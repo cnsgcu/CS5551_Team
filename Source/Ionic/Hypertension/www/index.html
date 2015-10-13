@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+    <title></title>
+
+    <link href="lib/ionic/css/ionic.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+
+    <!-- IF using Sass (run gulp sass first), then uncomment below and remove the CSS includes above
+    <link href="css/ionic.app.css" rel="stylesheet">
+    -->
+
+    <!-- ionic/angularjs js -->
+    <script src="lib/ionic/js/ionic.bundle.js"></script>
+
+    <!-- cordova script (this will be a 404 during development) -->
+    
+    <script src="js/ng-cordova.min.js"></script>
+      <script src="cordova.js"></script>
+    <script src="js/firebase.js"></script>
+    <script src="js/angularfire.min.js"></script>
+    <!-- your app's js -->
+    <script src="js/app.js"></script>
+  </head>
+  <body ng-app="starter" ng-controller="Hypertension">
+
+  <ion-pane>
+    
+     <div class="bar bar-header bar-stable">    
+        <h1 class="title">Hypertension Detection</h1>
+                
+        
+     </div>
+   
+     <ion-content class="text-center">
+        <br><br>
+         
+         <div class="list">
+            <label class="item item-input item-floating-label">
+                <span class="input-label">Systolic  BP</span>
+                <input type="text" placeholder="Systolic  BP" ng-model="sbp">
+                
+             </label>
+             <label class="item item-input item-floating-label">
+                 <span class="input-label">Diabolic BP</span>
+                 <input type="text" placeholder="Diabolic BP" ng-model="dbp">
+                 <a class="icon ion-close" href="" data-ng-click="clearSearch()">Clear</a>
+             </label>
+             
+             <br>  
+             
+             <button class="button button-full button-dark" ng-click="detectView(detectLogic(sbp,dbp,'Result'))">
+                 Results
+             </button>           
+        </div>  
+         
+        <br><br>
+         
+        <div id="result" class="hide">
+            <div class="item item-text-wrap"></div>
+        </div>
+         <br> <br> <br> <br> <br> <br> <br> <br> <br>
+          <div id="suggestion" class="hide">     
+         <button class="button" ng-click="detectView(detectLogic(sbp,dbp,'Suggest'))">Take Advice</button>
+     </div>
+         
+     </ion-content>
+    
+</ion-pane>
+      
+      
+ 
+</body>
+</html>

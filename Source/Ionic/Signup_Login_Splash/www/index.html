@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <link href="lib/ionic/css/ionic.css" rel="stylesheet">
+      <link href="css/style.css" rel="stylesheet">
+      
+      <!-- ionic/angularjs js -->
+      <script src="lib/ionic/js/ionic.bundle.js"></script>
+      <!-- <script src="js/ng-cordova.min.js"></script>
+      <script src="cordova.js"></script>
+      <script src="js/firebase.js"></script>
+      <script src="js/angularfire.min.js"></script>  -->
+      <!-- your app's js -->
+      <script src="js/app.js"></script>
+      <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+    
+  </head>
+    
+  <body ng-app="app" ng-controller="Hypertension">
+      <!--
+      The nav bar that will be updated as we navigate between views.
+      -->
+      <ion-nav-bar class="bar-royal">
+          <ion-nav-back-button></ion-nav-back-button>
+      </ion-nav-bar>
+    <!--
+      The views will be rendered in the <ion-nav-view> directive below
+      Templates are in the /templates folder (but you could also
+      have templates inline in this html file if you'd like).
+    -->
+    <ion-nav-view></ion-nav-view>
+
+    <script id="splash.html" type="text/ng-template">
+      <ion-view view-title="HealthScope">
+        <ion-content class="padding" scroll="false">
+          <div id="splash-wrap">
+            <div id="logo"></div>            
+            <div class="buttons">
+              <br> <br>
+              <button class="button button-royal button-block" ui-sref="login">Log in</button>
+              <button class="button button-royal button-block" ui-sref="signup">Sign up</button>
+              <!--<button class="button button-royal button-block" ui-sref="hypertension">Hypertension</button> -->
+            </div>
+          </div>
+        </ion-content>
+      </ion-pane>
+    </script>
+    
+    <script id="signup.html" type="text/ng-template">
+      <ion-view view-title="Sign up">
+        <ion-content class="padding">
+          <form ng-submit="signup()">
+            <div class="list">
+              <label class="item item-input">
+                <input type="email" placeholder="Email">
+              </label>
+              <label class="item item-input">
+                <input type="password" placeholder="Password">
+              </label>
+              <label class="item item-input">
+                <input type="text" placeholder="Age">
+              </label>
+              <label class="item item-input">
+                <input type="text" placeholder="Weight (in pounds)">
+              </label>
+              <label class="item item-input">
+                <input type="text" placeholder="Height">
+              </label>
+            </div>
+            <button class="button button-royal button-block">Sign up</button>
+          </form>
+        </ion-content>
+      </ion-view>
+    </script>
+    
+    <script id="login.html" type="text/ng-template">
+      <ion-view view-title="Log in">
+        <ion-content class="padding">
+          <form>
+            <div class="list">
+              <label class="item item-input">
+                <input type="email" placeholder="Email">
+              </label>
+              <label class="item item-input">
+                <input type="password" placeholder="Password">
+              </label>
+            </div>
+            <button class="button button-royal button-block">Log in</button>
+          </form>
+        </ion-content>
+      </ion-view>
+    </script>
+      
+    <script id="hypertension.html" type="text/ng-template">
+      <ion-view view-title="Hypertension">
+        <ion-content class="padding">
+          <form>
+            <div class="list">
+              <label class="item item-input">
+                <input type="text" placeholder="SBP">
+              </label>
+              <label class="item item-input">
+                <input type="text" placeholder="DBP">
+              </label>
+            </div>
+            <button class="button button-royal button-block" ng-click="detectView(detectLogic(sbp,dbp))">Record</button>
+          </form>
+        </ion-content>
+      </ion-view>
+    </script>
+
+  </body>
+</html>
