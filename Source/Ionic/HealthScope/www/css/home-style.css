@@ -1,0 +1,83 @@
+.slice {  
+  margin: 0 auto;
+  
+  width: 220px; height: 220px;
+  
+  overflow: hidden;
+  
+  backface-visibility: hidden;
+}
+
+.slice-right {
+  position: relative; top: 68px; left: 105px;
+  transform: skewY(30deg);
+}
+
+.slice-bottom {
+  position: relative; left: -20px; top: 12px;
+  transform: rotate(120deg) skewY(30deg);
+}
+
+.slice-left {
+  position: relative; left: -100px; top: -398px;
+  
+  transform: rotate(240deg) skewY(30deg);
+}
+
+.arc {
+  position: relative; left: -140px; top: 80px;
+  
+  width: 280px; height: 280px;
+  
+  border-radius: 280px;
+  border: 1px solid #dedede;
+
+  background-color: #9800ff;
+  
+  transform: skewY(-30deg);
+}
+
+.arc-bottom {
+  background-color: #f42c90;
+  
+  transform: skewY(-30deg) rotate(-120deg);
+}
+
+.arc-left {
+  background-color: #39e698;
+  
+  transform: skewY(-30deg) rotate(-240deg);
+}
+
+.arc ul {
+  color: white; font-weight: bold;
+  width: 90px;
+  text-align: center;
+  
+  position: relative; top: 81px; left: 162px;
+}
+
+.arc-bottom ul {
+  top: 181px; left: 95px;
+}
+
+.arc-left ul {
+  top: 81px; left: 26px;
+}
+
+.arc i {
+  color: white; font-size: 2em;
+}
+
+.core {
+  margin: 0 auto;
+  position: relative; top: -460px; left: -5px;
+  
+  width: 50px; height: 50px;
+  
+  background-color: #fb8d5f;
+  
+  border-radius: 50px;
+  
+  border: 3px solid #fff;
+}

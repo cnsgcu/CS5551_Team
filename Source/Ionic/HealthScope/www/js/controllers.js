@@ -1,39 +1,4 @@
-angular.module('app', ['ionic'])
-
-.config(function($stateProvider, $urlRouterProvider) {
-
-  // Ionic uses AngularUI Router which uses the concept of states
-  // Learn more here: https://github.com/angular-ui/ui-router
-  // Set up the various states which the app can be in.
-  // Each state's controller can be found in controllers.js
-  $stateProvider
-  
-  .state('hypertension', {
-    url: "/hypertension",
-    templateUrl: "hypertension.html"
-  })
-
-  .state('splash', {
-    url: '/splash',
-    templateUrl: "splash.html"
-  })
-  
-    // setup an abstract state for the tabs directive
-  .state('login', {
-    url: "/login",
-    templateUrl: "login.html"
-  })
-  
-      // setup an abstract state for the tabs directive
-  .state('signup', {
-    url: "/signup",
-    templateUrl: "signup.html"
-  });
-    
-    // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/splash');
-
-})
+angular.module('app.controllers', [])
 
 .controller('Hypertension', function($scope){
     $scope.detectLogic = function(sbp,dbp) {
@@ -47,14 +12,12 @@ angular.module('app', ['ionic'])
         
         if (isNaN(sbpValue) || isNaN(dbpValue))
             return{
-                
                "classNameForResult": "codered", 
                "results": "Please enter the values correctly." 
             }
         
         if(sbpValue<110 && dbpValue<140)
                 return {
-            
                 "classNameForResult": "codegreen",
                 "classNameForSuggestion": "bar bar-footer bar-balanced",
                 "results": "Normal : You don't have hypertension."   
@@ -98,10 +61,5 @@ angular.module('app', ['ionic'])
         //console.log(style["classNameForSuggestion"]);
         document.getElementById("result").innerHTML=style["results"];
 
-    }  
-
-    
-  
-        
-        
+    }
 });
