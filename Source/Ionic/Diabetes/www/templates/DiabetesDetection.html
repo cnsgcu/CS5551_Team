@@ -1,0 +1,38 @@
+ <ion-view view-title="Diabetes detection board">
+      <ion-nav-buttons side="right">
+        <a class="button button-icon icon ion-person" href="#/tab/dash/DiabetesDetector/Update"></a>
+    </ion-nav-buttons> 
+  <ion-content class="padding"> 
+       <div class="list card">
+           <div class="list"> 
+                <div class="item row">
+                  <div class="col">
+                      <label class="item-input item-floating-label">
+                       <span class="input-label">Sugar level of fasting glucose (mg/dl)</span>
+                        <input id="sugerLevel1" type="text" placeholder="Sugar level of fasting glucose (mg/dl)" ng-model="diaParameterF" required="required" >
+                      </label>
+                  </div>
+                </div>
+                <div class="item row">
+                  <div class="col">
+                      <label class="item-input item-floating-label">
+                       <span class="input-label">Sugar level of 2-hour glucose (mg/dl)</span>
+                        <input id="sugerLevel2" type="text" placeholder="Sugar level of 2-hour glucose (mg/dl)" ng-model="diaParameter2H">
+                      </label>
+                  </div>
+                </div>
+  
+       </div>
+             </div>
+<button id="diadetect" class="button button-block button-calm" ng-click="diaDetectView(diaDetectLogic(diaParameterF,diaParameter2H))">
+  Detect
+    </button>
+ <div id="result" class="hide">
+  <div class="item item-text-wrap">
+</div>
+</div> 
+<br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br>
+<div id="suggestion" class="hide">
+  <button id="getSuggestion" class="button button-full button-clear" name="getSuggestion">Get suggestion</button></div>
+  </ion-content>
+</ion-view>
