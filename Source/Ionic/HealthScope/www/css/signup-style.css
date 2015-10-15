@@ -23,7 +23,7 @@ form.ng-submitted input.ng-valid + i.icon.error {
   display: none;
 }
 
-.came-btn {
+.cam-btn {
   height: 90px; width: 100px;
   
   text-align: center; font-size: 3em;
