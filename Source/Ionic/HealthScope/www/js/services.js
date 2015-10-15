@@ -1,7 +1,6 @@
 angular.module('app.services', [])
 
 .factory('Camera', ['$q', function($q) {
-
   return {
     getPicture: function(options) {
       var q = $q.defer();

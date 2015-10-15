@@ -34,8 +34,14 @@ angular.module('app', ['ionic', 'app.controllers', 'app.services'])
       url: '/hypertension',
       controller: 'Hypertension',
       templateUrl: 'templates/hypertension.html',
+    })
+    
+    .state('diabetes', {
+      url: '/diabetes',
+      controller: 'DiaDet',
+      templateUrl: 'templates/diabetes.html',
     });
-  
+
   // If none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/');
 })

@@ -22,3 +22,20 @@ form .has-success {
 form.ng-submitted input.ng-valid + i.icon.error {
   display: none;
 }
+
+.came-btn {
+  height: 90px; width: 100px;
+  
+  text-align: center; font-size: 3em;
+  
+  margin: 0 auto;
+}
+
+.cam-icon-frame {
+  width: 52px; height: 52px;
+  
+  border-radius: 48px;
+  border: 1px solid #c5c5c5;
+  
+  margin: 0 auto;
+}
