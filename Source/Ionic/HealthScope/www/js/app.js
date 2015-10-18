@@ -9,6 +9,7 @@ angular.module('app', ['ionic', 'app.controllers', 'app.services'])
 .config(function($stateProvider, $urlRouterProvider) {
   // Ionic uses AngularUI Router which uses the concept of states
   // Learn more here: https://github.com/angular-ui/ui-router
+  
   $stateProvider
     .state('splash', {
       url: '/',
@@ -17,16 +18,19 @@ angular.module('app', ['ionic', 'app.controllers', 'app.services'])
 
     .state('login', {
       url: '/login',
+      controller: 'LoginCtrl',
       templateUrl: 'templates/login.html',
     })
     
     .state('signup', {
       url: '/signup',
+      controller: 'SignupCtrl',
       templateUrl: 'templates/signup.html',
     })
     
     .state('home', {
-      url: '/home',
+      url: '/home/:name',
+      controller: 'HomeCtrl',
       templateUrl: 'templates/home.html',
     })
     
@@ -52,17 +56,22 @@ angular.module('app', ['ionic', 'app.controllers', 'app.services'])
       require: '^form',
       link: function(scope, element, attrs, form) {
         var inputs = element.find("*");
+        
         for(var i = 0; i < inputs.length; i++) {
           (function(input){
             var attributes = input.attributes;
+            
             if (attributes.getNamedItem('ng-model') != void 0 && attributes.getNamedItem('name') != void 0) {
               var field = form[attributes.name.value];
+              
               if (field != void 0) {
                 scope.$watch(function() {
                   return form.$submitted + "_" + field.$valid;
                 }, function() {
                   if (form.$submitted != true) return;
+                  
                   var inp = angular.element(input);
+                  
                   if (inp.hasClass('ng-invalid')) {
                     element.removeClass('has-success');
                     element.addClass('has-error');

@@ -10,18 +10,29 @@
 
 .slice-right {
   position: relative; top: 68px; left: 105px;
-  transform: skewY(30deg);
+  
+  -webkit-transform: skewY(30deg);
+  -ms-transform    : skewY(30deg);
+  -o-transform     : skewY(30deg);
+  transform        : skewY(30deg);
 }
 
 .slice-bottom {
   position: relative; left: -20px; top: 12px;
-  transform: rotate(120deg) skewY(30deg);
+  
+  -webkit-transform: rotate(120deg) skewY(30deg);
+  -ms-transform    : rotate(120deg) skewY(30deg);
+  -o-transform     : rotate(120deg) skewY(30deg);
+  transform        : rotate(120deg) skewY(30deg);
 }
 
 .slice-left {
   position: relative; left: -100px; top: -398px;
   
-  transform: rotate(240deg) skewY(30deg);
+  -webkit-transform: rotate(240deg) skewY(30deg);
+  -ms-transform    : rotate(240deg) skewY(30deg);
+  -o-transform     : rotate(240deg) skewY(30deg);
+  transform        : rotate(240deg) skewY(30deg);
 }
 
 .arc {
@@ -36,7 +47,10 @@
 
   background-color: #9800ff;
   
-  transform: skewY(-30deg);
+  -webkit-transform: skewY(-30deg);
+  -ms-transform    : skewY(-30deg);
+  -o-transform     : skewY(-30deg);
+  transform        : skewY(-30deg);
 }
 
 .arc:active {
@@ -46,19 +60,25 @@
 .arc-bottom {
   background-color: #f42c90;
   
-  transform: skewY(-30deg) rotate(-120deg);
+  -webkit-transform: skewY(-30deg) rotate(-120deg);
+  -ms-transform    : skewY(-30deg) rotate(-120deg);
+  -o-transform     : skewY(-30deg) rotate(-120deg);
+  transform        : skewY(-30deg) rotate(-120deg);
 }
 
 .arc-left {
   background-color: #39e698;
   
-  transform: skewY(-30deg) rotate(-240deg);
+  -webkit-transform: skewY(-30deg) rotate(-240deg);
+  -ms-transform    : skewY(-30deg) rotate(-240deg);
+  -o-transform     : skewY(-30deg) rotate(-240deg);
+  transform        : skewY(-30deg) rotate(-240deg);
 }
 
 .arc ul {
-  color: white; font-weight: bold;
+  text-align: center; color: white; font-weight: bold;
+  
   width: 90px;
-  text-align: center;
   
   position: relative; top: 81px; left: 162px;
 }
@@ -84,6 +104,5 @@
   background-color: #fb8d5f;
   
   border-radius: 50px;
-  
   border: 3px solid #fff;
 }

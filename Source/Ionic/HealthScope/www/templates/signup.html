@@ -6,7 +6,7 @@
   <ion-content class="padding">
     <link href="css/signup-style.css" rel="stylesheet">
 
-    <form novalidate="novalidate" on-valid-submit="doLogin()">
+    <form name="loginform" novalidate="novalidate" ng-submit="loginform.$valid && doSubmit()">
       <div class="list card">
         <div class="list">
           <div class="item row">
@@ -16,7 +16,7 @@
               </div>
 
               <div style="line-height: 1px">
-                <label>Selfie</label>
+                <label>Photo</label>
               </div>
             </div>
           </div>
@@ -32,23 +32,11 @@
           </div>
 
           <div class="item row">
-            <div class="col col-80">
+            <div class="col">
               <label class="item-input validated">
                 <i class="icon ion-calendar placeholder-icon"></i>
                 <input id="dob" type="date" ng-model="user.dob" required="required">
                 <i class="icon ion-alert-circled error"></i>
-              </label>
-            </div>
-
-            <div class="col">
-              <label class="item item-input item-select">
-                <div class="input-label">&nbsp;</div>
-
-                <select>
-                  <option disabled selected>Gender</option>
-                  <option>Female</option>
-                  <option>Male</option>
-                </select>
               </label>
             </div>
           </div>
@@ -85,7 +73,7 @@
         </div>
       </div>
 
-      <button type="submit" class="button button-block button hs-btn">Submit</button>
+      <button type="submit" class="button button-block button hs-btn">Sign up</button>
     </form>
   </ion-content>
 </ion-view>

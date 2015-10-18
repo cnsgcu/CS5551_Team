@@ -4,17 +4,17 @@
 	</ion-nav-bar>
 
 	<ion-content class="padding">
-		<form>
+		<form ng-submit="doLogin(credential)">
 			<div class="list">
 				<label class="item item-input">
-					<input type="email" placeholder="Email">
+					<input type="email" placeholder="Email" ng-model="credential.email">
 				</label>
 				<label class="item item-input">
-					<input type="password" placeholder="Password">
+					<input type="password" placeholder="Password" ng-model="credential.password">
 				</label>
 			</div>
 
-			<button class="button button-royal button-block" ui-sref="home">Log in</button>
+			<button type="submit" class="button button-royal button-block">Log in</button>
 		</form>
 	</ion-content>
 </ion-view>

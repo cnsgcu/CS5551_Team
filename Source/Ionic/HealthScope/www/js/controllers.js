@@ -1,14 +1,13 @@
 angular.module('app.controllers', [])
 
     /**
-     * Hypertension - Tarun
-     */
+    * Hypertension - Tarun
+    */
     .controller('Hypertension', function ($scope) {
         $scope.detectLogic = function (sbp, dbp) {
             // Do some computation..
             var sbpValue = parseFloat(sbp);
             var dbpValue = parseFloat(dbp);
-            var flag = parseInt(nameValue);
 
             if (isNaN(sbpValue) || isNaN(dbpValue))
                 return {
@@ -61,8 +60,8 @@ angular.module('app.controllers', [])
     })
 
     /**
-     * Diabetes - Ting
-     */
+    * Diabetes - Ting
+    */
     .controller('DiaDet', function ($scope, $http) {
         $scope.diaDetectLogic = function (diaData1, diaData2) {
             // Do some computation..
@@ -129,4 +128,73 @@ angular.module('app.controllers', [])
             $scope.diaData1 = "";
             $scope.diaData2 = "";
         };
+    })
+
+    .controller('SignupCtrl', function ($scope, $location, Camera, UserService) {
+        function reset() {
+            $scope.user = {
+                'dob': '',
+                'name': '',
+                'email': '',
+                'password': '',
+                'repassword': ''
+            };
+        }
+        
+        reset();
+
+        $scope.takePicture = function () {
+            Camera.getPicture().then(function (imageURI) {
+                console.log(imageURI);
+            }, function (err) {
+                console.err(err);
+            });
+        };
+
+        $scope.doSubmit = function () {
+            var newUser = JSON.parse(JSON.stringify($scope.user));
+            delete newUser['repassword'];
+
+            UserService.create(
+                newUser,
+                function (data) {
+                    $location.path("/");
+                    reset();
+                },
+                function(error) {
+                    console.log(error);
+                }
+            );
+        };
+    })
+    
+    .controller('LoginCtrl', function($scope, $location, UserService) {
+         function reset() {
+            $scope.credential = {
+                'email': '',
+                'password': ''
+            };            
+        }
+        
+        reset();
+        
+        $scope.doLogin = function(credential) {
+            UserService.identify(
+                credential,
+                function(data) {
+                    if (data.length == 1) {
+                        var user = data[0];
+
+                        $location.path('/home/' + user['name']);                        
+                    }
+                },
+                function(error) {
+                    console.log(error);
+                }
+            );
+        }
+    })
+    
+    .controller('HomeCtrl', function($scope, $stateParams) {
+        $scope.user_name = $stateParams.name;
     });
