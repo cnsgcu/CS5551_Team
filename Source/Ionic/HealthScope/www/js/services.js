@@ -21,18 +21,12 @@ angular.module('app.services', [])
     make: function(reqMethod) {
       this.tmp = {};
       this.tmp.method = reqMethod;
+      
       return this;
     },
     
     requestTo: function(reqUrl) {
       this.tmp.url = reqUrl
-      
-      if (this.tmp.method === 'DELETE') {
-        var request = this.tmp;
-        this.tmp = null;
-        
-        return request;
-      }
       
       return this;
     },
@@ -51,18 +45,18 @@ angular.module('app.services', [])
   var restAPI = 'http://healthkeeper.mybluemix.net/api/users';
 
   return {
-    'create': function(userProfile, successHdlr, errorHdlr) {
+    'create': function(userProfile) {
       var registerAPI = restAPI + '/';
       var request = RequestFactory.make('POST').requestTo(registerAPI).carryData(userProfile);
       
-      $http(request).success(successHdlr).error(errorHdlr);
+      return $http(request);
     },
     
-    'identify': function(loginCredential, successHdlr, errorHdlr) {
+    'identify': function(loginCredential) {
       var identifyAPI = restAPI + '/identify';
       var request = RequestFactory.make('POST').requestTo(identifyAPI).carryData(loginCredential);
       
-      $http(request).success(successHdlr).error(errorHdlr);
+      return $http(request);
     }
   };
 })

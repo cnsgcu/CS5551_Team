@@ -1,8 +1,8 @@
 angular.module('app.controllers', [])
 
     /**
-    * Hypertension - Tarun
-    */
+     * Hypertension - Tarun
+     */
     .controller('Hypertension', function ($scope) {
         $scope.detectLogic = function (sbp, dbp) {
             // Do some computation..
@@ -60,8 +60,8 @@ angular.module('app.controllers', [])
     })
 
     /**
-    * Diabetes - Ting
-    */
+     * Diabetes - Ting
+     */
     .controller('DiaDet', function ($scope, $http) {
         $scope.diaDetectLogic = function (diaData1, diaData2) {
             // Do some computation..
@@ -130,6 +130,9 @@ angular.module('app.controllers', [])
         };
     })
 
+    /**
+     * Sign up - Cuong
+     */
     .controller('SignupCtrl', function ($scope, $location, Camera, UserService) {
         function reset() {
             $scope.user = {
@@ -141,60 +144,66 @@ angular.module('app.controllers', [])
             };
         }
         
-        reset();
+        function actOnSuccess (response) {
+            $location.path("/");
+            reset();
+        }
+        
+        function actOnError (response) {
+            console.log(response);
+        }
 
-        $scope.takePicture = function () {
-            Camera.getPicture().then(function (imageURI) {
-                console.log(imageURI);
-            }, function (err) {
-                console.err(err);
-            });
-        };
+        reset();
 
         $scope.doSubmit = function () {
             var newUser = JSON.parse(JSON.stringify($scope.user));
             delete newUser['repassword'];
 
-            UserService.create(
-                newUser,
-                function (data) {
-                    $location.path("/");
-                    reset();
+            UserService.create(newUser).then(actOnSuccess, actOnError);
+        };
+        
+        $scope.takePicture = function () {
+            Camera.getPicture().then(
+                function (imageURI) {
+                    console.log(imageURI);
                 },
-                function(error) {
-                    console.log(error);
+                function (err) {
+                    console.err(err);
                 }
             );
         };
     })
     
-    .controller('LoginCtrl', function($scope, $location, UserService) {
-         function reset() {
-            $scope.credential = {
-                'email': '',
-                'password': ''
-            };            
+    /**
+     * Log in - Cuong
+     */
+    .controller('LoginCtrl', function ($scope, $location, UserService) {
+        function reset() {
+            $scope.credential = { 'email': '', 'password': '' };
         }
+        
+        function actOnSuccess (response) {
+            if (response.data.length == 1) {
+                var user = response.data[0];
+
+                $location.path('/home/' + user['name']);
+            }
+        };
+        
+        function actOnError (response) {
+            console.log(response);
+        };
         
         reset();
-        
-        $scope.doLogin = function(credential) {
-            UserService.identify(
-                credential,
-                function(data) {
-                    if (data.length == 1) {
-                        var user = data[0];
 
-                        $location.path('/home/' + user['name']);                        
-                    }
-                },
-                function(error) {
-                    console.log(error);
-                }
-            );
-        }
+        $scope.doLogin = function (credential) {    
+            UserService.identify(credential).then(actOnSuccess, actOnError);
+        };
     })
     
-    .controller('HomeCtrl', function($scope, $stateParams) {
+    /**
+     * Home - Cuong
+     */
+    .controller('HomeCtrl', function ($scope, $stateParams) {
         $scope.user_name = $stateParams.name;
     });
