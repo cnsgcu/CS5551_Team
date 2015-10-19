@@ -1,17 +1,21 @@
 describe('LoginController', function() {
 
     var scope,
-        controller, 
-        deferredLogin,
+        controller,
+        httpBackend,
         locationMock,
+        deferredLogin,
         userServiceMock;
 
     beforeEach(module('app'));
 
-	beforeEach(inject(function($rootScope, $controller, $q) {  
+	beforeEach(inject(function($httpBackend, $rootScope, $controller, $q) {  
 		deferredLogin = $q.defer();
-	
-		// mock UserService
+	    
+        httpBackend = $httpBackend;
+        httpBackend.whenGET(/^templates\/.+\.html$/).respond('');     
+               
+        // mock UserService
 		userServiceMock = {
 			'identify': jasmine.createSpy('identify spy').and.returnValue(deferredLogin.promise)           
 		};
@@ -29,19 +33,20 @@ describe('LoginController', function() {
             UserService: userServiceMock 
         });
         
-        // Invoke doLogin with test credential
-        scope.doLogin({email: 'test', password: 'password'});
+        // invoke doLogin with test credential
+        scope.doLogin({email: 'tester@team5.com', password: 'password'});
 	}));
     
     describe('#doLogin', function() {
         it('should call identify on userService', function() {
-            expect(userServiceMock.identify).toHaveBeenCalledWith({email: 'test', password: 'password'}); 
+            expect(userServiceMock.identify).toHaveBeenCalledWith({email: 'tester@team5.com', password: 'password'}); 
         });
-
+        
         describe('when the login is executed,', function() {
             it('if successful, should change to home page', function() {
-
-                deferredLogin.resolve();  
+                var response = {data: [{name: 'Cuong'}]};
+                
+                deferredLogin.resolve(response);
                 scope.$digest();
 
                 expect(locationMock.path).toHaveBeenCalledWith('/home/Cuong');
