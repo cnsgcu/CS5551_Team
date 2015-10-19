@@ -1,4 +1,4 @@
-describe('LoginController', function() {
+describe('LoginCtrl', function() {
 
     var scope,
         controller,
@@ -12,6 +12,7 @@ describe('LoginController', function() {
 	beforeEach(inject(function($httpBackend, $rootScope, $controller, $q) {  
 		deferredLogin = $q.defer();
 	    
+        // mock httpBackend
         httpBackend = $httpBackend;
         httpBackend.whenGET(/^templates\/.+\.html$/).respond('');     
                
@@ -52,5 +53,6 @@ describe('LoginController', function() {
                 expect(locationMock.path).toHaveBeenCalledWith('/home/Cuong');
             });
         });
-    })
+    });
+    
 });
