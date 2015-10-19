@@ -1,3 +1,6 @@
+/**
+ * Login controller spec - Cuong
+ */
 describe('LoginCtrl', function() {
 
     var scope,
@@ -15,12 +18,12 @@ describe('LoginCtrl', function() {
         // mock httpBackend
         httpBackend = $httpBackend;
         httpBackend.whenGET(/^templates\/.+\.html$/).respond('');     
-               
+
         // mock UserService
 		userServiceMock = {
 			'identify': jasmine.createSpy('identify spy').and.returnValue(deferredLogin.promise)           
 		};
-	
+
 		// mock $location
 		locationMock = jasmine.createSpyObj('$location spy', ['path']);
         

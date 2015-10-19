@@ -1,3 +1,6 @@
+/**
+ * Signup controller spec - Cuong
+ */
 describe('SignupCtrl', function() {
 	
 	var scope,
@@ -49,7 +52,7 @@ describe('SignupCtrl', function() {
 		scope.doSubmit();
 	}));
 	
-	describe('#doSubmit', function() {
+	describe('#doSignup', function() {
 		it('should call create on userService', function() {
 			var expectProfile = JSON.parse(JSON.stringify(userProfile));
 			delete expectProfile['repassword'];
@@ -58,7 +61,7 @@ describe('SignupCtrl', function() {
 		});
 		
 		describe('when the signup is executed', function() {
-			it('if successful, should change to landing page', function() {
+			it('if successful, should go back to landing page', function() {
 				deferredSignup.resolve();
 				scope.$digest();
 				
