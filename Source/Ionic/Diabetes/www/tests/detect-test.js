@@ -17,6 +17,5 @@ describe("DiaDet", function () {
          expect($scope.diaDetectLogic("90", "95")["results"]).toEqual("Normal");
         expect($scope.diaDetectLogic("115", "135")["results"]).toEqual("Impaired fasting glycaemia glucose: more commonly known as pre-diabetes refers to a condition in which the fasting blood glucose level is consistently elevated above what is considered normal levels; however, it is not high enough to be diagnosed as diabetes mellitus.");
         expect($scope.diaDetectLogic("110", "150")["results"]).toEqual("Impaired glucose tolerance(IGT): is a pre-diabetic state of hyperglycemia that is associated with insulin resistance and increased risk of cardiovascular pathology. IGT may precede type 2 diabetes mellitus by many years. IGT is also a risk factor for mortality.");
-        
-});
+      });
 });
