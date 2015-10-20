@@ -42,7 +42,7 @@ angular.module('app.services', [])
     }
   };
   
-  var restAPI = 'http://healthkeeper.mybluemix.net/api/users';
+  var restAPI = 'https://healthkeeper.mybluemix.net/api/users';
 
   return {
     'create': function(userProfile) {

@@ -142,16 +142,16 @@ angular.module('app.controllers', [])
                 'password': '',
                 'repassword': ''
             };
-        }
+        };
         
         function actOnSuccess (response) {
-            $location.path("/");
+            $location.path('/');
             reset();
-        }
+        };
         
-        function actOnError (response) {
-            console.log(response);
-        }
+        function actOnError (reason) {
+            console.log('Failed: ' + reason);
+        };
 
         reset();
 
@@ -167,36 +167,52 @@ angular.module('app.controllers', [])
                 function (imageURI) {
                     console.log(imageURI);
                 },
-                function (err) {
-                    console.err(err);
+                function (reason) {
+                    console.err('Failed: ' + reason);
                 }
             );
         };
     })
     
     /**
-     * Log in - Cuong
+     * Login - Cuong
      */
-    .controller('LoginCtrl', function ($scope, $location, UserService) {
+    .controller('LoginCtrl', function ($scope, $location, $ionicPopup, UserService) {
         function reset() {
             $scope.credential = { 'email': '', 'password': '' };
         }
         
         function actOnSuccess (response) {
+            console.log(response);
             if (response.data.length == 1) {
                 var user = response.data[0];
 
                 $location.path('/home/' + user['name']);
+            } else{
+                var alertPopup = $ionicPopup.alert({
+                    title:'Wrong Credentials',
+                    okText:'Try Again'
+                });
+                alertPopup.then(function(){
+                    reset(); 
+                });    
             }
         };
         
-        function actOnError (response) {
-            console.log(response);
+        function actOnError (reason) {
+            var alertPopup = $ionicPopup.alert({
+                title:'Check your connection ' + JSON.stringify(reason),
+                okText:'Try Again'
+            });
+            alertPopup.then(function(){
+               reset(); 
+            });
+            console.log('Failed: ' + reason);
         };
         
         reset();
 
-        $scope.doLogin = function (credential) {    
+        $scope.doLogin = function (credential) {
             UserService.identify(credential).then(actOnSuccess, actOnError);
         };
     })
