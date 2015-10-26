@@ -54,7 +54,9 @@
 }
 
 .arc:active {
-  background-image: linear-gradient(to bottom right, rgba(0, 0, 0, 0.2) , rgba(0, 0, 0, 0.2));
+  background-image: -webkit-linear-gradient(top left, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2));
+  background-image: -o-linear-gradient(top left, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2));
+  background-image: linear-gradient(to bottom right, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2));
 }
 
 .arc-bottom {
