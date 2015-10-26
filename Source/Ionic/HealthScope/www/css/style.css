@@ -4,7 +4,7 @@
     background-color: #8fd4d1;
 }
 
-.hs-btn.active {
+.hs-btn.activated {
 	background-image: -webkit-linear-gradient(top left, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1));
 	background-image: -o-linear-gradient(top left, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1));
 	background-image: linear-gradient(to bottom right, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1));
