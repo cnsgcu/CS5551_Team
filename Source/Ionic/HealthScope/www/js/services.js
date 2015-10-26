@@ -1,21 +1,5 @@
 angular.module('app.services', [])
 
-.factory('Camera', ['$q', function($q) {
-  return {
-    getPicture: function(options) {
-      var q = $q.defer();
-
-      navigator.camera.getPicture(function(result) {
-        q.resolve(result);
-      }, function(err) {
-        q.reject(err);
-      }, options);
-
-      return q.promise;
-    }
-  }
-}])
-
 .factory('UserService', function($http) {
   var RequestFactory = {
     make: function(reqMethod) {
@@ -42,7 +26,7 @@ angular.module('app.services', [])
     }
   };
   
-  var restAPI = 'https://healthkeeper.mybluemix.net/api/users';
+  var restAPI = 'http://healthkeeper.mybluemix.net/api/users';
 
   return {
     'create': function(userProfile) {

@@ -133,7 +133,7 @@ angular.module('app.controllers', [])
     /**
      * Sign up - Cuong
      */
-    .controller('SignupCtrl', function ($scope, $location, Camera, UserService) {
+    .controller('SignupCtrl', function ($scope, $location, $cordovaCamera, $ionicPopup, UserService) {
         function reset() {
             $scope.user = {
                 'dob': '',
@@ -162,15 +162,27 @@ angular.module('app.controllers', [])
             UserService.create(newUser).then(actOnSuccess, actOnError);
         };
         
-        $scope.takePicture = function () {
-            Camera.getPicture().then(
-                function (imageURI) {
-                    console.log(imageURI);
-                },
-                function (reason) {
-                    console.err('Failed: ' + reason);
-                }
-            );
+        $scope.takePicture = function() {
+            var options = {
+                quality: 80,
+                destinationType: Camera.DestinationType.DATA_URL,
+                sourceType: Camera.PictureSourceType.CAMERA,
+                allowEdit: true,
+                encodingType: Camera.EncodingType.JPEG,
+                targetWidth: 250,
+                targetHeight: 250,
+                popoverOptions: CameraPopoverOptions,
+                saveToPhotoAlbum: false
+            };
+            
+            $cordovaCamera.getPicture(options).then(function(imageData) {
+                $scope.srcImage = "data:image/jpeg;base64," + imageData;
+            }, function(err) {
+                $ionicPopup.alert({
+                    title: JSON.parse(err),
+                    okText:'Try Again'
+                });
+            });
         };
     })
     
@@ -183,12 +195,11 @@ angular.module('app.controllers', [])
         }
         
         function actOnSuccess (response) {
-            console.log(response);
             if (response.data.length == 1) {
                 var user = response.data[0];
 
                 $location.path('/home/' + user['name']);
-            } else{
+            } else {
                 var alertPopup = $ionicPopup.alert({
                     title:'Wrong Credentials',
                     okText:'Try Again'
@@ -207,7 +218,6 @@ angular.module('app.controllers', [])
             alertPopup.then(function(){
                reset(); 
             });
-            console.log('Failed: ' + reason);
         };
         
         reset();
