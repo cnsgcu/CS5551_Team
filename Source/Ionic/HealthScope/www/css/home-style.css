@@ -35,8 +35,11 @@
   transform        : rotate(240deg) skewY(30deg);
 }
 
-.arc {
+.arc, .arc.activated {
   cursor: pointer;
+  
+  padding: 0;
+  font-size: 1em; line-height: 1;
   
   position: relative; left: -140px; top: 80px;
   
@@ -53,13 +56,13 @@
   transform        : skewY(-30deg);
 }
 
-.arc:active {
-  background-image: -webkit-linear-gradient(top left, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2));
-  background-image: -o-linear-gradient(top left, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2));
-  background-image: linear-gradient(to bottom right, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2));
+.arc.activated {
+  background-image: -webkit-linear-gradient(top left, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1));
+  background-image: -o-linear-gradient(top left, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1));
+  background-image: linear-gradient(to bottom right, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1));
 }
 
-.arc-bottom {
+.arc-bottom, .arc-bottom.activated {
   background-color: #f42c90;
   
   -webkit-transform: skewY(-30deg) rotate(-120deg);
@@ -68,7 +71,7 @@
   transform        : skewY(-30deg) rotate(-120deg);
 }
 
-.arc-left {
+.arc-left, .arc-left.activated {
   background-color: #39e698;
   
   -webkit-transform: skewY(-30deg) rotate(-240deg);
@@ -82,7 +85,7 @@
   
   width: 90px;
   
-  position: relative; top: 81px; left: 162px;
+  position: relative; top: 65px; left: 165px;
 }
 
 .arc-bottom ul {
@@ -90,11 +93,15 @@
 }
 
 .arc-left ul {
-  top: 81px; left: 26px;
+  top: 65px; left: 25px;
 }
 
 .arc i {
-  color: white; font-size: 2em;
+  color: white;
+}
+
+.arc i.icon:before {
+  font-size: 2em;
 }
 
 .core {
