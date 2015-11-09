@@ -126,6 +126,68 @@ angular.module('app.controllers', [])
         };
     })
 
+
+.controller('DiaSug',function($scope, Items){
+
+$(document).ready(function () { 
+    $(function () {
+        $('#Proteins').click(function (e) {
+        e.preventDefault();
+        $('#Proteins').next().toggle();
+    });
+        $('#GrainsAndStarchyFoods').click(function (e) {
+        e.preventDefault();
+        $('#GrainsAndStarchyFoods').next().toggle();
+    });
+        $('#Non-StarchyVegetables').click(function (e) {
+        e.preventDefault();
+        $('#Non-StarchyVegetables').next().toggle();
+        });
+    });
+    
+    $scope.ProteinItems = Items.allProtein();
+    $scope.GrainsAndStarchyFoodItems = Items.allGrainsAndStarchy();
+    $scope.NonStarchyVegetableItems = Items.allNonStarchyVegetable();
+    
+    $scope.show=function(item){
+        $("#tip").html("Tips:");
+        var img = document.createElement("IMG");
+        img.src =item.picture;
+        console.log(item.id);
+        if(item.id>=0 && item.id<=10){
+            $("#protein").html("Protein");
+            $("#proteinName").html(item.name);
+            if (document.getElementById('proteinImage').lastChild==null)
+                document.getElementById('proteinImage').appendChild(img);
+            else{ document.getElementById('proteinImage').removeChild(document.getElementById('proteinImage').lastChild);
+                document.getElementById('proteinImage').appendChild(img);
+                }
+            $("#proteinTip").html(item.tip);
+        }
+        else if(item.id>=11 && item.id<=24){
+            $("#Grain").html("Grains and Starchy Food");
+            $("#GrainsAndStarchyFoodName").html(item.name);
+            if (document.getElementById('GrainsAndStarchyFoodImage').lastChild==null)
+                document.getElementById('GrainsAndStarchyFoodImage').appendChild(img);
+            else{ document.getElementById('GrainsAndStarchyFoodImage').removeChild(document.getElementById('GrainsAndStarchyFoodImage').lastChild);
+                document.getElementById('GrainsAndStarchyFoodImage').appendChild(img);
+                }
+            $("#GrainsAndStarchyFoodTip").html(item.tip);
+        }
+        else{
+            $("#vegi").html("Non-Starchy Vegetable");
+            $("#Non-StarchyVegetableName").html(item.name);
+            if (document.getElementById('Non-StarchyVegetableImage').lastChild==null)
+                document.getElementById('Non-StarchyVegetableImage').appendChild(img);
+            else{ document.getElementById('Non-StarchyVegetableImage').removeChild(document.getElementById('Non-StarchyVegetableImage').lastChild);
+                document.getElementById('Non-StarchyVegetableImage').appendChild(img);
+                }
+            $("#Non-StarchyVegetableTip").html(item.tip);
+        }        
+    }
+});
+})
+
     /**
      * Sign up - Cuong
      */

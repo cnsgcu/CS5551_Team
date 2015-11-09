@@ -44,7 +44,15 @@ angular.module('app', ['ionic', 'app.controllers', 'app.services', 'ngCordova'])
       url: '/diabetes',
       controller: 'DiaDet',
       templateUrl: 'templates/diabetes.html',
-    });
+    })
+  
+    .state('diaSuggestion', {
+      url: '/diabetesSuggestion',
+      templateUrl:
+      'templates/diabetesSuggestion.html',
+      controller:'DiaSug'
+  })
+  ;
 
   // If none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/');
