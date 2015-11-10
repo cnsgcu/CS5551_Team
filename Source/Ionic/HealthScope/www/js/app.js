@@ -27,6 +27,12 @@ angular.module('app', ['ionic', 'app.controllers', 'app.services', 'ngCordova'])
       controller: 'SignupCtrl',
       templateUrl: 'templates/signup.html',
     })
+	
+	.state('suggestHP', {
+      url: '/suggestHP',
+      controller: 'SliderController',
+      templateUrl: 'templates/suggestHP.html',
+    })
     
     .state('home', {
       url: '/home/:name',
@@ -56,6 +62,56 @@ angular.module('app', ['ionic', 'app.controllers', 'app.services', 'ngCordova'])
 
   // If none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/');
+})
+
+.directive('slider', function ($timeout) {
+  return {
+    restrict: 'AE',
+	replace: true,
+	scope:{
+		images: '='
+	},
+    link: function (scope, elem, attrs) {
+
+		scope.currentIndex=0;
+
+		scope.next=function(){
+			scope.currentIndex<scope.images.length-1?scope.currentIndex++:scope.currentIndex=0;
+		};
+		
+		scope.prev=function(){
+			scope.currentIndex>0?scope.currentIndex--:scope.currentIndex=scope.images.length-1;
+		};
+		
+		scope.$watch('currentIndex',function(){
+			scope.images.forEach(function(image){
+				image.visible=false;
+			});
+			scope.images[scope.currentIndex].visible=true;
+		});
+		
+		/* Start: For Automatic slideshow*/
+		
+		var timer;
+		
+		var sliderFunc=function(){
+			timer=$timeout(function(){
+				scope.next();
+				timer=$timeout(sliderFunc,5000);
+			},5000);
+		};
+		
+		sliderFunc();
+		
+		scope.$on('$destroy',function(){
+			$timeout.cancel(timer);
+		});
+		
+		/* End : For Automatic slideshow*/
+		
+    },
+	templateUrl:'templates/templateurl.html'
+  }
 })
 
 .directive('validated', function($parse) {

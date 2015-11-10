@@ -1,58 +1,55 @@
-angular.module('app.controllers', [])
+angular.module('app.controllers', ['ngAnimate'])
 
+    /**
+     * Slider logic - Tarun
+     */
+    .controller('SliderController', function($scope) {
+        $scope.images=[{src:'img1.png',title:'Pic 1'},
+                       {src:'img2.jpg',title:'Pic 2'},
+                       {src:'img3.jpg',title:'Pic 3'},
+                       {src:'img4.png',title:'Pic 4'},
+                       {src:'img5.png',title:'Pic 5'}]; 
+    })
+ 
     /**
      * Hypertension - Tarun
      */
-    .controller('Hypertension', function ($scope, $cordovaVibration) {
-        $scope.detectLogic = function (sbp, dbp) {
-            // Do some computation..
-            var sbpValue = parseFloat(sbp);
-            var dbpValue = parseFloat(dbp);
-
-            if (isNaN(sbpValue) || isNaN(dbpValue))
-                return {
-                    "classNameForResult": "codered",
-                    "results": "Please enter the values correctly."
-                }
-
-            if (sbpValue < 110 && dbpValue < 140)
-                return {
-                    "classNameForResult": "codegreen",
-                    "results": "Normal : You don't have hypertension."
-                }
-
-            if (sbpValue >= 120 && sbpValue <= 139 && dbpValue < 90)
-                return {
-                    "classNameForResult": "card",
-                    "results": "You have Pre-Hypertension."
-                }
-
-            if (sbpValue >= 140 && sbpValue <= 159 && dbpValue >= 100)
-                return {
-                    "classNameForResult": "card",
-                    "results": "You have State 1 Hypertension."
-                }
-
-
-            if (sbpValue >= 160 && sbpValue <= 179 && dbpValue >= 110)
-                return {
-                    "classNameForResult": "card",
-                    "results": "You have State 2 Hypertension."
-                }
-
-            if (sbpValue >= 180 || dbpValue >= 110)
-                return {
-                    "classNameForResult": "codered",
-                    "results": "You have stage 3 Hypertension (severe)."
-                }
-        }
-
-        $scope.detectView = function (style) {
-            document.getElementById("result").innerHTML = style["results"];
-            document.getElementById("result").className = style["classNameForResult"];
-            document.getElementById("suggestion").className = style["classNameForSuggestion"];
-            $cordovaVibration.vibrate(200);
-        }
+    .controller('Hypertension', function ($scope, UserService, $location, $ionicPopup, $cordovaVibration) {
+            
+        function actOnSuccess (response) {
+            
+            if (response.data) {
+                var user = response.data;
+                console.log ("Response from the server : "+ JSON.stringify(user));
+                $ionicPopup.alert({
+                    title:'Your result it ' + user['result'],
+                    okText:'Home'
+                });
+                //$location.path('/home/' + user['name']);
+            } else {
+                //var alertPopup = $ionicPopup.alert({
+                $ionicPopup.alert({
+                    title:'Wrong JSON',
+                    okText:'Try Again'
+                });
+                /*alertPopup.then(function(){
+                    reset(); 
+                }); */   
+            } 
+        };
+        
+        function actOnError (reason) {
+            $ionicPopup.alert({
+                title:'Check your connection',
+                okText:'Try Again'
+            });                  
+        };
+        
+        $scope.doRecord = function (record) {
+                record.id = sessionStorage.getItem("userID");
+                console.log(record);
+                UserService.recordHypertension(record).then(actOnSuccess, actOnError);
+            };
     })
 
     /**
@@ -255,7 +252,8 @@ $(document).ready(function () {
         function actOnSuccess (response) {
             if (response.data.length == 1) {
                 var user = response.data[0];
-
+                
+                sessionStorage.setItem("userID", user['id']); // Changes done by Tarun to store User ID (from mongoDB) session
                 $location.path('/home/' + user['name']);
             } else {
                 var alertPopup = $ionicPopup.alert({
@@ -270,7 +268,7 @@ $(document).ready(function () {
         
         function actOnError (reason) {
             var alertPopup = $ionicPopup.alert({
-                title:'Check your connection ' + JSON.stringify(reason),
+                title:'Check your connection ',
                 okText:'Try Again'
             });
             alertPopup.then(function(){

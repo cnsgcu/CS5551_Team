@@ -26,22 +26,37 @@ angular.module('app.services', [])
     }
   };
   
-  var restAPI = 'http://healthkeeper.mybluemix.net/api/users';
+  var restAPI = {
+   
+    'create':'http://healthkeeper.mybluemix.net/api/users',
+    'identify':'http://healthkeeper.mybluemix.net/api/users',
+    'hypertension':'http://healthkeeper.mybluemix.net/api/hypertension'   
+  }
 
   return {
     'create': function(userProfile) {
-      var registerAPI = restAPI + '/';
+      var API = restAPI['create'];
+      var registerAPI = API + '/';
       var request = RequestFactory.make('POST').requestTo(registerAPI).carryData(userProfile);
       
       return $http(request);
     },
     
     'identify': function(loginCredential) {
-      var identifyAPI = restAPI + '/identify';
+      var API = restAPI['identify'];
+      var identifyAPI = API + '/identify';
       var request = RequestFactory.make('POST').requestTo(identifyAPI).carryData(loginCredential);
       
       return $http(request);
-    }
+    },
+     'recordHypertension': function(hypertensionVaribales) {
+      console.log("In the hypertension functions signup");
+      var API = restAPI['hypertension'];
+      var hypertensionAPI = API + '/detect';
+      var request = RequestFactory.make('POST').requestTo(hypertensionAPI).carryData(hypertensionVaribales);
+      
+      return $http(request);
+     }
   };
 })
 .factory('Items',function(){
