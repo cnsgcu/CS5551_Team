@@ -30,7 +30,9 @@ angular.module('app.services', [])
    
     'create':'http://healthkeeper.mybluemix.net/api/users',
     'identify':'http://healthkeeper.mybluemix.net/api/users',
-    'hypertension':'http://healthkeeper.mybluemix.net/api/hypertension'   
+    'hypertension':'http://healthkeeper.mybluemix.net/api/hypertension' ,
+    'diabetes':'http://healthkeeper.mybluemix.net/api/diabetes'
+
   }
 
   return {
@@ -54,6 +56,15 @@ angular.module('app.services', [])
       var API = restAPI['hypertension'];
       var hypertensionAPI = API + '/detect';
       var request = RequestFactory.make('POST').requestTo(hypertensionAPI).carryData(hypertensionVaribales);
+      
+      return $http(request);
+     },
+      
+      'recordDiabetes': function(diabetesdiagnosis) {
+      console.log("In the diabetes functions signup");
+      var API = restAPI['diabetes'];
+      var diabetesAPI = API + '/detect';
+      var request = RequestFactory.make('POST').requestTo(diabetesAPI).carryData(diabetesdiagnosis);
       
       return $http(request);
      }
