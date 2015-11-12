@@ -25,16 +25,13 @@ angular.module('app.controllers', ['ngAnimate'])
                     title:'Your result it ' + user['result'],
                     okText:'Home'
                 });
-                //$location.path('/home/' + user['name']);
+                
             } else {
-                //var alertPopup = $ionicPopup.alert({
+                
                 $ionicPopup.alert({
                     title:'Wrong JSON',
                     okText:'Try Again'
-                });
-                /*alertPopup.then(function(){
-                    reset(); 
-                }); */   
+                });                 
             } 
         };
         
