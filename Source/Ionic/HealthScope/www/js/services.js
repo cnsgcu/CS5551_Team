@@ -44,4 +44,41 @@ angular.module('app.services', [])
     }
   };
 })
+
+.factory('OverweightDetectionService', function($http) {
+    var RequestFactory = {
+        make: function(reqMethod) {
+          this.tmp = {};
+          this.tmp.method = reqMethod;
+          
+          return this;
+        },
+        
+        requestTo: function(reqUrl) {
+          this.tmp.url = reqUrl
+          
+          return this;
+        },
+        
+        carryData: function(reqData) {
+          var request = this.tmp;
+          this.tmp = null;
+                
+          request.data = JSON.stringify(reqData);
+          request.contentType = 'application/json'
+    
+          return request;
+        }
+    };
+    var restAPI = 'http://healthkeeper.mybluemix.net/api/overweight';
+    
+    return {
+        'detect': function(weightForm) {
+          var overweightDetectAPI = restAPI + '/';
+          var request = RequestFactory.make('POST').requestTo(overweightDetectAPI).carryData(weightForm);
+          
+          return $http(request);
+        },
+    };
+})
 ;

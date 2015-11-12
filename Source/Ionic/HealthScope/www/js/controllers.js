@@ -228,4 +228,57 @@ angular.module('app.controllers', [])
      */
     .controller('HomeCtrl', function ($scope, $stateParams) {
         $scope.user_name = $stateParams.name;
+    })
+    
+    .controller('Overweight', function($scope, $ionicPopup, OverweightDetectionService) {
+        $scope.diagnosis = {
+            'height'   : '_ _ _',
+            'weightLbs': '_ _ _',
+            'bmi'      : '_ _ _',
+            'result'   : '_ _ _',
+            'gender'   : '_ _ _'
+        };
+
+        
+        function actOnSuccess (response) {
+            var data = response.data;
+            
+            $scope.diagnosis['weightLbs'] = data['weightLbs'] + " lbs";
+            $scope.diagnosis['bmi'] = parseFloat(data['bmi']).toFixed(2);
+            $scope.diagnosis['result'] = data['diagnosis'];
+            $scope.diagnosis['height'] = Math.floor(data['heightInch'] / 12) + "' " + parseFloat((data['heightInch'] % 12) / 12).toFixed(2).substring(2) + '"';
+            $scope.diagnosis['gender'] = data['gender'];
+        };
+        
+        function actOnError (response) {
+            console.log(response);
+        };
+        
+        $scope.showForm = function() {
+            $scope.form = {'gender': 'Male'};
+            
+            var overweightForm = $ionicPopup.show({
+                scope: $scope,
+                title: 'Medical Information',
+                templateUrl: 'templates/overweight_form.html',
+                buttons: [
+                    { text: 'Cancel' },
+                    {
+                        text: '<b>Detect</b>',
+                        type: 'button-positive',
+                        onTap: function(e) {
+                            if (!$scope.form) {
+                                e.preventDefault();
+                            } else {
+                                return $scope.form;
+                            }
+                        }
+                    }
+                ]
+            });
+            
+            overweightForm.then(function(form) {
+                OverweightDetectionService.detect(form).then(actOnSuccess, actOnError);
+            });
+        }
     });

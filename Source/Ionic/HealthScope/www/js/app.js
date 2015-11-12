@@ -44,6 +44,17 @@ angular.module('app', ['ionic', 'app.controllers', 'app.services', 'ngCordova'])
       url: '/diabetes',
       controller: 'DiaDet',
       templateUrl: 'templates/diabetes.html',
+    })
+    
+    .state('overweight', {
+      url: '/overweight',
+      controller: 'Overweight',
+      templateUrl: 'templates/overweight.html',
+    })
+    
+    .state('nutrition', {
+      url: '/overweight/nutrition',
+      templateUrl: 'templates/overweight_nutrition.html',
     });
 
   // If none of the above states are matched, use this as the fallback

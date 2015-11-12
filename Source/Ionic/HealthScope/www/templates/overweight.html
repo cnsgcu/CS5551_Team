@@ -1,0 +1,107 @@
+<ion-view view-title="Overweight">
+	<ion-side-menus>
+		<!-- Left menu -->
+		<ion-side-menu side="left">
+			<div class="bar bar-header bar-light">
+				<h1 class="title">Menu</h1>
+			</div>
+			
+			<ion-nav-view class="has-header">
+				<ion-list>
+					<ion-item ui-sref="overweight">
+						<i class="icon ion-ios-speedometer" style="font-size: 24px; padding-right: 16px;"></i>
+						Check up
+					</ion-item>
+					<ion-item ui-sref="nutrition">
+						<i class="icon ion-ios-heart" style="font-size: 24px; padding-right: 16px;"></i>
+						Nutrition
+					</ion-item>
+				</ion-list>
+			</ion-nav-view>
+		</ion-side-menu>
+
+		<ion-side-menu-content>
+			<ion-nav-bar class="bar-calm" align-title="center">
+				<ion-nav-buttons side="left">
+					<button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
+				</ion-nav-buttons>
+			</ion-nav-bar>
+
+			<ion-nav-view class="padding has-header"">
+				<div style="margin: 15px 0 15px 0;">
+					<div style="width: 200px;
+								height: 200px;
+								display: flex;
+								margin: 0 auto;
+								overflow: hidden;
+								text-align: center;
+								border-radius: 100px;
+								flex-direction: column;
+								justify-content: center;
+								border: 1px solid #F1F1F1;">
+						<div style="color: white;
+									height: 32px;
+									line-height: 32px;
+									background-color: #8FD4D1;">
+							{{diagnosis.gender}}
+						</div>
+		
+						<div style="display:flex;
+									height: 50px;
+									color: #8FD4D1;
+									padding: 5px 0px;">
+							<div style="width: 50%;">
+								<div>Weight</div>
+								<div>{{diagnosis.weightLbs}}</div>
+							</div>
+		
+							<div style="width: 50%;">
+								<div>Height</div>
+								<div>{{diagnosis.height}}</div>
+							</div>
+						</div>
+		
+						<div style="height: 36px;
+									font-size: 1.5em;
+									line-height: 36px;
+									color: #FAA69F;
+									background: #FFFAF7;">{{diagnosis.result}}</div>
+		
+						<div style="height: 50px;
+									color: #8FD4D1;
+									font-size: 1.7em;
+									line-height: 50px;">{{diagnosis.bmi}} bmi</div>
+						<div style="color: white;
+									height: 32px;
+									line-height: 32px;
+									background-color: #8FD4D1;">123 - 456</div>
+					</div>
+				</div>
+		
+				<div style="position: relative;
+							right: -88%;
+							background: #8FD4D1;
+							width: 40px;
+							height: 40px;
+							z-index: 100;
+							border-radius: 20px;
+							text-align: center;
+							color: white;
+							line-height: 40px;
+							font-size: 1.5em;" ng-click="showForm()">
+					<i class="icon ion-ios-speedometer" style="font-size: 24px;"></i>
+				</div>
+		
+				<ion-scroll zooming="true" direction="y" style="height: 50%;">
+					<div style="height: 200px;">
+						<ion-list>
+							<ion-item ng-repeat="item in [1,2,3,4]">
+								<i class="icon ion-happy"></i> {{item}}
+							</ion-item>
+						</ion-list>
+					</div>
+				</ion-scroll>
+			</ion-nav-view>
+		</ion-side-menu-content>
+	</ion-side-menus>
+</ion-view>
