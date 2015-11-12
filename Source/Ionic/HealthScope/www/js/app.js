@@ -52,7 +52,7 @@ angular.module('app', ['ionic', 'app.controllers', 'app.services', 'ngCordova'])
       templateUrl: 'templates/diabetes.html',
     })
   
-    .state('diaSuggestion', {
+    .state('diabetesSuggestion', {
       url: '/diabetesSuggestion',
       templateUrl:
       'templates/diabetesSuggestion.html',
