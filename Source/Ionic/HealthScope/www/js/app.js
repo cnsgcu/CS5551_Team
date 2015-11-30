@@ -33,6 +33,12 @@ angular.module('app', ['ionic', 'app.controllers', 'app.services', 'ngCordova'])
       controller: 'SliderController',
       templateUrl: 'templates/suggestHP.html',
     })
+	
+	 .state('videoHP', {
+      url: '/videoHP',
+      controller: 'SliderController',
+      templateUrl: 'templates/videoHP.html',
+    })
     
     .state('home', {
       url: '/home/:name',

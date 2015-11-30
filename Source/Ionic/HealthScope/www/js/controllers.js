@@ -3,12 +3,15 @@ angular.module('app.controllers', ['ngAnimate'])
     /**
      * Slider logic - Tarun
      */
-    .controller('SliderController', function($scope) {
+     .controller('SliderController', function($scope) {
         $scope.images=[{src:'img1.png',title:'Pic 1'},
-                       {src:'img2.jpg',title:'Pic 2'},
-                       {src:'img3.jpg',title:'Pic 3'},
+                       {src:'img2.png',title:'Pic 2'},
+                       {src:'img3.png',title:'Pic 3'},
                        {src:'img4.png',title:'Pic 4'},
-                       {src:'img5.png',title:'Pic 5'}]; 
+                       {src:'img5.png',title:'Pic 5'},
+                       {src:'img6.png',title:'Pic 6'},
+                       {src:'img7.png',title:'Pic 7'},
+                       {src:'img8.png',title:'Pic 8'}]; 
     })
  
     /**
