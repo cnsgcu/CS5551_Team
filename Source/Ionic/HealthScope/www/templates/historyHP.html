@@ -1,0 +1,29 @@
+<ion-view view-title="History">
+	<ion-nav-bar class="bar-stable">
+		<ion-nav-back-button></ion-nav-back-button>
+	</ion-nav-bar>
+
+	<ion-content>  
+    	<div class="card" ng-controller="DoughnutCtrl">
+           <div class="item item-divider">
+            	Previous diagnosis
+        	</div>       
+			<canvas id="doughnut" class="chart chart-doughnut" chart-data="data" chart-labels="labels"></canvas> 
+	   	    Legend : [Diagnosis Type]|[Date][SBP + DBP]
+    	</div>
+		<div class="card" ng-controller="BarCtrl"> 
+        	<div class="item item-divider">
+            	Previous SBP/DBP Analysis
+        	</div>       
+	        <canvas id="bar" class="chart chart-bar" chart-data="data" chart-labels="labels"></canvas>
+						
+        		<div class="input-color-HT">
+            		<input type="text" value="SBP" /><div class="color-box" style="background-color: #FF0000;"></div>            		
+        		</div>    		
+        		<div class="input-color-HT">
+            		<input type="text" value="DBP"/><div class="color-box" style="background-color: #00FA9A;"></div>
+        		</div>
+    		
+    	</div>
+	</ion-content>
+</ion-view>
