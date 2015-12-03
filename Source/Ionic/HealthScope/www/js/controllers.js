@@ -13,6 +13,168 @@ angular.module('app.controllers', ['ngAnimate'])
                        {src:'img7.png',title:'Pic 7'},
                        {src:'img8.png',title:'Pic 8'}]; 
     })
+    
+	/**
+     * Doughnut logic - Tarun
+     */
+    .controller("DoughnutCtrl", function ($scope, UserService, $ionicPopup, $location) {
+   
+        function actOnSuccess (response) {
+            
+            if (response.data) {
+                
+                var jsonData = response.data;
+                                                
+                if (jsonData.count == 3 || jsonData.count > 3){
+                    var record1 = jsonData.records[0].result + " ("+ convertDate(jsonData.records[0].detectedDate) + ")";
+                    var record2 = jsonData.records[1].result + " ("+ convertDate(jsonData.records[1].detectedDate) + ")";
+                    var record3 = jsonData.records[2].result + " ("+ convertDate(jsonData.records[2].detectedDate) + ")";
+                    $scope.labels = [record1, record2, record3]
+                    $scope.data = [parseInt(jsonData.records[0].sbp)+parseInt(jsonData.records[0].dbp), 
+                                   parseInt(jsonData.records[1].sbp)+parseInt(jsonData.records[1].dbp),
+                                   parseInt(jsonData.records[2].sbp)+parseInt(jsonData.records[2].dbp)]
+                }
+                else if (jsonData.count == 2){
+                    $scope.labels = [jsonData.records[0].result, jsonData.records[1].result];
+                    $scope.data = [parseInt(jsonData.records[0].sbp)+parseInt(jsonData.records[0].dbp), 
+                                   parseInt(jsonData.records[1].sbp)+parseInt(jsonData.records[1].dbp)]
+                }
+                else if (jsonData.count == 1){
+                    $scope.labels = [jsonData.records[0].result];
+                    $scope.data = [parseInt(jsonData.records[0].sbp)+parseInt(jsonData.records[0].dbp)]
+                }
+                              
+            } else {
+                $ionicPopup.alert({
+                    title:'No history for you',
+                    okText:'Record data'
+                });
+                $location.path('/hypertension');
+            } 
+        };
+        
+        function actOnError (reason) {
+            
+            $ionicPopup.alert({
+                    title:'Connection Error',
+                    okText:'Try Again'
+                });
+            $location.path('/hypertension');             
+        };
+        
+        function convertDate (stringDate){
+            var month = stringDate.substring(4, 7);
+            if (month == 'Dec') month = '12';
+            if (month == 'Nov') month = '11';
+            if (month == 'Oct') month = '10';
+            if (month == 'Sep') month = '09';
+            if (month == 'Aug') month = '08';
+            if (month == 'Jul') month = '07';
+            if (month == 'Jun') month = '06';
+            if (month == 'May') month = '05';
+            if (month == 'Apr') month = '04';
+            if (month == 'Mar') month = '03';
+            if (month == 'Feb') month = '02';
+            if (month == 'Jan') month = '01';
+            return month+"/"+stringDate.substring(8, 10);
+        }
+   
+		var id = sessionStorage.getItem("userID");
+        UserService.historyHypertension().then(actOnSuccess, actOnError);        
+    })
+    
+	/**
+     * Bar chart logic - Tarun
+     */
+    .controller("BarCtrl", function ($scope, UserService, $ionicPopup, $location) {
+        
+        UserService.historyHypertension().then(actOnSuccess, actOnError);
+        
+        function actOnSuccess (response) {
+            
+            if (response.data) {
+                
+                var jsonData = response.data;
+                                
+                if (jsonData.count == 3 || jsonData.count > 3){
+                    
+                     var label1 = convertDate(jsonData.records[0].detectedDate);
+                     var label2 = convertDate(jsonData.records[1].detectedDate);
+                     var label3 = convertDate(jsonData.records[2].detectedDate);
+                     $scope.labels = [label1, label2, label3];
+                     $scope.series = ['SBP', 'DBP'];
+
+                     $scope.data = [
+                                    [parseInt(jsonData.records[0].sbp), parseInt(jsonData.records[1].sbp), parseInt(jsonData.records[2].sbp)],
+                                    [parseInt(jsonData.records[0].dbp), parseInt(jsonData.records[1].dbp), parseInt(jsonData.records[2].dbp)]
+                                   ];                    
+                }
+                else if (jsonData.count == 2){
+                    
+                    var label11 = convertDate(jsonData.records[0].detectedDate);
+                    var label22 = convertDate(jsonData.records[1].detectedDate);
+                    $scope.labels = [label11, label22];
+                    $scope.series = ['SBP', 'DBP'];
+
+                    $scope.data = [
+                                    [parseInt(jsonData.records[0].sbp), parseInt(jsonData.records[1].sbp)],
+                                    [parseInt(jsonData.records[0].dbp), parseInt(jsonData.records[1].dbp)]
+                                   ];                      
+                }
+                else if (jsonData.count == 1){
+                    
+                    var label111 = convertDate(jsonData.records[0].detectedDate);
+                    $scope.labels = [label111];
+                    $scope.series = ['SBP', 'DBP'];
+
+                    $scope.data = [[parseInt(jsonData.records[0].sbp)], [parseInt(jsonData.records[0].dbp)]];  
+                }      
+            }
+            else {
+                
+                $ionicPopup.alert({
+                    title:'No history for you',
+                    okText:'Record data'
+                });
+                $location.path('/hypertension');    
+            }
+        };
+        
+        function actOnError (reason) {
+            
+            $ionicPopup.alert({
+                    title:'Connection Error',
+                    okText:'Try Again'
+                });
+            $location.path('/hypertension');             
+        };
+        
+         function convertDate (stringDate){
+            var year = stringDate.substring(26, 28);
+            var month = stringDate.substring(4, 7);
+            var day = stringDate.substring(8, 10);
+            if (month == 'Dec') month = '12';
+            if (month == 'Nov') month = '11';
+            if (month == 'Oct') month = '10';
+            if (month == 'Sep') month = '09';
+            if (month == 'Aug') month = '08';
+            if (month == 'Jul') month = '07';
+            if (month == 'Jun') month = '06';
+            if (month == 'May') month = '05';
+            if (month == 'Apr') month = '04';
+            if (month == 'Mar') month = '03';
+            if (month == 'Feb') month = '02';
+            if (month == 'Jan') month = '01';
+            return month + "/" + day + "/" + year;
+        };
+    })
+    
+    /**
+     * Hypertension History - Tarun
+     */
+    .controller('HypertensionHistoryController', function($scope) {
+        
+    })
  
     /**
      * Hypertension - Tarun
@@ -25,12 +187,13 @@ angular.module('app.controllers', ['ngAnimate'])
                 var user = response.data;
                 console.log ("Response from the server : "+ JSON.stringify(user));
                 $ionicPopup.alert({
-                    title:'Your result it ' + user['result'],
+                    title:'Your result is ' + user['result'],
                     okText:'Home'
                 });
                 
             } else {
-                
+                $scope.sbp = "";
+                $scope.dbp = "";
                 $ionicPopup.alert({
                     title:'Wrong JSON',
                     okText:'Try Again'
@@ -39,6 +202,8 @@ angular.module('app.controllers', ['ngAnimate'])
         };
         
         function actOnError (reason) {
+            $scope.sbp = "";
+            $scope.dbp = "";
             $ionicPopup.alert({
                 title:'Check your connection',
                 okText:'Try Again'
@@ -46,9 +211,46 @@ angular.module('app.controllers', ['ngAnimate'])
         };
         
         $scope.doRecord = function (record) {
-                record.id = sessionStorage.getItem("userID");
-                console.log(record);
-                UserService.recordHypertension(record).then(actOnSuccess, actOnError);
+                if (record == null) {
+                    $ionicPopup.alert({
+                        title: 'Please enter data',
+                        okText: 'Try Again'
+                    });                      
+                }
+             
+                else {
+                    
+                    if (typeof record.sbp === 'undefined' || record.sbp == "" || record.sbp == null){
+                        console.log("SBP is empty");
+                        var alertPopupSBP = $ionicPopup.alert({
+                                        title: 'Please enter SBP',
+                                        okText: 'Try Again'
+                                     });
+                        alertPopupSBP.then(function() {            
+                             $scope.sbp = "";
+                             //$scope.dbp = "";
+                             record.sbp = "";
+                             //record.dbp = "";
+                        });     
+                    }
+                    else if (typeof record.dbp === 'undefined' || record.dbp == "" || record.dbp == null){
+                        console.log("DBP is empty");
+                        var alertPopupDBP = $ionicPopup.alert({
+                                        title: 'Please enter DBP',
+                                        okText: 'Try Again'
+                                     });
+                        alertPopupDBP.then(function() {            
+                             //$scope.sbp = "";
+                             $scope.dbp = "";
+                             //record.sbp = "";
+                             record.dbp = "";
+                        });     
+                    }
+                    else {
+                        record.id = sessionStorage.getItem("userID");
+                        UserService.recordHypertension(record).then(actOnSuccess, actOnError);
+                    }
+                }
             };
     })
 

@@ -50,11 +50,20 @@ angular.module('app.services', [])
       
       return $http(request);
     },
-     'recordHypertension': function(hypertensionVaribales) {
-      console.log("In the hypertension functions signup");
+     'recordHypertension': function(hypertensionVaribales) {   
+      
       var API = restAPI['hypertension'];
       var hypertensionAPI = API + '/detect';
       var request = RequestFactory.make('POST').requestTo(hypertensionAPI).carryData(hypertensionVaribales);
+      
+      return $http(request);
+     },
+     
+     'historyHypertension': function(historyId) {   
+      console.log("Inside hypertension history function.. about to call the REST API");
+      var API = restAPI['hypertension'];
+      var hypertensionAPI = API + '/history';
+      var request = RequestFactory.make('GET').requestTo(hypertensionAPI).carryData(historyId);
       
       return $http(request);
      },
