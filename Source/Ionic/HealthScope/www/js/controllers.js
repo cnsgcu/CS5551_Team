@@ -14,6 +14,15 @@ angular.module('app.controllers', ['ngAnimate'])
                        {src:'img8.png',title:'Pic 8'}]; 
     })
     
+    
+    .controller('VideoController', function($scope, $location) {
+        
+         $scope.showVideo = function(){
+            console.log("Here I am being called");
+             $location.url("/videoHP");
+         } 
+    })
+    
 	/**
      * Doughnut logic - Tarun
      */
@@ -80,7 +89,8 @@ angular.module('app.controllers', ['ngAnimate'])
         }
    
 		var id = sessionStorage.getItem("userID");
-        UserService.historyHypertension().then(actOnSuccess, actOnError);        
+        //var jsonID = { "usrId": id};
+        UserService.historyHypertension(id).then(actOnSuccess, actOnError);        
     })
     
 	/**
@@ -88,7 +98,9 @@ angular.module('app.controllers', ['ngAnimate'])
      */
     .controller("BarCtrl", function ($scope, UserService, $ionicPopup, $location) {
         
-        UserService.historyHypertension().then(actOnSuccess, actOnError);
+        var id = sessionStorage.getItem("userID");
+        //var jsonID = { "usrId": id};
+        UserService.historyHypertension(id).then(actOnSuccess, actOnError);
         
         function actOnSuccess (response) {
             

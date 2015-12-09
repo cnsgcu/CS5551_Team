@@ -5,7 +5,7 @@
 // 'app.services' is found in services.js
 // 'app.controllers' is found in controllers.js
 
-angular.module('app', ['ionic', 'app.controllers', 'app.services', 'ngCordova','chart.js'])
+angular.module('app', ['ionic', 'app.controllers', 'app.services', 'ngCordova', 'chart.js', 'ui.router'])
 
 .config(function($stateProvider, $urlRouterProvider, $compileProvider) {
   // Ionic uses AngularUI Router which uses the concept of states
@@ -37,7 +37,7 @@ angular.module('app', ['ionic', 'app.controllers', 'app.services', 'ngCordova','
 	
 	 .state('videoHP', {
       url: '/videoHP',
-      controller: 'SliderController',
+      controller: 'VideoController',
       templateUrl: 'templates/videoHP.html',
     })
     

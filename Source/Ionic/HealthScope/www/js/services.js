@@ -62,7 +62,7 @@ angular.module('app.services', [])
      'historyHypertension': function(historyId) {   
       console.log("Inside hypertension history function.. about to call the REST API");
       var API = restAPI['hypertension'];
-      var hypertensionAPI = API + '/history';
+      var hypertensionAPI = API + '/history/'+historyId;
       var request = RequestFactory.make('GET').requestTo(hypertensionAPI).carryData(historyId);
       
       return $http(request);
