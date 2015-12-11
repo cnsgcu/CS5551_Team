@@ -38,7 +38,7 @@ angular.module('app', ['ionic', 'app.controllers', 'app.services', 'ngCordova', 
 	 .state('videoHP', {
       url: '/videoHP',
       controller: 'VideoController',
-      templateUrl: 'templates/videoHP.html',
+      templateUrl: 'templates/movieHP.html',
     })
     
     .state('historyHP', {
