@@ -1,4 +1,4 @@
-<ion-view view-title="Overweight">
+<ion-view view-title="Weight Checkup">
     <link href="css/overweight-style.css" rel="stylesheet">
 
     <ion-nav-view class="has-header">
@@ -7,7 +7,7 @@
                     height: 250px;
                     border: 1px solid #ddd;
                     border-top: none;
-                    box-shadow: 0 0 8px 2px rgba(186,186,186,0.4)">
+                    box-shadow: 0 0 8px 2px rgba(186, 186, 186, 0.4)">
             <div style="width: 200px;
                         height: 200px;
                         display: flex;
@@ -98,8 +98,8 @@
                             <label class="item item-input item-select">
                                 <div class="input-label">&nbsp</div>
 
-                                <select ng-model="body_measurement.gender" style="left: 0; direction: ltr; color: rgb(170,170,170);">
-                                    <option value="">Select gender</option>
+                                <select ng-model="body_measurement.gender" style="left: 0; direction: ltr;" ng-class="body_measurement.gender ? '' : 'gender-selector'">
+                                    <option value="" disabled>Select gender</option>
                                     <option ng-repeat="gender in ['Male', 'Female']">{{gender}}</option>
                                 </select>
                             </label>
@@ -134,7 +134,8 @@
                                min-height: inherit;
                                position: absolute;
                                right: 20px;
-                               box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);" class="button" ng-click="detect()">
+                               box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);"
+                        class="button" ng-click="detect()">
                     CHECK UP
                 </button>
             </div>
@@ -147,12 +148,12 @@
                         </div>
                     </div>
 
-                    <div style="flex-grow: 2; padding: 16px; color: #444; border: 1px solid #ddd; border-top: none; border-left: none; border-right: none;">
+                    <div style="flex-grow: 2; padding: 16px; color: #444; border: 1px none #ddd; border-bottom-style: solid;">
                         <div style="color: rgba(0, 0, 0, 0.87); font-size: 14px; font-weight: bold;">
                             Daily calories
                         </div>
                         <div style="color: rgba(0, 0, 0, 0.38); font-size: 12px; font-weight: bold;">
-                            1,234 cal
+                            {{diagnosis.healthyCalories}}
                         </div>
                     </div>
                 </li>
@@ -181,12 +182,12 @@
                         </div>
                     </div>
 
-                    <div style="flex-grow: 2; padding: 16px; color: #444; border: 1px solid #ddd; border-top: none; border-left: none; border-right: none;">
+                    <div style="flex-grow: 2; padding: 16px; color: #444; border: 1px none #ddd; border-bottom-style: solid;">
                         <div style="color: rgba(0, 0, 0, 0.87); font-size: 14px; font-weight: bold;">
                             Next checkup
                         </div>
                         <div style="color: rgba(0, 0, 0, 0.38); font-size: 12px; font-weight: bold;">
-                            August 23, 2015
+                            {{diagnosis.checkupDate}}
                         </div>
                     </div>
                 </li>

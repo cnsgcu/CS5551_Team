@@ -15,6 +15,10 @@
     line-height: 40px;
 }
 
+.gender-selector {
+    color: rgb(170,170,170) !important;
+}
+
 .overweight-form .card {
     margin: 10px 10px;
 }

@@ -200,7 +200,7 @@ angular.module('app', ['ionic', 'app.controllers', 'app.services', 'ngCordova', 
 
             xScale = d3.time.scale()
                 .domain([dataPoints[0].x, new Date(dataPoints[dataPoints.length - 1].x.getTime() + 302400000)])
-                .range([30, chartWidth - 5]);
+                .range([30, chartWidth]);
 
             yScale = d3.scale.linear()
                 .domain([0, maxY + (maxY - minY) / dataPoints.length])

@@ -694,12 +694,14 @@ angular.module('app.controllers', ['ngAnimate'])
     .controller('OverweightDetectionCtrl', function ($scope, $ionicPopup, OverweightDetectionService) {
         function reset() {
             $scope.diagnosis = {
-                height   : '_ _ _',
-                weightLbs: '_ _ _',
-                bmi      : '_ _ _ _ _',
-                result   : '_ _ _',
-                gender   : '_ _ _',
-                healthyWeight: '_ _ _'
+                height         : '_ _ _',
+                weightLbs      : '_ _ _',
+                bmi            : '_ _ _ _ _',
+                result         : '_ _ _',
+                gender         : '_ _ _',
+                healthyWeight  : '_ _ _',
+                healthyCalories: '',
+                checkupDate    : ''
             };
 
             $scope.form = {
@@ -720,6 +722,8 @@ angular.module('app.controllers', ['ngAnimate'])
             $scope.diagnosis['bmi'] = parseFloat(data['bmi']).toFixed(2) + " BMI";
             $scope.diagnosis['height'] = Math.floor(data['heightInch'] / 12) + "' " + data['heightInch'] % 12 + '"';
             $scope.diagnosis['healthyWeight'] = data['healthyWeightLowerLbs'] + '-' + data['healthyWeightUpperLbs'] + ' .lbs';
+            $scope.diagnosis['healthyCalories'] = data['healthyCaloriesLower'] + ' - ' + data['healthyCaloriesUpper'] + ' .cal';
+            $scope.diagnosis['checkupDate'] = new Date(new Date().getTime() + 7 * 24 * 60 * 60 * 1000).toDateString().split(' ').slice(1, 4).join(' ');
 
             $scope.form.hidden = true;
         }
@@ -727,6 +731,10 @@ angular.module('app.controllers', ['ngAnimate'])
         function actOnError(response) {
             console.log(response);
         }
+
+        $scope.toggleSelectStyle = function() {
+            console.log($scope.body_measurement.gender);
+        };
 
         $scope.showForm = function () {
             reset();
