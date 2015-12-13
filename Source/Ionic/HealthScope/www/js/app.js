@@ -41,6 +41,12 @@ angular.module('app', ['ionic', 'app.controllers', 'app.services', 'ngCordova', 
                 templateUrl: 'templates/movieHP.html',
             })
 
+            .state('historyHP', {
+                url: '/historyHP',
+                controller: 'HypertensionHistoryController',
+                templateUrl: 'templates/historyHP.html',
+            })
+
             .state('home', {
                 url: '/home/:name',
                 controller: 'HomeCtrl',
