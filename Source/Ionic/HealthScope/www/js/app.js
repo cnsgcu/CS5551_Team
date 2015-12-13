@@ -58,13 +58,42 @@ angular.module('app', ['ionic', 'app.controllers', 'app.services', 'ngCordova', 
       controller: 'Hypertension',
       templateUrl: 'templates/hypertension.html',
     })
-    
+      
     .state('diabetes', {
-      url: '/diabetes',
-      controller: 'DiaDet',
-      templateUrl: 'templates/diabetes.html',
-    })
-    
+      url: "/diabetes",
+      abstract: true,
+      templateUrl: "templates/diabetes_menu.html"
+  })
+  
+    .state('diabetes.detection', {
+      url: '/detection',
+      views: {
+          menuContent: {
+              controller: 'DiaDet',
+              templateUrl: 'templates/diabetes_detection.html'
+          }
+      }
+  })
+      
+    .state('diabetes.suggestion', {
+      url: '/suggestion',
+      views: {
+          menuContent: {
+              controller: 'DiaSug',
+              templateUrl: 'templates/diabetes_suggestion.html'
+          }
+      }
+  })
+    .state('diabetes.history', {
+      url: '/history',
+      views: {
+          menuContent: {
+              controller: 'DiaHistory',
+              templateUrl: 'templates/diabetes_history.html'
+          }
+      }
+  })
+  
     .state('overweight', {
       url: '/overweight',
       controller: 'Overweight',
@@ -74,13 +103,6 @@ angular.module('app', ['ionic', 'app.controllers', 'app.services', 'ngCordova', 
     .state('nutrition', {
       url: '/overweight/nutrition',
       templateUrl: 'templates/overweight_nutrition.html',
-    })
-    
-    .state('diabetesSuggestion', {
-      url: '/diabetesSuggestion',
-      templateUrl:
-      'templates/diabetesSuggestion.html',
-      controller:'DiaSug'
     });
 
   // If none of the above states are matched, use this as the fallback

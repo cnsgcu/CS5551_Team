@@ -67,16 +67,28 @@ angular.module('app.services', [])
       
       return $http(request);
      },
+            
       
-      'recordDiabetes': function(diabetesdiagnosis) {
-      console.log("In the diabetes functions signup");
+      'diabetesHistory': function(data) {
+      console.log("In the diabetes history");
       var API = restAPI['diabetes'];
-      var diabetesAPI = API + '/detect';
-      var request = RequestFactory.make('POST').requestTo(diabetesAPI).carryData(diabetesdiagnosis);
-      
+      var diabetesHis = API + '/history';
+      var request = RequestFactory.make('POST').requestTo(diabetesHis).carryData(data);
+      console.log(data);
       return $http(request);
-     }
+     }, 
   };
+})
+
+.factory('DiabetesDetectionService', function($http) {
+    return {
+        'detect': function(form) {
+          var diabetesDetectAPI = restAPI['diabetes'] + '/detect';
+          var request = RequestFactory.make('POST').requestTo(diabetesDetectAPI).carryData(form);
+          
+          return $http(request);
+        },
+    };
 })
 
 .factory('OverweightDetectionService', function($http) {

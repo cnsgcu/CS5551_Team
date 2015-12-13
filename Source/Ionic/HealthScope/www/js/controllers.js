@@ -269,42 +269,206 @@ angular.module('app.controllers', ['ngAnimate'])
     /**
      * Diabetes - Ting
      */
-   .controller('DiaDet', function ($scope, UserService, $location, $ionicPopup, $cordovaVibration) {
-            
-        function actOnSuccess (response) {
-            
+    .controller('DiaDet', function ($scope, $ionicPopup, DiabetesDetectionService) {
+
+        $scope.diagnosis = {
+            'sugar1': '_ _ _',
+            'sugar2': '_ _ _',
+            'result': '_ _ _',
+        };
+
+
+        function actOnSuccess(response) {
+            var data = response.data;
+            console.log(data);
+
+            $scope.diagnosis['sugar1'] = data['sugar1'];
+            $scope.diagnosis['sugar2'] = data['sugar2'];
+            $scope.diagnosis['result'] = data['result'];
+        };
+
+        function actOnError(response) {
+            console.log(response);
+        };
+
+        $scope.showForm = function () {
+            $scope.form = {};
+
+            var diabetesForm = $ionicPopup.show({
+                scope: $scope,
+                title: 'Medical Information',
+                templateUrl: 'templates/diabetes_form.html',
+                buttons: [
+                    {text: 'Cancel'},
+                    {
+                        text: '<b>Detect</b>',
+                        type: 'button-positive',
+                        onTap: function (e) {
+                            if (!$scope.form) {
+                                e.preventDefault();
+                            } else {
+                                return $scope.form;
+                            }
+                        }
+                    }
+                ]
+            });
+
+            diabetesForm.then(function (form) {
+                console.log(sessionStorage.getItem("userID"));
+                form.id = sessionStorage.getItem("userID");
+                DiabetesDetectionService.detect(form).then(actOnSuccess, actOnError);
+            });
+        }
+    })
+
+    .controller('DiaHistory', function ($scope, UserService, $location, $ionicPopup, $cordovaVibration) {
+
+        function actOnSuccess(response) {
+
             if (response.data) {
-                var user = response.data;
-                console.log ("Response from the server : "+ JSON.stringify(user));
+                var historyData = response.data;
+                console.log(historyData);
+
+                var sugar1Data = [], sugar2Data = [], resultsData = [], sugar1, sugar2, results;
+                var sugar1Value, sugar2Value, result, timeStamp, timeDate;
+                for (var i = 0; i < historyData.count; i++) {
+                    sugar1Value = parseInt(historyData.records[i].sugar1);
+                    sugar2Value = parseInt(historyData.records[i].sugar2);
+                    timeDate = new Date(historyData.records[i].detectedDate);
+                    timeStamp = timeDate.getTime();
+                    if (historyData.records[i].result == "Normal") result = 1;
+                    else if (historyData.records[i].result == "Impaired fasting glycaemia glucose") result = 2;
+                    else if (historyData.records[i].result == "Impaired glucose tolerance") result = 3;
+                    else if (historyData.records[i].result == "Diabetes mellitus") result = 4;
+                    sugar1 = [timeStamp, sugar1Value];
+                    sugar2 = [timeStamp, sugar2Value];
+                    results = [timeStamp, result];
+                    sugar1Data.push(sugar1);
+                    sugar2Data.push(sugar2);
+                    resultsData.push(results);
+
+                }
+                History(sugar1Data, sugar2Data, resultsData);
+            }
+            else {
                 $ionicPopup.alert({
-                    title:'Your result is ' + user['result'],
-                    okText:'Home'
+                    title: 'Wrong date',
+                    okText: 'Try Again'
                 });
-                //$location.path('/home/' + user['name']);
-            } else {
-                //var alertPopup = $ionicPopup.alert({
-                $ionicPopup.alert({
-                    title:'Wrong JSON',
-                    okText:'Try Again'
-                });
-                /*alertPopup.then(function(){
-                    reset(); 
-                }); */   
-            } 
-        };
-        
-        function actOnError (reason) {
+            }
+
+        }
+
+        function actOnError(reason) {
             $ionicPopup.alert({
-                title:'Check your connection',
-                okText:'Try Again'
-            });                  
+                title: 'Check your connection',
+                okText: 'Try Again'
+            });
+        }
+
+        $scope.doDiaHistory = function (record) {
+            record.usrId = sessionStorage.getItem("userID");
+            console.log(record);
+            UserService.diabetesHistory(record).then(actOnSuccess, actOnError);
         };
-        
-        $scope.doRecord = function (record) {
-                record.id = sessionStorage.getItem("userID");
-                console.log(record);
-                UserService.recordDiabetes(record).then(actOnSuccess, actOnError);
+
+
+        function History(sugar1, sugar2, result) {
+
+            Highcharts.theme = {
+                colors: ["#2b908f", "#90ee7e", "#f45b5b", "#7798BF", "#aaeeee", "#ff0066", "#eeaaee",
+                    "#55BF3B", "#DF5353", "#7798BF", "#aaeeee"]
             };
+
+            $('#container').highcharts({
+                chart: {
+                    alignTicks: false
+                },
+
+                rangeSelector: {
+                    selected: 1
+                },
+
+                title: {
+                    text: ''
+                },
+
+                xAxis: {
+                    type: 'datetime',
+                },
+
+                yAxis: [{ // Primary yAxis
+                    labels: {
+                        format: '{value}mg/dl',
+                        style: {
+                            color: "#2b908f"
+                        }
+                    },
+
+                    title: {
+                        text: 'Sugar level',
+                        style: {
+                            color: Highcharts.getOptions().colors[2]
+                        }
+                    },
+                    opposite: true
+
+                },
+
+                    {
+                        gridLineWidth: 0,
+                        title: {
+                            text: 'Detection level',
+                            style: {
+                                color: "#f45b5b"
+                            }
+                        },
+                        labels: {
+                            format: '{value}',
+                            style: {
+                                color: "#f45b5b"
+                            }
+                        },
+                        opposite: false
+                    },
+                ],
+
+                series: [{
+                    type: 'column',
+                    name: 'Sugar1',
+                    data: sugar1,
+                    yAxis: 0,
+                    color: "#aaeeee",
+                    tooltip: {
+                        valueSuffix: 'mg/dl'
+                    }
+
+                }, {
+                    type: 'column',
+                    name: 'Sugar2',
+                    data: sugar2,
+                    yAxis: 0,
+                    color: "#90ee7e",
+                    tooltip: {
+                        valueSuffix: 'mg/dl'
+                    }
+
+                }, {
+                    type: 'spline',
+                    name: 'Result level',
+                    data: result,
+                    yAxis: 1,
+                    color: "#f45b5b"
+
+                }
+                ]
+
+            });
+            Highcharts.setOptions(Highcharts.theme);
+
+        }
+
     })
 
 .controller('DiaSug',function($scope, Items){
