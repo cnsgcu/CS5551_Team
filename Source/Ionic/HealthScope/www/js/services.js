@@ -69,13 +69,21 @@ angular.module('app.services', [])
                 return $http(request);
             },
 
-            'recordDiabetes': function (diabetesdiagnosis) {
-                console.log("In the diabetes functions signup");
+            'diabetesHistory': function(data) {
+                console.log("In the diabetes history");
                 var API = restAPI['diabetes'];
-                var diabetesAPI = API + '/detect';
-                var request = RequestFactory.make('POST').requestTo(diabetesAPI).carryData(diabetesdiagnosis);
-
+                var diabetesHis = API + '/history';
+                var request = RequestFactory.make('POST').requestTo(diabetesHis).carryData(data);
+                console.log(data);
                 return $http(request);
+            },     
+                  
+            'diabetesTopHistory': function (id){
+                  console.log("In the top 3 history");
+                  var API = restAPI['diabetes'];
+                  var diabetesTopHis = API + '/history/top/'+id;
+                  var request = RequestFactory.make('GET').requestTo(diabetesTopHis).carryData();
+                  return $http(request);
             }
         };
     })

@@ -266,7 +266,7 @@ angular.module('app.controllers', ['ngAnimate'])
     /**
      * Diabetes - Ting
      */
-    .controller('DiaDet', function ($scope, $ionicPopup, DiabetesDetectionService) {
+    .controller('DiaDet', function ($scope, $ionicPopup, DiabetesDetectionService, UserService) {
 
         $scope.diagnosis = {
             'sugar1': '_ _ _',
@@ -274,7 +274,25 @@ angular.module('app.controllers', ['ngAnimate'])
             'result': '_ _ _',
         };
 
-
+         $scope.top = [{
+            'sugar1':'',
+            'sugar2':'',
+            'result':'',
+            'detectedDate':'',
+        },
+            {
+            'sugar1':'',
+            'sugar2':'',
+            'result':'',
+            'detectedDate':'',
+        },
+                     {
+            'sugar1':'',
+            'sugar2':'',
+            'result':'',
+            'detectedDate':'',
+        }];
+    
         function actOnSuccess(response) {
             var data = response.data;
             console.log(data);
@@ -284,6 +302,21 @@ angular.module('app.controllers', ['ngAnimate'])
             $scope.diagnosis['result'] = data['result'];
         };
 
+        function actSuccess(response) {
+            var data = response.data;
+            console.log(data);
+            for(var i = 0; i<data.count; i++){
+                var record = data.records[i];
+                
+                $scope.top[i].sugar1 = record.sugar1;
+                console.log(record.sugar1);
+                $scope.top[i].sugar2 = record.sugar2;
+                $scope.top[i].result = record.result;
+                $scope.top[i].detectedDate = record.detectedDate;
+            }
+            console.log($scope.top);
+
+        };
         function actOnError(response) {
             console.log(response);
         };
@@ -304,19 +337,24 @@ angular.module('app.controllers', ['ngAnimate'])
                             if (!$scope.form) {
                                 e.preventDefault();
                             } else {
+                                diabetesForm.then(function (form) {
+                                console.log(sessionStorage.getItem("userID"));
+                                form.id = sessionStorage.getItem("userID");
+                                DiabetesDetectionService.detect(form).then(actOnSuccess, actOnError);
+                                });
                                 return $scope.form;
                             }
                         }
                     }
                 ]
             });
-
-            diabetesForm.then(function (form) {
-                console.log(sessionStorage.getItem("userID"));
-                form.id = sessionStorage.getItem("userID");
-                DiabetesDetectionService.detect(form).then(actOnSuccess, actOnError);
-            });
         }
+        
+                
+//        show the lasted three records
+    var id = sessionStorage.getItem("userID");
+    UserService.diabetesTopHistory(id).then(actSuccess, actOnError); 
+    
     })
 
     .controller('DiaSug', function ($scope, Items) {
@@ -387,42 +425,9 @@ angular.module('app.controllers', ['ngAnimate'])
 
         function actOnSuccess(response) {
 
-            if (response.data) {
+            if (response.data && response.data.count != 0) {
                 var historyData = response.data;
                 console.log(historyData);
-
-
-//var data = {
-//       count: 4,
-//       // sorted by date
-//       records: [
-//            {
-//                "sugar1": "12",
-//                "sugar2": "34",
-//                "date": "Fri Nov 19 19:54:23 UTC 2015",
-//                "result": "Normal"
-//            },
-//           {
-//                "sugar1": "124",
-//                "sugar2": "84",
-//                "date": "Fri Nov 20 19:54:23 UTC 2015",
-//                "result": "Impaired fasting glycaemia glucose"
-//            },
-//            {
-//                "sugar1": "56",
-//                "sugar2": "78",
-//                "date": "Fri Nov 21 19:54:23 UTC 2015",
-//                "result": "Normal"
-//            },
-//           {
-//                "sugar1": "140",
-//                "sugar2": "140",
-//                "date": "Fri Nov 23 19:54:23 UTC 2015",
-//                "result": "Diabetes mellitus"
-//            }
-//
-//       ]
-//};
 
                 var sugar1Data = [], sugar2Data = [], resultsData = [], sugar1, sugar2, results;
                 var sugar1Value, sugar2Value, result, timeStamp, timeDate;
@@ -444,10 +449,12 @@ angular.module('app.controllers', ['ngAnimate'])
 
                 }
                 History(sugar1Data, sugar2Data, resultsData);
+                $("#result").html("Result Level 1: Normal; Result Level 2: Impaired fasting glycaemia glucose; Result Level 3: Impaired glucose tolerance; Result Level 4: Diabetes mellitus");
             }
+ 
             else {
                 $ionicPopup.alert({
-                    title: 'Wrong date',
+                    title: 'Do record during selected period',
                     okText: 'Try Again'
                 });
             }
@@ -490,20 +497,23 @@ angular.module('app.controllers', ['ngAnimate'])
 
                 xAxis: {
                     type: 'datetime',
+                    fontSize: "13px"
                 },
 
                 yAxis: [{ // Primary yAxis
                     labels: {
-                        format: '{value}mg/dl',
+                        format: '{value}',
                         style: {
-                            color: "#2b908f"
+                            color: "#2b908f",
+                            fontSize: "13px"
                         }
                     },
 
                     title: {
-                        text: 'Sugar level',
+                        text: 'Sugar level(mg/dl)',
                         style: {
-                            color: Highcharts.getOptions().colors[2]
+                            color:  "#2b908f",
+                            fontSize: "13px"
                         }
                     },
                     opposite: true
@@ -515,13 +525,16 @@ angular.module('app.controllers', ['ngAnimate'])
                         title: {
                             text: 'Detection level',
                             style: {
-                                color: "#f45b5b"
+                                color: "#f45b5b",
+                                fontSize: "13px"
+                                
                             }
                         },
                         labels: {
                             format: '{value}',
                             style: {
-                                color: "#f45b5b"
+                                color: "#f45b5b",
+                                fontSize: "13px"
                             }
                         },
                         opposite: false
