@@ -680,7 +680,7 @@ angular.module('app.controllers', ['ngAnimate'])
         $scope.diagnosis = {
             'height'   : '_ _ _',
             'weightLbs': '_ _ _',
-            'bmi'      : '_ _ _',
+            'bmi'      : '_ _ _ _ _',
             'result'   : '_ _ _',
             'gender'   : '_ _ _'
         };
@@ -693,8 +693,6 @@ angular.module('app.controllers', ['ngAnimate'])
 
         function actOnSuccess(response) {
             var data = response.data;
-
-            console.log(data);
 
             $scope.diagnosis['gender'] = data['gender'];
             $scope.diagnosis['result'] = data['diagnosis'];
@@ -735,7 +733,7 @@ angular.module('app.controllers', ['ngAnimate'])
         }
     })
 
-    .controller('OverweightHistoryCtrl', function ($scope, OverweightHistoryService) {
+    .controller('OverweightHistoryCtrl', function ($scope, $window, OverweightHistoryService) {
 
         function actOnSuccess(data) {
             console.log(data);
@@ -745,36 +743,55 @@ angular.module('app.controllers', ['ngAnimate'])
             console.log(cause);
         }
 
-        OverweightHistoryService.recentHistory("123").then(actOnSuccess, actOnError);
+        OverweightHistoryService.recentHistory("5642c0c299fd4c0080e9666d").then(actOnSuccess, actOnError);
+
+        $scope.Math = $window.Math;
+
+        $scope.dataPoints = [
+            {x: new Date(new Date().getTime() - 42 * 24 * 60 * 60 * 1000), y: 195},
+            {x: new Date(new Date().getTime() - 35 * 24 * 60 * 60 * 1000), y: 180},
+            {x: new Date(new Date().getTime() - 28 * 24 * 60 * 60 * 1000), y: 270},
+            {x: new Date(new Date().getTime() - 21 * 24 * 60 * 60 * 1000), y: 150},
+            {x: new Date(new Date().getTime() - 14 * 24 * 60 * 60 * 1000), y: 250},
+            {x: new Date(new Date().getTime() - 7 * 24 * 60 * 60 * 1000), y: 130},
+            {x: new Date(), y: 123}
+        ];
 
         $scope.records = [
             {
-                recordedDate: new Date(),
-                weightInLbs: 123
+                recordedDate: new Date().toISOString().split('T')[0],
+                weightInLbs: 123,
+                weightDiff: -7
             },
             {
-                recordedDate: new Date(),
-                weightInLbs: 130
+                recordedDate: new Date(new Date().getTime() - 7 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+                weightInLbs: 130,
+                weightDiff: -120
             },
             {
-                recordedDate: new Date(),
-                weightInLbs: 250
+                recordedDate: new Date(new Date().getTime() - 14 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+                weightInLbs: 250,
+                weightDiff: 100
             },
             {
-                recordedDate: new Date(),
-                weightInLbs: 150
+                recordedDate: new Date(new Date().getTime() - 21 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+                weightInLbs: 150,
+                weightDiff: -120
             },
             {
-                recordedDate: new Date(),
-                weightInLbs: 270
+                recordedDate: new Date(new Date().getTime() - 28 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+                weightInLbs: 270,
+                weightDiff: 90
             },
             {
-                recordedDate: new Date(),
-                weightInLbs: 180
+                recordedDate: new Date(new Date().getTime() - 35 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+                weightInLbs: 180,
+                weightDiff: -15
             },
             {
-                recordedDate: new Date(),
-                weightInLbs: 195
+                recordedDate: new Date(new Date().getTime() - 42 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+                weightInLbs: 195,
+                weightDiff: 10
             }
         ];
     });

@@ -199,7 +199,7 @@ angular.module('app', ['ionic', 'app.controllers', 'app.services', 'ngCordova', 
             });
 
             xScale = d3.time.scale()
-                .domain([dataPoints[0].x, new Date(dataPoints[dataPoints.length - 1].x.getTime() + 3.5 * 24 * 60 * 60 * 1000)])
+                .domain([dataPoints[0].x, new Date(dataPoints[dataPoints.length - 1].x.getTime() + 302400000)])
                 .range([30, chartWidth - 5]);
 
             yScale = d3.scale.linear()
@@ -247,16 +247,7 @@ angular.module('app', ['ionic', 'app.controllers', 'app.services', 'ngCordova', 
             restrict: "EA",
             template: "<svg style='background-color: #8FD4D1; display: block; position: absolute; width: 100%; height: 100%;'></svg>",
             link: function ($scope, $elem, attrs) {
-                // TODO: get dataPoints from $scope dynamically
-                var dataPoints = [
-                    {x: new Date(new Date().getTime() - 42 * 24 * 60 * 60 * 1000), y: 120},
-                    {x: new Date(new Date().getTime() - 35 * 24 * 60 * 60 * 1000), y: 600},
-                    {x: new Date(new Date().getTime() - 28 * 24 * 60 * 60 * 1000), y: 100},
-                    {x: new Date(new Date().getTime() - 21 * 24 * 60 * 60 * 1000), y: 300},
-                    {x: new Date(new Date().getTime() - 14 * 24 * 60 * 60 * 1000), y: 500},
-                    {x: new Date(new Date().getTime() - 7 * 24 * 60 * 60 * 1000), y: 400},
-                    {x: new Date(), y: 800}
-                ];
+                var dataPoints = $scope.dataPoints;
                 var svgDom = $elem.find("svg")[0];
                 var svg = d3.select(svgDom);
 
@@ -282,16 +273,19 @@ angular.module('app', ['ionic', 'app.controllers', 'app.services', 'ngCordova', 
                     .enter().append("circle")
                     .attr("stroke", "white")
                     .attr("fill", function (d, i) {
-                        return "#81BFBC"
+                        return "#81BFBC";
+                    })
+                    .attr("stroke-width", function(d, i) {
+                        return 2;
                     })
                     .attr("r", function (d, i) {
-                        return 3
+                        return 4;
                     })
                     .attr("cx", function (d, i) {
-                        return xScale(d.x)
+                        return xScale(d.x);
                     })
                     .attr("cy", function (d, i) {
-                        return yScale(d.y)
+                        return yScale(d.y);
                     });
             }
         };

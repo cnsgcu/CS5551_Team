@@ -49,19 +49,37 @@
                                         position: absolute;
                                         line-height: 73px;
                                         z-index: 100;">
-                                123
                             </div>
-                            <div style="width: 16px;
-                                        height: 16px;
+
+                            <div ng-if="record.weightDiff < 0" style="width: 16px;
+                                        height: 32px;
                                         margin: 0 auto;
-                                        transform: translateY(180%);
+                                        transform: translateY(70%);
                                         border-radius: 8px;
-                                        background: rgb(92,215,232);
-                                        border: 2px solid #fff;">
+                                        background: #fff;
+                                        border: 2px solid rgb(142,209,138);
+                                        box-shadow: inset 0 0 3px rgba(0,0,0,0.2);">
                                 <i class="icon ion-arrow-down-c" style="position: absolute;
                                                                       font-size: 16px;
-                                                                      top: -4px;
-                                                                      left: 2px;">
+                                                                      top: 4px;
+                                                                      left: 2px;
+                                                                      color: rgb(142,209,138);">
+                                </i>
+                            </div>
+
+                            <div ng-if="record.weightDiff > 0" style="width: 16px;
+                                        height: 32px;
+                                        margin: 0 auto;
+                                        transform: translateY(70%);
+                                        border-radius: 8px;
+                                        background: #fff;
+                                        border: 2px solid #FAA69F;
+                                        box-shadow: inset 0 0 3px rgba(0,0,0,0.2);">
+                                <i class="icon ion-arrow-up-c" style="position: absolute;
+                                                                      font-size: 16px;
+                                                                      top: 4px;
+                                                                      left: 2px;
+                                                                      color: #FAA69F;">
                                 </i>
                             </div>
                             <div style="position: absolute;
@@ -81,11 +99,23 @@
                                     border-top: none;
                                     border-left: none;
                                     border-right: none;">
-                            <div style="color: rgba(0, 0, 0, 0.87); font-size: 14px; font-weight: bold;">
-                                7:00PM
+                            <div style="display: flex; color: rgba(0, 0, 0, 0.7); font-size: 16px; font-weight: bold;">
+                                <div style="flex-grow: 1;">
+                                    Net weight: {{record.weightInLbs}} .lbs
+                                </div>
+
+                                <div style="flex-grow: 1;
+                                            color: rgba(0, 0, 0, 0.38);
+                                            font-size: 13px;
+                                            font-weight: bold;
+                                            text-align: right;">
+                                    <i class="icon ion-android-calendar"></i>&nbsp {{record.recordedDate}}
+                                </div>
                             </div>
                             <div style="color: rgba(0, 0, 0, 0.38); font-size: 12px; font-weight: bold;">
-                                {{record.weightInLbs}} .lbs
+                                <span ng-if="record.weightDiff > 0">Gain:</span>
+                                <span ng-if="record.weightDiff < 0">Loss:</span>
+                                {{Math.abs(record.weightDiff)}} .lbs
                             </div>
                         </div>
                     </li>
