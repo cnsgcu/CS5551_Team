@@ -28,15 +28,6 @@ var RequestFactory = {
       request.contentType = 'application/json';
 
       return request;
-    },
-
-    withoutData: function(reqData) {
-        var request = this.tmp;
-        this.tmp = null;
-
-        request.contentType = 'application/json';
-
-        return request;
     }
 };
 
@@ -107,7 +98,7 @@ angular.module('app.services', [])
             'recentHistory': function (usrId) {
                 var overweightHistAPI = restAPI['overweight'] + '/history/top/' + usrId;
 
-                var request = RequestFactory.make('GET').requestTo(overweightHistAPI).withoutData();
+                var request = RequestFactory.make('GET').requestTo(overweightHistAPI).carryData();
 
                 return $http(request);
             },

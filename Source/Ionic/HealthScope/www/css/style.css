@@ -1,3 +1,4 @@
+// Git
 .hs-btn, .hs-btn:active, .hs-btn:hover, .hs-btn.activated {
     color: #fff;
     border-color: #8ccccf;
@@ -24,4 +25,34 @@
 
 .codedarkorange {
     color: darkorange;
+}
+
+.video-container {
+    position: relative;
+    padding-bottom: 56.25%;
+    padding-top: 30px; height: 0; overflow: hidden;
+}
+ 
+.video-container iframe, .video-container object, .video-container embed {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.input-color-HT {
+    position: relative;
+}
+.input-color-HT input {
+    padding-left: 20px;
+}
+.input-color-HT .color-box {
+    width: 10px;
+    height: 10px;
+    display: inline-block;
+    background-color: #ccc;
+    position: absolute;
+    left: 5px;
+    top: 5px;
 }
