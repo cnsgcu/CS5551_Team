@@ -1,0 +1,39 @@
+<ion-view view-title="Diabetes History">
+    <ion-content class="padding has-header">
+        <link href="css/signup-style.css" rel="stylesheet">
+
+        <h5>Select the time period:</h5>
+        <form name="loginform" novalidate="novalidate" ng-submit="loginform.$valid && doDiaHistory(date)">
+            <div class="list card">
+                <div class="list">
+                    <div class="item row">
+                        <div class="col">
+                            <label class="item-input validated">From:
+                                <i class="icon ion-calendar placeholder-icon"></i>
+                                <input id="start" class="hide" type="date" ng-model="date.startDate"
+                                       required="required">
+                                <i class="icon ion-alert-circled error"></i>
+                            </label>
+                        </div>
+                        <div class="col">
+                            <label class="item-input validated">To:
+                                <i class="icon ion-calendar placeholder-icon"></i>
+                                <input id="end" type="date" ng-model="date.endDate" required="required">
+                                <i class="icon ion-alert-circled error"></i>
+                            </label>
+                        </div>
+                        <button type="submit" class="button button-calm">Submit</button>
+
+                    </div>
+                </div>
+            </div>
+        </form>
+
+        <div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+        <div class="result" id="result">Result Level 1: Normal; Result Level 2: Impaired fasting glycaemia glucose;
+            Result Level 3: Impaired glucose tolerance; Result Level 4: Diabetes mellitus
+        </div>
+    </ion-content>
+</ion-view>
+
+

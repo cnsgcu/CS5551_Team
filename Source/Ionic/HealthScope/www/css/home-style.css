@@ -1,117 +1,137 @@
-.slice {  
-  margin: 0 auto;
-  
-  width: 220px; height: 220px;
-  
-  overflow: hidden;
-  
-  backface-visibility: hidden;
+.slice {
+    margin: 0 auto;
+
+    width: 220px;
+    height: 220px;
+
+    overflow: hidden;
+
+    backface-visibility: hidden;
 }
 
 .slice-right {
-  position: relative; top: 68px; left: 105px;
-  
-  -webkit-transform: skewY(30deg);
-  -ms-transform    : skewY(30deg);
-  -o-transform     : skewY(30deg);
-  transform        : skewY(30deg);
+    position: relative;
+    top: 68px;
+    left: 105px;
+
+    -webkit-transform: skewY(30deg);
+    -ms-transform: skewY(30deg);
+    -o-transform: skewY(30deg);
+    transform: skewY(30deg);
 }
 
 .slice-bottom {
-  position: relative; left: -20px; top: 12px;
-  
-  -webkit-transform: rotate(120deg) skewY(30deg);
-  -ms-transform    : rotate(120deg) skewY(30deg);
-  -o-transform     : rotate(120deg) skewY(30deg);
-  transform        : rotate(120deg) skewY(30deg);
+    position: relative;
+    left: -20px;
+    top: 12px;
+
+    -webkit-transform: rotate(120deg) skewY(30deg);
+    -ms-transform: rotate(120deg) skewY(30deg);
+    -o-transform: rotate(120deg) skewY(30deg);
+    transform: rotate(120deg) skewY(30deg);
 }
 
 .slice-left {
-  position: relative; left: -100px; top: -398px;
-  
-  -webkit-transform: rotate(240deg) skewY(30deg);
-  -ms-transform    : rotate(240deg) skewY(30deg);
-  -o-transform     : rotate(240deg) skewY(30deg);
-  transform        : rotate(240deg) skewY(30deg);
+    position: relative;
+    left: -100px;
+    top: -398px;
+
+    -webkit-transform: rotate(240deg) skewY(30deg);
+    -ms-transform: rotate(240deg) skewY(30deg);
+    -o-transform: rotate(240deg) skewY(30deg);
+    transform: rotate(240deg) skewY(30deg);
 }
 
 .arc, .arc.activated {
-  cursor: pointer;
-  
-  padding: 0;
-  font-size: 1em; line-height: 1;
-  
-  position: relative; left: -140px; top: 80px;
-  
-  width: 280px; height: 280px;
-  
-  border-radius: 280px;
-  border: 1px solid #dedede;
+    cursor: pointer;
 
-  background-color: #9800ff;
-  
-  -webkit-transform: skewY(-30deg);
-  -ms-transform    : skewY(-30deg);
-  -o-transform     : skewY(-30deg);
-  transform        : skewY(-30deg);
+    padding: 0;
+    font-size: 1em;
+    line-height: 1;
+
+    position: relative;
+    left: -140px;
+    top: 80px;
+
+    width: 280px;
+    height: 280px;
+
+    border-radius: 280px;
+    border: 1px solid #dedede;
+
+    background-color: #9800ff;
+
+    -webkit-transform: skewY(-30deg);
+    -ms-transform: skewY(-30deg);
+    -o-transform: skewY(-30deg);
+    transform: skewY(-30deg);
 }
 
 .arc.activated {
-  background-image: -webkit-linear-gradient(top left, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1));
-  background-image: -o-linear-gradient(top left, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1));
-  background-image: linear-gradient(to bottom right, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1));
+    background-image: -webkit-linear-gradient(top left, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1));
+    background-image: -o-linear-gradient(top left, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1));
+    background-image: linear-gradient(to bottom right, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1));
 }
 
 .arc-bottom, .arc-bottom.activated {
-  background-color: #f42c90;
-  
-  -webkit-transform: skewY(-30deg) rotate(-120deg);
-  -ms-transform    : skewY(-30deg) rotate(-120deg);
-  -o-transform     : skewY(-30deg) rotate(-120deg);
-  transform        : skewY(-30deg) rotate(-120deg);
+    background-color: #f42c90;
+
+    -webkit-transform: skewY(-30deg) rotate(-120deg);
+    -ms-transform: skewY(-30deg) rotate(-120deg);
+    -o-transform: skewY(-30deg) rotate(-120deg);
+    transform: skewY(-30deg) rotate(-120deg);
 }
 
 .arc-left, .arc-left.activated {
-  background-color: #39e698;
-  
-  -webkit-transform: skewY(-30deg) rotate(-240deg);
-  -ms-transform    : skewY(-30deg) rotate(-240deg);
-  -o-transform     : skewY(-30deg) rotate(-240deg);
-  transform        : skewY(-30deg) rotate(-240deg);
+    background-color: #39e698;
+
+    -webkit-transform: skewY(-30deg) rotate(-240deg);
+    -ms-transform: skewY(-30deg) rotate(-240deg);
+    -o-transform: skewY(-30deg) rotate(-240deg);
+    transform: skewY(-30deg) rotate(-240deg);
 }
 
 .arc ul {
-  text-align: center; color: white; font-weight: bold;
-  
-  width: 90px;
-  
-  position: relative; top: 65px; left: 165px;
+    text-align: center;
+    color: white;
+    font-weight: bold;
+
+    width: 90px;
+
+    position: relative;
+    top: 65px;
+    left: 165px;
 }
 
 .arc-bottom ul {
-  top: 181px; left: 95px;
+    top: 181px;
+    left: 95px;
 }
 
 .arc-left ul {
-  top: 65px; left: 25px;
+    top: 65px;
+    left: 25px;
 }
 
 .arc i {
-  color: white;
+    color: white;
 }
 
 .arc i.icon:before {
-  font-size: 2em;
+    font-size: 2em;
 }
 
 .core {
-  margin: 0 auto;
-  position: relative; top: -460px; left: -5px;
-  
-  width: 50px; height: 50px;
-  
-  background-color: #fb8d5f;
-  
-  border-radius: 50px;
-  border: 3px solid #fff;
+    margin: 0 auto;
+    position: relative;
+    top: -460px;
+    left: -5px;
+
+    width: 50px;
+    height: 50px;
+
+    background-color: #fb8d5f;
+
+    border-radius: 50px;
+    border: 3px solid #fff;
 }

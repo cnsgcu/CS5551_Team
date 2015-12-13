@@ -1,0 +1,196 @@
+<ion-view view-title="Overweight">
+    <link href="css/overweight-style.css" rel="stylesheet">
+
+    <ion-nav-view class="has-header">
+        <div style="margin-bottom: 10px;
+                    padding-top: 24px;
+                    height: 250px;
+                    border: 1px solid #ddd;
+                    border-top: none;
+                    box-shadow: 0 0 8px 2px rgba(186,186,186,0.4)">
+            <div style="width: 200px;
+                        height: 200px;
+                        display: flex;
+                        margin: 0 auto;
+                        overflow: hidden;
+                        text-align: center;
+                        border-radius: 100px;
+                        flex-direction: column;
+                        justify-content: center;
+                        border: 1px solid #F1F1F1;">
+                <div style="color: white;
+                            height: 32px;
+                            line-height: 32px;
+                            background-color: #8FD4D1;">
+                    {{diagnosis.gender}}
+                </div>
+
+                <div style="display:flex;
+                            height: 50px;
+                            color: #8FD4D1;
+                            padding: 5px 0;">
+                    <div style="width: 50%;">
+                        <div>Weight</div>
+                        <div>{{diagnosis.weightLbs}}</div>
+                    </div>
+
+                    <div style="width: 50%;">
+                        <div>Height</div>
+                        <div>{{diagnosis.height}}</div>
+                    </div>
+                </div>
+
+                <div style="height: 36px;
+                            font-size: 1.5em;
+                            line-height: 36px;
+                            color: #FAA69F;
+                            background: #FFFAF7;">
+                    {{diagnosis.result}}
+                </div>
+
+                <div style="height: 50px;
+                            color: #8FD4D1;
+                            font-size: 1.7em;
+                            line-height: 50px;">
+                    {{diagnosis.bmi}}
+                </div>
+
+                <div style="color: white;
+                            height: 32px;
+                            line-height: 32px;
+                            background-color: #8FD4D1;">
+                    _ _ _
+                </div>
+            </div>
+        </div>
+
+        <div ng-if="form.hidden" class="checkupBtn" ng-click="showForm()">
+            <i class="icon ion-compose" style="font-size: 24px;"></i>
+        </div>
+
+        <div ng-switch on="form.hidden" style="position: absolute; height: 100%; width: 100%; overflow: auto; padding: 0 10px;">
+            <div ng-switch-when="false" class="overweight-form">
+                <h4 style="color: #FAA69F;">Body Measurement</h4>
+
+                <div class="card">
+                    <div style="display: flex;">
+                        <div class="overweight-form-icon">
+                            <i class="icon ion-ios-speedometer"></i>
+                        </div>
+
+                        <div style="flex-grow: 1;">
+                            <label class="item item-input">
+                                <input type="text" placeholder="Weight" ng-model="body_measurement.weightLbs">
+                                <label style="padding-right: 16px;">.lb</label>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div style="display: flex;">
+                        <div class="overweight-form-icon">
+                            <i class="icon ion-man"></i>
+                            <i class="icon ion-woman"></i>
+                        </div>
+
+                        <div style="flex-grow: 1;">
+                            <label class="item item-input item-select">
+                                <div class="input-label">&nbsp</div>
+
+                                <select ng-model="body_measurement.gender" style="left: 0; direction: ltr; color: rgb(170,170,170);">
+                                    <option value="">Select gender</option>
+                                    <option ng-repeat="gender in ['Male', 'Female']">{{gender}}</option>
+                                </select>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div style="display: flex;">
+                        <div class="overweight-form-icon">
+                            <i class="icon ion-ios-body"></i>
+                        </div>
+
+                        <div style="flex-grow: 1;">
+                            <label class="item item-input">
+                                <input type="text" placeholder="Height" ng-model="body_measurement.heightInFeet">
+                                <label style="padding-right: 16px;">.feet</label>
+
+                                <input type="text" ng-model="body_measurement.heightInInch">
+                                <label style="padding-right: 16px;">.inch</label>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <button style="background-color: #8FD4D1;
+                               color: white;
+                               font-weight: bold;
+                               border: none;
+                               font-size: 12px;
+                               padding: 0 28px;
+                               min-height: inherit;
+                               position: absolute;
+                               right: 20px;
+                               box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);" class="button" ng-click="detect()">
+                    CHECK UP
+                </button>
+            </div>
+
+            <ul ng-switch-when="true">
+                <li style="display: flex;">
+                    <div style="width: 53px; text-align: center; font-size: 20px; color: white;">
+                        <div style="width: 40px; height: 40px; line-height: 40px; margin: 0 auto; transform: translateY(50%); border-radius: 20px; background: #FAA69F;">
+                            <i class="icon ion-android-restaurant"></i>
+                        </div>
+                    </div>
+
+                    <div style="flex-grow: 2; padding: 16px; color: #444; border: 1px solid #ddd; border-top: none; border-left: none; border-right: none;">
+                        <div style="color: rgba(0, 0, 0, 0.87); font-size: 14px; font-weight: bold;">
+                            Daily calories
+                        </div>
+                        <div style="color: rgba(0, 0, 0, 0.38); font-size: 12px; font-weight: bold;">
+                            1,234 cal
+                        </div>
+                    </div>
+                </li>
+
+                <li style="display: flex;">
+                    <div style="width: 53px; text-align: center; font-size: 20px; color: white;">
+                        <div style="width: 40px; height: 40px; line-height: 40px; margin: 0 auto; transform: translateY(50%); border-radius: 20px; background: rgb(92,215,232);">
+                            <i class="icon ion-android-walk"></i>
+                        </div>
+                    </div>
+
+                    <div style="flex-grow: 2; padding: 16px; color: #444; border: 1px solid #ddd; border-top: none; border-left: none; border-right: none;">
+                        <div style="color: rgba(0, 0, 0, 0.87); font-size: 14px; font-weight: bold;">
+                            Daily exercises
+                        </div>
+                        <div style="color: rgba(0, 0, 0, 0.38); font-size: 12px; font-weight: bold;">
+                            100 hours
+                        </div>
+                    </div>
+                </li>
+
+                <li style="display: flex;">
+                    <div style="width: 53px; text-align: center; font-size: 20px; color: white;">
+                        <div style="width: 40px; height: 40px; line-height: 40px; margin: 0 auto; transform: translateY(50%); border-radius: 20px; background: rgb(142,209,138);">
+                            <i class="icon ion-android-calendar"></i>
+                        </div>
+                    </div>
+
+                    <div style="flex-grow: 2; padding: 16px; color: #444; border: 1px solid #ddd; border-top: none; border-left: none; border-right: none;">
+                        <div style="color: rgba(0, 0, 0, 0.87); font-size: 14px; font-weight: bold;">
+                            Next checkup
+                        </div>
+                        <div style="color: rgba(0, 0, 0, 0.38); font-size: 12px; font-weight: bold;">
+                            August 23, 2015
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </ion-nav-view>
+</ion-view>
