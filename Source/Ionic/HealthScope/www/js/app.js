@@ -265,8 +265,7 @@ angular.module('app', ['ionic', 'app.controllers', 'app.services', 'ngCordova', 
                     })
                     .interpolate("cardinal");
 
-                svg.append("path")
-                    .attr("d", plot(dataPoints));
+                svg.append("path").attr("d", plot(dataPoints));
 
                 svg.selectAll(".point")
                     .data(dataPoints)
