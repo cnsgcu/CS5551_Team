@@ -35,6 +35,12 @@ angular.module('app', ['ionic', 'app.controllers', 'app.services', 'ngCordova', 
                 templateUrl: 'templates/suggestHP.html'
             })
 
+            .state('videoHP', {
+                url: '/videoHP',
+                controller: 'VideoController',
+                templateUrl: 'templates/movieHP.html',
+            })
+
             .state('home', {
                 url: '/home/:name',
                 controller: 'HomeCtrl',
