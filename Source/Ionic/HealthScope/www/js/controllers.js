@@ -3,75 +3,75 @@ angular.module('app.controllers', ['ngAnimate'])
     /**
      * Slider logic - Tarun
      */
-     .controller('SliderController', function($scope) {
-        $scope.images=[{src:'img1.png',title:'Pic 1'},
-                       {src:'img2.png',title:'Pic 2'},
-                       {src:'img3.png',title:'Pic 3'},
-                       {src:'img4.png',title:'Pic 4'},
-                       {src:'img5.png',title:'Pic 5'},
-                       {src:'img6.png',title:'Pic 6'},
-                       {src:'img7.png',title:'Pic 7'},
-                       {src:'img8.png',title:'Pic 8'}]; 
+    .controller('SliderController', function ($scope) {
+        $scope.images = [{src: 'img1.png', title: 'Pic 1'},
+            {src: 'img2.png', title: 'Pic 2'},
+            {src: 'img3.png', title: 'Pic 3'},
+            {src: 'img4.png', title: 'Pic 4'},
+            {src: 'img5.png', title: 'Pic 5'},
+            {src: 'img6.png', title: 'Pic 6'},
+            {src: 'img7.png', title: 'Pic 7'},
+            {src: 'img8.png', title: 'Pic 8'}];
     })
-    
-    
-    .controller('VideoController', function($scope, $location) {
-        
-         $scope.showVideo = function(){
+
+
+    .controller('VideoController', function ($scope, $location) {
+
+        $scope.showVideo = function () {
             console.log("Here I am being called");
-             $location.url("/videoHP");
-         } 
+            $location.url("/videoHP");
+        }
     })
-    
-	/**
+
+    /**
      * Doughnut logic - Tarun
      */
     .controller("DoughnutCtrl", function ($scope, UserService, $ionicPopup, $location) {
-   
-        function actOnSuccess (response) {
-            
+
+        function actOnSuccess(response) {
+
             if (response.data) {
-                
+
                 var jsonData = response.data;
-                                                
-                if (jsonData.count == 3 || jsonData.count > 3){
-                    var record1 = jsonData.records[0].result + " ("+ convertDate(jsonData.records[0].detectedDate) + ")";
-                    var record2 = jsonData.records[1].result + " ("+ convertDate(jsonData.records[1].detectedDate) + ")";
-                    var record3 = jsonData.records[2].result + " ("+ convertDate(jsonData.records[2].detectedDate) + ")";
+
+                if (jsonData.count == 3 || jsonData.count > 3) {
+                    var record1 = jsonData.records[0].result + " (" + convertDate(jsonData.records[0].detectedDate) + ")";
+                    var record2 = jsonData.records[1].result + " (" + convertDate(jsonData.records[1].detectedDate) + ")";
+                    var record3 = jsonData.records[2].result + " (" + convertDate(jsonData.records[2].detectedDate) + ")";
                     $scope.labels = [record1, record2, record3]
-                    $scope.data = [parseInt(jsonData.records[0].sbp)+parseInt(jsonData.records[0].dbp), 
-                                   parseInt(jsonData.records[1].sbp)+parseInt(jsonData.records[1].dbp),
-                                   parseInt(jsonData.records[2].sbp)+parseInt(jsonData.records[2].dbp)]
+                    $scope.data = [parseInt(jsonData.records[0].sbp) + parseInt(jsonData.records[0].dbp),
+                        parseInt(jsonData.records[1].sbp) + parseInt(jsonData.records[1].dbp),
+                        parseInt(jsonData.records[2].sbp) + parseInt(jsonData.records[2].dbp)]
                 }
-                else if (jsonData.count == 2){
+                else if (jsonData.count == 2) {
                     $scope.labels = [jsonData.records[0].result, jsonData.records[1].result];
-                    $scope.data = [parseInt(jsonData.records[0].sbp)+parseInt(jsonData.records[0].dbp), 
-                                   parseInt(jsonData.records[1].sbp)+parseInt(jsonData.records[1].dbp)]
+                    $scope.data = [parseInt(jsonData.records[0].sbp) + parseInt(jsonData.records[0].dbp),
+                        parseInt(jsonData.records[1].sbp) + parseInt(jsonData.records[1].dbp)]
                 }
-                else if (jsonData.count == 1){
+                else if (jsonData.count == 1) {
                     $scope.labels = [jsonData.records[0].result];
-                    $scope.data = [parseInt(jsonData.records[0].sbp)+parseInt(jsonData.records[0].dbp)]
+                    $scope.data = [parseInt(jsonData.records[0].sbp) + parseInt(jsonData.records[0].dbp)]
                 }
-                              
+
             } else {
                 $ionicPopup.alert({
-                    title:'No history for you',
-                    okText:'Record data'
+                    title: 'No history for you',
+                    okText: 'Record data'
                 });
                 $location.path('/hypertension');
-            } 
+            }
         };
-        
-        function actOnError (reason) {
-            
+
+        function actOnError(reason) {
+
             $ionicPopup.alert({
-                    title:'Connection Error',
-                    okText:'Try Again'
-                });
-            $location.path('/hypertension');             
+                title: 'Connection Error',
+                okText: 'Try Again'
+            });
+            $location.path('/hypertension');
         };
-        
-        function convertDate (stringDate){
+
+        function convertDate(stringDate) {
             var month = stringDate.substring(4, 7);
             if (month == 'Dec') month = '12';
             if (month == 'Nov') month = '11';
@@ -85,83 +85,83 @@ angular.module('app.controllers', ['ngAnimate'])
             if (month == 'Mar') month = '03';
             if (month == 'Feb') month = '02';
             if (month == 'Jan') month = '01';
-            return month+"/"+stringDate.substring(8, 10);
+            return month + "/" + stringDate.substring(8, 10);
         }
-   
-		var id = sessionStorage.getItem("userID");
-        //var jsonID = { "usrId": id};
-        UserService.historyHypertension(id).then(actOnSuccess, actOnError);        
-    })
-    
-	/**
-     * Bar chart logic - Tarun
-     */
-    .controller("BarCtrl", function ($scope, UserService, $ionicPopup, $location) {
-        
+
         var id = sessionStorage.getItem("userID");
         //var jsonID = { "usrId": id};
         UserService.historyHypertension(id).then(actOnSuccess, actOnError);
-        
-        function actOnSuccess (response) {
-            
-            if (response.data) {
-                
-                var jsonData = response.data;
-                                
-                if (jsonData.count == 3 || jsonData.count > 3){
-                    
-                     var label1 = convertDate(jsonData.records[0].detectedDate);
-                     var label2 = convertDate(jsonData.records[1].detectedDate);
-                     var label3 = convertDate(jsonData.records[2].detectedDate);
-                     $scope.labels = [label1, label2, label3];
-                     $scope.series = ['SBP', 'DBP'];
+    })
 
-                     $scope.data = [
-                                    [parseInt(jsonData.records[0].sbp), parseInt(jsonData.records[1].sbp), parseInt(jsonData.records[2].sbp)],
-                                    [parseInt(jsonData.records[0].dbp), parseInt(jsonData.records[1].dbp), parseInt(jsonData.records[2].dbp)]
-                                   ];                    
+    /**
+     * Bar chart logic - Tarun
+     */
+    .controller("BarCtrl", function ($scope, UserService, $ionicPopup, $location) {
+
+        var id = sessionStorage.getItem("userID");
+        //var jsonID = { "usrId": id};
+        UserService.historyHypertension(id).then(actOnSuccess, actOnError);
+
+        function actOnSuccess(response) {
+
+            if (response.data) {
+
+                var jsonData = response.data;
+
+                if (jsonData.count == 3 || jsonData.count > 3) {
+
+                    var label1 = convertDate(jsonData.records[0].detectedDate);
+                    var label2 = convertDate(jsonData.records[1].detectedDate);
+                    var label3 = convertDate(jsonData.records[2].detectedDate);
+                    $scope.labels = [label1, label2, label3];
+                    $scope.series = ['SBP', 'DBP'];
+
+                    $scope.data = [
+                        [parseInt(jsonData.records[0].sbp), parseInt(jsonData.records[1].sbp), parseInt(jsonData.records[2].sbp)],
+                        [parseInt(jsonData.records[0].dbp), parseInt(jsonData.records[1].dbp), parseInt(jsonData.records[2].dbp)]
+                    ];
                 }
-                else if (jsonData.count == 2){
-                    
+                else if (jsonData.count == 2) {
+
                     var label11 = convertDate(jsonData.records[0].detectedDate);
                     var label22 = convertDate(jsonData.records[1].detectedDate);
                     $scope.labels = [label11, label22];
                     $scope.series = ['SBP', 'DBP'];
 
                     $scope.data = [
-                                    [parseInt(jsonData.records[0].sbp), parseInt(jsonData.records[1].sbp)],
-                                    [parseInt(jsonData.records[0].dbp), parseInt(jsonData.records[1].dbp)]
-                                   ];                      
+                        [parseInt(jsonData.records[0].sbp), parseInt(jsonData.records[1].sbp)],
+                        [parseInt(jsonData.records[0].dbp), parseInt(jsonData.records[1].dbp)]
+                    ];
                 }
-                else if (jsonData.count == 1){
-                    
+                else if (jsonData.count == 1) {
+
                     var label111 = convertDate(jsonData.records[0].detectedDate);
                     $scope.labels = [label111];
                     $scope.series = ['SBP', 'DBP'];
 
                     $scope.data = [[parseInt(jsonData.records[0].sbp)], [parseInt(jsonData.records[0].dbp)]];
-                }      
+                }
             }
             else {
-                
+
                 $ionicPopup.alert({
-                    title:'No history for you',
-                    okText:'Record data'
+                    title: 'No history for you',
+                    okText: 'Record data'
                 });
-                $location.path('/hypertension');    
+                $location.path('/hypertension');
             }
         };
-        
-        function actOnError (reason) {
-            
+
+        function actOnError(reason) {
+
             $ionicPopup.alert({
-                    title:'Connection Error',
-                    okText:'Try Again'
-                });
-            $location.path('/hypertension');             
+                title: 'Connection Error',
+                okText: 'Try Again'
+            });
+            $location.path('/hypertension');
         };
-        
-         function convertDate (stringDate){
+
+        function convertDate(stringDate) {
             var year = stringDate.substring(26, 28);
             var month = stringDate.substring(4, 7);
             var day = stringDate.substring(8, 10);
@@ -181,86 +181,86 @@ angular.module('app.controllers', ['ngAnimate'])
         };
     })
 
-    .controller('HypertensionHistoryController', function($scope) {
-        
+    .controller('HypertensionHistoryController', function ($scope) {
+
     })
- 
+
     /**
      * Hypertension - Tarun
      */
     .controller('Hypertension', function ($scope, UserService, $location, $ionicPopup, $cordovaVibration) {
-            
-        function actOnSuccess (response) {
-            
+
+        function actOnSuccess(response) {
+
             if (response.data) {
                 var user = response.data;
-                console.log ("Response from the server : "+ JSON.stringify(user));
+                console.log("Response from the server : " + JSON.stringify(user));
                 $ionicPopup.alert({
-                    title:'Your result is ' + user['result'],
-                    okText:'Home'
+                    title: 'Your result is ' + user['result'],
+                    okText: 'Home'
                 });
-                
+
             } else {
                 $scope.sbp = "";
                 $scope.dbp = "";
                 $ionicPopup.alert({
-                    title:'Wrong JSON',
-                    okText:'Try Again'
-                });                 
-            } 
+                    title: 'Wrong JSON',
+                    okText: 'Try Again'
+                });
+            }
         };
-        
-        function actOnError (reason) {
+
+        function actOnError(reason) {
             $scope.sbp = "";
             $scope.dbp = "";
             $ionicPopup.alert({
-                title:'Check your connection',
-                okText:'Try Again'
-            });                  
+                title: 'Check your connection',
+                okText: 'Try Again'
+            });
         };
-        
+
         $scope.doRecord = function (record) {
-                if (record == null) {
-                    $ionicPopup.alert({
-                        title: 'Please enter data',
+            if (record == null) {
+                $ionicPopup.alert({
+                    title: 'Please enter data',
+                    okText: 'Try Again'
+                });
+            }
+
+            else {
+
+                if (typeof record.sbp === 'undefined' || record.sbp == "" || record.sbp == null) {
+                    console.log("SBP is empty");
+                    var alertPopupSBP = $ionicPopup.alert({
+                        title: 'Please enter SBP',
                         okText: 'Try Again'
-                    });                      
+                    });
+                    alertPopupSBP.then(function () {
+                        $scope.sbp = "";
+                        //$scope.dbp = "";
+                        record.sbp = "";
+                        //record.dbp = "";
+                    });
                 }
-             
+                else if (typeof record.dbp === 'undefined' || record.dbp == "" || record.dbp == null) {
+                    console.log("DBP is empty");
+                    var alertPopupDBP = $ionicPopup.alert({
+                        title: 'Please enter DBP',
+                        okText: 'Try Again'
+                    });
+                    alertPopupDBP.then(function () {
+                        //$scope.sbp = "";
+                        $scope.dbp = "";
+                        //record.sbp = "";
+                        record.dbp = "";
+                    });
+                }
                 else {
-                    
-                    if (typeof record.sbp === 'undefined' || record.sbp == "" || record.sbp == null){
-                        console.log("SBP is empty");
-                        var alertPopupSBP = $ionicPopup.alert({
-                                        title: 'Please enter SBP',
-                                        okText: 'Try Again'
-                                     });
-                        alertPopupSBP.then(function() {            
-                             $scope.sbp = "";
-                             //$scope.dbp = "";
-                             record.sbp = "";
-                             //record.dbp = "";
-                        });     
-                    }
-                    else if (typeof record.dbp === 'undefined' || record.dbp == "" || record.dbp == null){
-                        console.log("DBP is empty");
-                        var alertPopupDBP = $ionicPopup.alert({
-                                        title: 'Please enter DBP',
-                                        okText: 'Try Again'
-                                     });
-                        alertPopupDBP.then(function() {            
-                             //$scope.sbp = "";
-                             $scope.dbp = "";
-                             //record.sbp = "";
-                             record.dbp = "";
-                        });     
-                    }
-                    else {
-                        record.id = sessionStorage.getItem("userID");
-                        UserService.recordHypertension(record).then(actOnSuccess, actOnError);
-                    }
+                    record.id = sessionStorage.getItem("userID");
+                    UserService.recordHypertension(record).then(actOnSuccess, actOnError);
                 }
-            };
+            }
+        };
     })
 
     /**
@@ -274,25 +274,25 @@ angular.module('app.controllers', ['ngAnimate'])
             'result': '_ _ _',
         };
 
-         $scope.top = [{
-            'sugar1':'',
-            'sugar2':'',
-            'result':'',
-            'detectedDate':'',
+        $scope.top = [{
+            'sugar1': '',
+            'sugar2': '',
+            'result': '',
+            'detectedDate': '',
         },
             {
-            'sugar1':'',
-            'sugar2':'',
-            'result':'',
-            'detectedDate':'',
-        },
-                     {
-            'sugar1':'',
-            'sugar2':'',
-            'result':'',
-            'detectedDate':'',
-        }];
-    
+                'sugar1': '',
+                'sugar2': '',
+                'result': '',
+                'detectedDate': '',
+            },
+            {
+                'sugar1': '',
+                'sugar2': '',
+                'result': '',
+                'detectedDate': '',
+            }];
+
         function actOnSuccess(response) {
             var data = response.data;
             console.log(data);
@@ -305,9 +305,9 @@ angular.module('app.controllers', ['ngAnimate'])
         function actSuccess(response) {
             var data = response.data;
             console.log(data);
-            for(var i = 0; i<data.count; i++){
+            for (var i = 0; i < data.count; i++) {
                 var record = data.records[i];
-                
+
                 $scope.top[i].sugar1 = record.sugar1;
                 console.log(record.sugar1);
                 $scope.top[i].sugar2 = record.sugar2;
@@ -338,9 +338,9 @@ angular.module('app.controllers', ['ngAnimate'])
                                 e.preventDefault();
                             } else {
                                 diabetesForm.then(function (form) {
-                                console.log(sessionStorage.getItem("userID"));
-                                form.id = sessionStorage.getItem("userID");
-                                DiabetesDetectionService.detect(form).then(actOnSuccess, actOnError);
+                                    console.log(sessionStorage.getItem("userID"));
+                                    form.id = sessionStorage.getItem("userID");
+                                    DiabetesDetectionService.detect(form).then(actOnSuccess, actOnError);
                                 });
                                 return $scope.form;
                             }
@@ -349,12 +349,12 @@ angular.module('app.controllers', ['ngAnimate'])
                 ]
             });
         }
-        
-                
+
+
 //        show the lasted three records
-    var id = sessionStorage.getItem("userID");
-    UserService.diabetesTopHistory(id).then(actSuccess, actOnError); 
-    
+        var id = sessionStorage.getItem("userID");
+        UserService.diabetesTopHistory(id).then(actSuccess, actOnError);
+
     })
 
     .controller('DiaSug', function ($scope, Items) {
@@ -451,7 +451,7 @@ angular.module('app.controllers', ['ngAnimate'])
                 History(sugar1Data, sugar2Data, resultsData);
                 $("#result").html("Result Level 1: Normal; Result Level 2: Impaired fasting glycaemia glucose; Result Level 3: Impaired glucose tolerance; Result Level 4: Diabetes mellitus");
             }
- 
+
             else {
                 $ionicPopup.alert({
                     title: 'Do record during selected period',
@@ -512,7 +512,7 @@ angular.module('app.controllers', ['ngAnimate'])
                     title: {
                         text: 'Sugar level(mg/dl)',
                         style: {
-                            color:  "#2b908f",
+                            color: "#2b908f",
                             fontSize: "13px"
                         }
                     },
@@ -527,7 +527,7 @@ angular.module('app.controllers', ['ngAnimate'])
                             style: {
                                 color: "#f45b5b",
                                 fontSize: "13px"
-                                
+
                             }
                         },
                         labels: {
@@ -646,10 +646,12 @@ angular.module('app.controllers', ['ngAnimate'])
         }
 
         function actOnSuccess(response) {
-            if (response.data.length == 1) {
+            if (response.data.length === 1) {
                 var user = response.data[0];
 
                 sessionStorage.setItem("userID", user['id']); // Changes done by Tarun to store User ID (from mongoDB) session
+                sessionStorage.setItem("userID", user['name']);
+
                 $location.path('/home/' + user['name']);
             } else {
                 var alertPopup = $ionicPopup.alert({
@@ -690,28 +692,36 @@ angular.module('app.controllers', ['ngAnimate'])
      * Overweight - Cuong
      */
     .controller('OverweightDetectionCtrl', function ($scope, $ionicPopup, OverweightDetectionService) {
-        $scope.diagnosis = {
-            'height'   : '_ _ _',
-            'weightLbs': '_ _ _',
-            'bmi'      : '_ _ _ _ _',
-            'result'   : '_ _ _',
-            'gender'   : '_ _ _'
-        };
+        function reset() {
+            $scope.diagnosis = {
+                height   : '_ _ _',
+                weightLbs: '_ _ _',
+                bmi      : '_ _ _ _ _',
+                result   : '_ _ _',
+                gender   : '_ _ _',
+                healthyWeight: '_ _ _'
+            };
 
-        $scope.form = {
-            hidden: false
-        };
+            $scope.form = {
+                hidden: false
+            };
 
-        $scope.body_measurement = {};
+            $scope.body_measurement = {};
+        }
+
+        reset();
 
         function actOnSuccess(response) {
             var data = response.data;
 
             $scope.diagnosis['gender'] = data['gender'];
             $scope.diagnosis['result'] = data['diagnosis'];
-            $scope.diagnosis['weightLbs'] = data['weightLbs'] + " lbs";
+            $scope.diagnosis['weightLbs'] = data['weightLbs'] + " .lbs";
             $scope.diagnosis['bmi'] = parseFloat(data['bmi']).toFixed(2) + " BMI";
             $scope.diagnosis['height'] = Math.floor(data['heightInch'] / 12) + "' " + data['heightInch'] % 12 + '"';
+            $scope.diagnosis['healthyWeight'] = data['healthyWeightLowerLbs'] + '-' + data['healthyWeightUpperLbs'] + ' .lbs';
+
+            $scope.form.hidden = true;
         }
 
         function actOnError(response) {
@@ -719,37 +729,50 @@ angular.module('app.controllers', ['ngAnimate'])
         }
 
         $scope.showForm = function () {
-            $scope.body_measurement = {};
-            $scope.diagnosis = {
-                'height'   : '_ _ _',
-                'weightLbs': '_ _ _',
-                'bmi'      : '_ _ _',
-                'result'   : '_ _ _',
-                'gender'   : '_ _ _'
-            };
-
-            $scope.form.hidden = false;
+            reset();
         };
 
-        $scope.detect = function() {
+        $scope.detect = function () {
             if ($scope.body_measurement.gender && $scope.body_measurement.weightLbs) {
                 var measurement = {
                     gender: $scope.body_measurement.gender,
                     weightLbs: $scope.body_measurement.weightLbs,
-                    heightInch: parseInt($scope.body_measurement.heightInFeet) * 12 + parseInt($scope.body_measurement.heightInInch)
+                    heightInch: 12 * parseInt($scope.body_measurement.heightInFeet) + parseInt($scope.body_measurement.heightInInch)
                 };
 
                 OverweightDetectionService.detect(measurement).then(actOnSuccess, actOnError);
-
-                $scope.form.hidden = true;
             }
         }
     })
 
     .controller('OverweightHistoryCtrl', function ($scope, $window, OverweightHistoryService) {
+        $scope.Math = $window.Math;
 
-        function actOnSuccess(data) {
-            console.log(data);
+        function byDate(lhs, rhs) {
+            return lhs.x - rhs.x;
+        }
+
+        function toDataPoint(datum) {
+            return {
+                x: new Date(Date.parse(datum['detectedDate'])),
+                y: datum['weightLbs']
+            };
+        }
+
+        function toTimelineRow(datum, idx, records) {
+            return {
+                recordedDate: new Date(Date.parse(datum['detectedDate'])).toISOString().split('T')[0],
+                weightInLbs: datum['weightLbs'],
+                weightDiff: (idx + 1) < records.length ? datum['weightLbs'] - records[idx + 1]['weightLbs'] : 0
+            };
+        }
+
+        function actOnSuccess(result) {
+            var records = result.data.records;
+
+            $scope.dataPoints = records.slice(0, 7).map(toDataPoint).sort(byDate);
+
+            $scope.records = records.map(toTimelineRow).slice(0, 7);
         }
 
         function actOnError(cause) {
@@ -757,54 +780,4 @@ angular.module('app.controllers', ['ngAnimate'])
         }
 
         OverweightHistoryService.recentHistory("5642c0c299fd4c0080e9666d").then(actOnSuccess, actOnError);
-
-        $scope.Math = $window.Math;
-
-        $scope.dataPoints = [
-            {x: new Date(new Date().getTime() - 42 * 24 * 60 * 60 * 1000), y: 195},
-            {x: new Date(new Date().getTime() - 35 * 24 * 60 * 60 * 1000), y: 180},
-            {x: new Date(new Date().getTime() - 28 * 24 * 60 * 60 * 1000), y: 270},
-            {x: new Date(new Date().getTime() - 21 * 24 * 60 * 60 * 1000), y: 150},
-            {x: new Date(new Date().getTime() - 14 * 24 * 60 * 60 * 1000), y: 250},
-            {x: new Date(new Date().getTime() - 7 * 24 * 60 * 60 * 1000), y: 130},
-            {x: new Date(), y: 123}
-        ];
-
-        $scope.records = [
-            {
-                recordedDate: new Date().toISOString().split('T')[0],
-                weightInLbs: 123,
-                weightDiff: -7
-            },
-            {
-                recordedDate: new Date(new Date().getTime() - 7 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
-                weightInLbs: 130,
-                weightDiff: -120
-            },
-            {
-                recordedDate: new Date(new Date().getTime() - 14 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
-                weightInLbs: 250,
-                weightDiff: 100
-            },
-            {
-                recordedDate: new Date(new Date().getTime() - 21 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
-                weightInLbs: 150,
-                weightDiff: -120
-            },
-            {
-                recordedDate: new Date(new Date().getTime() - 28 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
-                weightInLbs: 270,
-                weightDiff: 90
-            },
-            {
-                recordedDate: new Date(new Date().getTime() - 35 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
-                weightInLbs: 180,
-                weightDiff: -15
-            },
-            {
-                recordedDate: new Date(new Date().getTime() - 42 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
-                weightInLbs: 195,
-                weightDiff: 10
-            }
-        ];
     });

@@ -175,7 +175,7 @@ angular.module('app', ['ionic', 'app.controllers', 'app.services', 'ngCordova', 
         }
     })
 
-    .directive('overweightChart', function ($window) {
+    .directive('weightChart', function ($window) {
         var d3 = $window.d3;
         var xScale, yScale;
         var chartHeight, chartWidth;
@@ -246,46 +246,50 @@ angular.module('app', ['ionic', 'app.controllers', 'app.services', 'ngCordova', 
         return {
             restrict: "EA",
             template: "<svg style='background-color: #8FD4D1; display: block; position: absolute; width: 100%; height: 100%;'></svg>",
-            link: function ($scope, $elem, attrs) {
-                var dataPoints = $scope.dataPoints;
-                var svgDom = $elem.find("svg")[0];
-                var svg = d3.select(svgDom);
+            link: function ($scope, $elem) {
+                $scope.$watch("dataPoints", function(oldValue, newValue) {
+                    if ($scope.dataPoints) {
+                        var dataPoints = $scope.dataPoints;
+                        var svgDom = $elem.find("svg")[0];
+                        var svg = d3.select(svgDom);
 
-                chartWidth = svgDom.offsetWidth;
-                chartHeight = svgDom.offsetHeight;
+                        chartWidth = svgDom.offsetWidth;
+                        chartHeight = svgDom.offsetHeight;
 
-                setupChartView(svg, dataPoints);
+                        setupChartView(svg, dataPoints);
 
-                var plot = d3.svg.line()
-                    .x(function (d) {
-                        return xScale(d.x);
-                    })
-                    .y(function (d) {
-                        return yScale(d.y);
-                    })
-                    .interpolate("cardinal");
+                        var plot = d3.svg.line()
+                            .x(function (d) {
+                                return xScale(d.x);
+                            })
+                            .y(function (d) {
+                                return yScale(d.y);
+                            })
+                            .interpolate("cardinal");
 
-                svg.append("path").attr("d", plot(dataPoints));
+                        svg.append("path").attr("d", plot(dataPoints));
 
-                svg.selectAll(".point")
-                    .data(dataPoints)
-                    .enter().append("circle")
-                    .attr("stroke", "white")
-                    .attr("fill", function (d, i) {
-                        return "#81BFBC";
-                    })
-                    .attr("stroke-width", function(d, i) {
-                        return 2;
-                    })
-                    .attr("r", function (d, i) {
-                        return 4;
-                    })
-                    .attr("cx", function (d, i) {
-                        return xScale(d.x);
-                    })
-                    .attr("cy", function (d, i) {
-                        return yScale(d.y);
-                    });
+                        svg.selectAll(".point")
+                            .data(dataPoints)
+                            .enter().append("circle")
+                            .attr("stroke", "white")
+                            .attr("fill", function (d, i) {
+                                return "#81BFBC";
+                            })
+                            .attr("stroke-width", function(d, i) {
+                                return 2;
+                            })
+                            .attr("r", function (d, i) {
+                                return 4;
+                            })
+                            .attr("cx", function (d, i) {
+                                return xScale(d.x);
+                            })
+                            .attr("cy", function (d, i) {
+                                return yScale(d.y);
+                            });
+                    }
+                }, true);
             }
         };
     })
