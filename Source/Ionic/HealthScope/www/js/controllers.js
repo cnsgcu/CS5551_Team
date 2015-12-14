@@ -650,7 +650,7 @@ angular.module('app.controllers', ['ngAnimate'])
                 var user = response.data[0];
 
                 sessionStorage.setItem("userID", user['id']); // Changes done by Tarun to store User ID (from mongoDB) session
-                sessionStorage.setItem("userID", user['name']);
+                sessionStorage.setItem("userName", user['name']);
 
                 $location.path('/home/' + user['name']);
             } else {
@@ -701,7 +701,7 @@ angular.module('app.controllers', ['ngAnimate'])
                 gender         : '_ _ _',
                 healthyWeight  : '_ _ _',
                 healthyCalories: '',
-                nextCheckupDate    : ''
+                nextCheckupDate: ''
             };
 
             $scope.form = {
@@ -724,7 +724,7 @@ angular.module('app.controllers', ['ngAnimate'])
             $scope.diagnosis['healthyWeight'] = data['healthyWeightLowerLbs'] + ' - ' + data['healthyWeightUpperLbs'] + ' .lbs';
             $scope.diagnosis['healthyCalories'] = data['healthyCaloriesLower'] + ' - ' + data['healthyCaloriesUpper'] + ' .cal';
             $scope.diagnosis['checkupDate'] = new Date().toLocaleDateString();
-            $scope.diagnosis['nextCheckupDate'] = new Date(new Date().getTime() + 8 * 24 * 60 * 60 * 1000).toDateString().split(' ').slice(1, 4).join(' ');
+            $scope.diagnosis['nextCheckupDate'] = new Date(new Date().getTime() + 7 * 24 * 60 * 60 * 1000).toDateString().split(' ').slice(1, 4).join(' ');
 
             $scope.form.hidden = true;
         }
@@ -770,7 +770,7 @@ angular.module('app.controllers', ['ngAnimate'])
 
         function toTimelineRow(datum, idx, records) {
             return {
-                recordedDate: new Date(Date.parse(datum['detectedDate'])).toISOString().split('T')[0],
+                recordedDate: new Date(Date.parse(datum['detectedDate'])).toDateString().split(' ').slice(1, 4).join(' '),
                 weightInLbs: datum['weightLbs'],
                 weightDiff: (idx + 1) < records.length ? datum['weightLbs'] - records[idx + 1]['weightLbs'] : 0
             };
@@ -788,5 +788,5 @@ angular.module('app.controllers', ['ngAnimate'])
             console.log(cause);
         }
 
-        OverweightHistoryService.recentHistory("5642c0c299fd4c0080e9666d").then(actOnSuccess, actOnError);
+        OverweightHistoryService.recentHistory(sessionStorage.getItem('userID')).then(actOnSuccess, actOnError);
     });
