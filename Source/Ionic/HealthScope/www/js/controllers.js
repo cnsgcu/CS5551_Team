@@ -701,7 +701,7 @@ angular.module('app.controllers', ['ngAnimate'])
                 gender         : '_ _ _',
                 healthyWeight  : '_ _ _',
                 healthyCalories: '',
-                checkupDate    : ''
+                nextCheckupDate    : ''
             };
 
             $scope.form = {
@@ -721,9 +721,10 @@ angular.module('app.controllers', ['ngAnimate'])
             $scope.diagnosis['weightLbs'] = data['weightLbs'] + " .lbs";
             $scope.diagnosis['bmi'] = parseFloat(data['bmi']).toFixed(2) + " BMI";
             $scope.diagnosis['height'] = Math.floor(data['heightInch'] / 12) + "' " + data['heightInch'] % 12 + '"';
-            $scope.diagnosis['healthyWeight'] = data['healthyWeightLowerLbs'] + '-' + data['healthyWeightUpperLbs'] + ' .lbs';
+            $scope.diagnosis['healthyWeight'] = data['healthyWeightLowerLbs'] + ' - ' + data['healthyWeightUpperLbs'] + ' .lbs';
             $scope.diagnosis['healthyCalories'] = data['healthyCaloriesLower'] + ' - ' + data['healthyCaloriesUpper'] + ' .cal';
-            $scope.diagnosis['checkupDate'] = new Date(new Date().getTime() + 7 * 24 * 60 * 60 * 1000).toDateString().split(' ').slice(1, 4).join(' ');
+            $scope.diagnosis['checkupDate'] = new Date().toLocaleDateString();
+            $scope.diagnosis['nextCheckupDate'] = new Date(new Date().getTime() + 8 * 24 * 60 * 60 * 1000).toDateString().split(' ').slice(1, 4).join(' ');
 
             $scope.form.hidden = true;
         }
