@@ -543,7 +543,7 @@ angular.module('app.controllers', ['ngAnimate'])
 
                 series: [{
                     type: 'column',
-                    name: 'Sugar1',
+                    name: 'Fasting glucose',
                     data: sugar1,
                     yAxis: 0,
                     color: "#aaeeee",
@@ -553,7 +553,7 @@ angular.module('app.controllers', ['ngAnimate'])
 
                 }, {
                     type: 'column',
-                    name: 'Sugar2',
+                    name: '2-hour glucose',
                     data: sugar2,
                     yAxis: 0,
                     color: "#90ee7e",
