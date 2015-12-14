@@ -652,7 +652,7 @@ angular.module('app.controllers', ['ngAnimate'])
                 sessionStorage.setItem("userID", user['id']); // Changes done by Tarun to store User ID (from mongoDB) session
                 sessionStorage.setItem("userName", user['name']);
 
-                $location.path('/home/' + user['name']);
+                $location.path('/home');
             } else {
                 var alertPopup = $ionicPopup.alert({
                     title: 'Wrong Credentials',
@@ -685,7 +685,7 @@ angular.module('app.controllers', ['ngAnimate'])
      * Home - Cuong
      */
     .controller('HomeCtrl', function ($scope, $stateParams) {
-        $scope.user_name = $stateParams.name;
+        $scope.user_name = sessionStorage.getItem('userName');
     })
 
     /**
@@ -716,15 +716,17 @@ angular.module('app.controllers', ['ngAnimate'])
         function actOnSuccess(response) {
             var data = response.data;
 
-            $scope.diagnosis['gender'] = data['gender'];
-            $scope.diagnosis['result'] = data['diagnosis'];
-            $scope.diagnosis['weightLbs'] = data['weightLbs'] + " .lbs";
-            $scope.diagnosis['bmi'] = parseFloat(data['bmi']).toFixed(2) + " BMI";
-            $scope.diagnosis['height'] = Math.floor(data['heightInch'] / 12) + "' " + data['heightInch'] % 12 + '"';
-            $scope.diagnosis['healthyWeight'] = data['healthyWeightLowerLbs'] + ' - ' + data['healthyWeightUpperLbs'] + ' .lbs';
-            $scope.diagnosis['healthyCalories'] = data['healthyCaloriesLower'] + ' - ' + data['healthyCaloriesUpper'] + ' .cal';
-            $scope.diagnosis['checkupDate'] = new Date().toLocaleDateString();
-            $scope.diagnosis['nextCheckupDate'] = new Date(new Date().getTime() + 7 * 24 * 60 * 60 * 1000).toDateString().split(' ').slice(1, 4).join(' ');
+            $scope.diagnosis = {
+                gender         : data['gender'],
+                result         : data['diagnosis'],
+                weightLbs      : data['weightLbs'] + ' .lbs',
+                bmi            : parseFloat(data['bmi']).toFixed(2) + ' BMI',
+                height         : Math.floor(data['heightInch'] / 12) + "' " + data['heightInch'] % 12 + '"',
+                healthyWeight  : data['healthyWeightLowerLbs'] + ' - ' + data['healthyWeightUpperLbs'] + ' .lbs',
+                healthyCalories: data['healthyCaloriesLower'] + ' - ' + data['healthyCaloriesUpper'] + ' .cal',
+                checkupDate    : new Date().toDateString().split(' ').slice(1, 4).join(' '),
+                nextCheckupDate: new Date(new Date().getTime() + 7 * 24 * 60 * 60 * 1000).toDateString().split(' ').slice(1, 4).join(' ')
+            };
 
             $scope.form.hidden = true;
         }

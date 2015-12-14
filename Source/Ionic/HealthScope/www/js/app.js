@@ -48,7 +48,7 @@ angular.module('app', ['ionic', 'app.controllers', 'app.services', 'ngCordova', 
             })
 
             .state('home', {
-                url: '/home/:name',
+                url: '/home',
                 controller: 'HomeCtrl',
                 templateUrl: 'templates/home.html'
             })
