@@ -40,7 +40,7 @@
                 Timeline
             </div>
 
-            <ion-scroll zooming="true" direction="xy" style="height: 45%; position: relative;">
+            <ion-scroll zooming="true" direction="y" style="height: 45%; position: relative;">
                 <div ng-repeat="record in records" style="display: flex;">
                     <div style="width: 53px; text-align: center; font-size: 20px; color: white; position: relative;">
                         <div style="color: black;
@@ -58,10 +58,9 @@
                                         background: #fff;
                                         border: 2px solid rgb(142,209,138);
                                         box-shadow: inset 0 0 3px rgba(0,0,0,0.2);">
-                            <i class="icon ion-arrow-down-c" style="position: absolute;
+                            <i class="icon ion-arrow-down-c" style="position: relative;
                                                                       font-size: 16px;
                                                                       top: 4px;
-                                                                      left: 2px;
                                                                       color: rgb(142,209,138);">
                             </i>
                         </div>
@@ -74,10 +73,9 @@
                                         background: #fff;
                                         border: 2px solid #FAA69F;
                                         box-shadow: inset 0 0 3px rgba(0,0,0,0.2);">
-                            <i class="icon ion-arrow-up-c" style="position: absolute;
+                            <i class="icon ion-arrow-up-c" style="position: relative;
                                                                       font-size: 16px;
                                                                       top: 4px;
-                                                                      left: 2px;
                                                                       color: #FAA69F;">
                             </i>
                         </div>
@@ -121,5 +119,4 @@
             </ion-scroll>
         </ion-content>
     </ion-nav-view>
-
 </ion-view>

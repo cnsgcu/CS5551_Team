@@ -204,7 +204,7 @@ angular.module('app', ['ionic', 'app.controllers', 'app.services', 'ngCordova', 
 
             yScale = d3.scale.linear()
                 .domain([0, maxY + (maxY - minY) / dataPoints.length])
-                .range([chartHeight - 45, 0]);
+                .range([chartHeight - 25, 0]);
 
             var xAxisGen = d3.svg.axis()
                 .scale(xScale)
@@ -234,7 +234,7 @@ angular.module('app', ['ionic', 'app.controllers', 'app.services', 'ngCordova', 
 
             svg.append("g")
                 .attr("class", "x axis")
-                .attr("transform", "translate(0, " + (chartHeight - 45) + ")")
+                .attr("transform", "translate(0, " + (chartHeight - 25) + ")")
                 .call(xAxisGen);
 
             svg.append("g")
