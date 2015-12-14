@@ -58,11 +58,9 @@
             <i class="icon ion-ios-speedometer" style="font-size: 24px;"></i>
         </div>
 <!--show the lastest three records-->
-		  <div style="padding-left: 40px; height: 100%; position: relative;">
-                <ul style="position: absolute; height: 100%; width: 80%; overflow: auto">
-                         <p style="text-align: center; font-size: 18px; font-weight: bold; color: rgb(92,215,232)">*** The Lastest Three Detections</p>
-
-                    <li ng-repeat="topData in top" style="display: flex;">
+       <p style="text-align: center; font-size: 16px; font-weight: bold; color: rgb(92,215,232)">*** The Lastest Three Detections</p>
+       <ion-scroll zooming="true" direction="y" style="height: 45%; position: relative;">
+           <div ng-repeat="topData in top" style="display: flex;">
                         <div style="width: 53px; text-align: center; font-size: 20px; color: white; position: relative;">
                             <div style="width: 16px;
                                         height: 16px;
@@ -83,23 +81,22 @@
                         </div>
 
                         <div style="flex-grow: 2;
-                                    padding: 16px;
+                                    padding: 7px;
                                     color: #444;
                                     border: 1px solid #ddd;
                                     border-top: none;
                                     border-left: none;
                                     border-right: none;">
-                            <div style="color: rgba(0, 0, 0, 0.87); font-size: 16px; font-weight: bold;"  >
+                            <div style="color: rgba(0, 0, 0, 0.87); font-size: 15px; font-weight: bold;"  >
                                 {{topData.detectedDate}}
                             </div>
                             <div style="color: rgba(0, 0, 0, 0.38); font-size: 14px; font-weight: bold;">
                                 {{topData.result}}
                             </div>
-                            <div style="padding-top:5px; color: #a2dd99; font-weight: bold" id="sugar1">Fasting glucose: {{topData.sugar1}} mg/dl</div>
-                            <div style="padding-top:5px; color: #a2dd99; font-weight: bold" id="sugar2">2-hour glucose: {{topData.sugar2}} mg/dl</div>
+                            <div style="color: #a2dd99; font-weight: bold" id="sugar1">Fasting glucose: {{topData.sugar1}} mg/dl</div>
+                            <div style="color: #a2dd99; font-weight: bold" id="sugar2">2-hour glucose: {{topData.sugar2}} mg/dl</div>
                         </div>
-                    </li>
-                    </ul>
                     </div>
+       </ion-scroll>
     </ion-nav-view>
 </ion-view>
