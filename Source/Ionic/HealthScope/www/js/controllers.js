@@ -701,7 +701,8 @@ angular.module('app.controllers', ['ngAnimate'])
                 gender         : '_ _ _',
                 healthyWeight  : '_ _ _',
                 healthyCalories: '',
-                nextCheckupDate: ''
+                nextCheckupDate: '',
+                checkupDate    : '_ _ _'
             };
 
             $scope.form = {
