@@ -747,6 +747,7 @@ angular.module('app.controllers', ['ngAnimate'])
         $scope.detect = function () {
             if ($scope.body_measurement.gender && $scope.body_measurement.weightLbs) {
                 var measurement = {
+                    usrId : sessionStorage.getItem('userID'),
                     gender: $scope.body_measurement.gender,
                     weightLbs: $scope.body_measurement.weightLbs,
                     heightInch: 12 * parseInt($scope.body_measurement.heightInFeet) + parseInt($scope.body_measurement.heightInInch)
