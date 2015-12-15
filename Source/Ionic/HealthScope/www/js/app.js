@@ -113,6 +113,7 @@ angular.module('app', ['ionic', 'app.controllers', 'app.services', 'ngCordova', 
 
             .state('overweight.history', {
                 url: '/history',
+                cache: false,
                 views: {
                     menuContent: {
                         controller: 'OverweightHistoryCtrl',
@@ -203,7 +204,7 @@ angular.module('app', ['ionic', 'app.controllers', 'app.services', 'ngCordova', 
                 .range([30, chartWidth]);
 
             yScale = d3.scale.linear()
-                .domain([0, maxY + (maxY - minY) / dataPoints.length])
+                .domain([minY - (maxY - minY) / dataPoints.length, maxY + (maxY - minY) / dataPoints.length])
                 .range([chartHeight - 25, 0]);
 
             var xAxisGen = d3.svg.axis()
@@ -212,7 +213,7 @@ angular.module('app', ['ionic', 'app.controllers', 'app.services', 'ngCordova', 
                 .tickValues(dataPoints.map(function (d) {
                     return d.x;
                 }))
-                .tickFormat(function (d, i) {
+                .tickFormat(function (d) {
                     return months[d.getMonth()] + " " + d.getDate();
                 })
                 .innerTickSize(-chartHeight)

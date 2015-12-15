@@ -754,7 +754,7 @@ angular.module('app.controllers', ['ngAnimate'])
         };
 
         $scope.showForm = function () {
-            reset();
+          $scope.form.hidden = false;
         };
 
         $scope.detect = function () {
@@ -805,5 +805,7 @@ angular.module('app.controllers', ['ngAnimate'])
             console.log(cause);
         }
 
-        OverweightHistoryService.recentHistory(sessionStorage.getItem('userID')).then(actOnSuccess, actOnError);
+        $scope.showHistory = function() {
+          OverweightHistoryService.recentHistory(sessionStorage.getItem('userID')).then(actOnSuccess, actOnError);
+        };
     });
