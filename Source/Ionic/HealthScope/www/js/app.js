@@ -29,22 +29,10 @@ angular.module('app', ['ionic', 'app.controllers', 'app.services', 'ngCordova', 
                 templateUrl: 'templates/signup.html'
             })
 
-            .state('suggestHP', {
-                url: '/suggestHP',
-                controller: 'SliderController',
-                templateUrl: 'templates/suggestHP.html'
-            })
-
-            .state('videoHP', {
-                url: '/videoHP',
-                controller: 'VideoController',
-                templateUrl: 'templates/movieHP.html',
-            })
-
-            .state('historyHP', {
-                url: '/historyHP',
-                controller: 'HypertensionHistoryController',
-                templateUrl: 'templates/historyHP.html',
+            .state('changePass', {
+                url: '/changePass',
+                controller: 'ChangeController',
+                templateUrl: 'templates/changePassword.html'
             })
 
             .state('home', {
@@ -55,8 +43,42 @@ angular.module('app', ['ionic', 'app.controllers', 'app.services', 'ngCordova', 
 
             .state('hypertension', {
                 url: '/hypertension',
-                controller: 'Hypertension',
-                templateUrl: 'templates/hypertension.html'
+                templateUrl: 'templates/hypertension_menu.html'
+            })
+
+            .state('hypertension.detection', {
+                url: '/detection',
+                views: {
+                    menuContent: {
+                        controller: 'Hypertension',
+                        templateUrl: 'templates/hypertension_detection.html'
+                    }
+                }
+            })
+
+            .state('hypertension.suggestion', {
+                url: '/suggestion',
+                views: {
+                    menuContent: {
+                        controller: 'SliderController',
+                        templateUrl: 'templates/hypertension_suggestion.html'
+                    }
+                }
+            })
+
+            .state('hypertension.history', {
+                url: '/history',
+                views: {
+                    menuContent: {
+                        controller: 'HypertensionHistoryController',
+                        templateUrl: 'templates/hypertension_history.html'
+                    }
+                }
+            })
+
+            .state('videoHP', {
+                url: '/videoHP',
+                templateUrl: 'templates/movieHP.html',
             })
 
             .state('diabetes', {
@@ -126,6 +148,20 @@ angular.module('app', ['ionic', 'app.controllers', 'app.services', 'ngCordova', 
         $urlRouterProvider.otherwise('/');
     })
 
+    // Added by Tarun (to disable the back button after login)
+    .run(function ($ionicPlatform, $state) {
+        $ionicPlatform.registerBackButtonAction(function (event) {
+            if ($state.$current.name == "home") {
+                // H/W BACK button is disabled for these states (these views)
+                // Do not go to the previous state (or view) for these states. 
+                // Do nothing here to disable H/W back button.
+            } else {
+                // For all other states, the H/W BACK button is enabled
+                navigator.app.backHistory();
+            }
+        }, 100);
+    })
+
     .directive('slider', function ($timeout) {
         return {
             restrict: 'AE',
@@ -183,21 +219,27 @@ angular.module('app', ['ionic', 'app.controllers', 'app.services', 'ngCordova', 
         var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
         function setupChartView(svg, dataPoints) {
-            var maxY = dataPoints.map(function(d) {return d.y}).reduce(function(a, b){
-                if (a > b) {
-                    return a;
-                } else {
-                    return b;
-                }
-            });
+            var maxY = dataPoints.map(function (d) {
+                    return d.y
+                })
+                .reduce(function (a, b) {
+                    if (a > b) {
+                        return a;
+                    } else {
+                        return b;
+                    }
+                });
 
-            var minY = dataPoints.map(function(d) {return d.y}).reduce(function(a, b){
-                if (a > b) {
-                    return b;
-                } else {
-                    return a;
-                }
-            });
+            var minY = dataPoints.map(function (d) {
+                    return d.y
+                })
+                .reduce(function (a, b) {
+                    if (a > b) {
+                        return b;
+                    } else {
+                        return a;
+                    }
+                });
 
             xScale = d3.time.scale()
                 .domain([dataPoints[0].x, new Date(dataPoints[dataPoints.length - 1].x.getTime() + 302400000)])
@@ -248,7 +290,7 @@ angular.module('app', ['ionic', 'app.controllers', 'app.services', 'ngCordova', 
             restrict: "EA",
             template: "<svg style='background-color: #8FD4D1; display: block; position: absolute; width: 100%; height: 100%;'></svg>",
             link: function ($scope, $elem) {
-                $scope.$watch("dataPoints", function(oldValue, newValue) {
+                $scope.$watch("dataPoints", function (oldValue, newValue) {
                     if ($scope.dataPoints) {
                         var dataPoints = $scope.dataPoints;
                         var svgDom = $elem.find("svg")[0];
@@ -277,7 +319,7 @@ angular.module('app', ['ionic', 'app.controllers', 'app.services', 'ngCordova', 
                             .attr("fill", function (d, i) {
                                 return "#81BFBC";
                             })
-                            .attr("stroke-width", function(d, i) {
+                            .attr("stroke-width", function (d, i) {
                                 return 2;
                             })
                             .attr("r", function (d, i) {

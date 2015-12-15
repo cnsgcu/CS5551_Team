@@ -1,4 +1,4 @@
-angular.module('app.controllers', ['ngAnimate'])
+angular.module('app.controllers', ['ngAnimate', 'ngCordova'])
 
     /**
      * Slider logic - Tarun
@@ -14,14 +14,6 @@ angular.module('app.controllers', ['ngAnimate'])
             {src: 'img8.png', title: 'Pic 8'}];
     })
 
-
-    .controller('VideoController', function ($scope, $location) {
-
-        $scope.showVideo = function () {
-            console.log("Here I am being called");
-            $location.url("/videoHP");
-        }
-    })
 
     /**
      * Doughnut logic - Tarun
@@ -190,13 +182,71 @@ angular.module('app.controllers', ['ngAnimate'])
      */
     .controller('Hypertension', function ($scope, UserService, $location, $ionicPopup, $cordovaVibration) {
 
+        $scope.diagnosis = {
+            'SBP': '_ _ _',
+            'DBP': '_ _ _',
+            'RESULT': '_ _ _',
+        };
+
+        $scope.top = [{
+            'SBP': '---',
+            'DBP': '---',
+            'RESULT': '---',
+            'detectedDate': '---',
+        },
+            {
+                'SBP': '---',
+                'DBP': '---',
+                'RESULT': '---',
+                'detectedDate': '---',
+            },
+            {
+                'SBP': '---',
+                'DBP': '---',
+                'RESULT': '---',
+                'detectedDate': '---',
+            }];
+
+        $scope.showHPForm = function () {
+            $scope.form = {};
+
+            var hpForm = $ionicPopup.show({
+                scope: $scope,
+                title: 'Medical Information',
+                templateUrl: 'templates/hypertension_form.html',
+                buttons: [
+                    {text: 'Cancel'},
+                    {
+                        text: '<b>Detect</b>',
+                        type: 'button-positive',
+                        onTap: function (e) {
+                            if (!$scope.form) {
+                                e.preventDefault();
+                            } else {
+                                hpForm.then(function (form) {
+
+                                    // console.log("Data from the form is "+ JSON.stringify(form));
+                                    form.id = sessionStorage.getItem("userID");
+                                    UserService.recordHypertension(form).then(actOnSuccess, actOnError);
+                                });
+                                return $scope.form;
+                            }
+                        }
+                    }
+                ]
+            });
+        }
+
         function actOnSuccess(response) {
 
             if (response.data) {
-                var user = response.data;
-                console.log("Response from the server : " + JSON.stringify(user));
+                var data = response.data;
+                $scope.diagnosis['SBP'] = data['sbp'];
+                $scope.diagnosis['DBP'] = data['dbp'];
+                $scope.diagnosis['RESULT'] = data['result'];
+                $cordovaVibration.vibrate(500);
                 $ionicPopup.alert({
-                    title: 'Your result is ' + user['result'],
+                    title: 'Your result is ' + data['result'],
                     okText: 'Home'
                 });
 
@@ -204,7 +254,7 @@ angular.module('app.controllers', ['ngAnimate'])
                 $scope.sbp = "";
                 $scope.dbp = "";
                 $ionicPopup.alert({
-                    title: 'Wrong JSON',
+                    title: 'Try Again, something went wrong',
                     okText: 'Try Again'
                 });
             }
@@ -219,48 +269,6 @@ angular.module('app.controllers', ['ngAnimate'])
             });
         };
 
-        $scope.doRecord = function (record) {
-            if (record == null) {
-                $ionicPopup.alert({
-                    title: 'Please enter data',
-                    okText: 'Try Again'
-                });
-            }
-
-            else {
-
-                if (typeof record.sbp === 'undefined' || record.sbp == "" || record.sbp == null) {
-                    console.log("SBP is empty");
-                    var alertPopupSBP = $ionicPopup.alert({
-                        title: 'Please enter SBP',
-                        okText: 'Try Again'
-                    });
-                    alertPopupSBP.then(function () {
-                        $scope.sbp = "";
-                        //$scope.dbp = "";
-                        record.sbp = "";
-                        //record.dbp = "";
-                    });
-                }
-                else if (typeof record.dbp === 'undefined' || record.dbp == "" || record.dbp == null) {
-                    console.log("DBP is empty");
-                    var alertPopupDBP = $ionicPopup.alert({
-                        title: 'Please enter DBP',
-                        okText: 'Try Again'
-                    });
-                    alertPopupDBP.then(function () {
-                        //$scope.sbp = "";
-                        $scope.dbp = "";
-                        //record.sbp = "";
-                        record.dbp = "";
-                    });
-                }
-                else {
-                    record.id = sessionStorage.getItem("userID");
-                    UserService.recordHypertension(record).then(actOnSuccess, actOnError);
-                }
-            }
-        };
     })
 
     /**
@@ -694,15 +702,15 @@ angular.module('app.controllers', ['ngAnimate'])
     .controller('OverweightDetectionCtrl', function ($scope, $ionicPopup, OverweightDetectionService) {
         function reset() {
             $scope.diagnosis = {
-                height         : '_ _ _',
-                weightLbs      : '_ _ _',
-                bmi            : '_ _ _ _ _',
-                result         : '_ _ _',
-                gender         : '_ _ _',
-                healthyWeight  : '_ _ _',
+                height: '_ _ _',
+                weightLbs: '_ _ _',
+                bmi: '_ _ _ _ _',
+                result: '_ _ _',
+                gender: '_ _ _',
+                healthyWeight: '_ _ _',
                 healthyCalories: '',
                 nextCheckupDate: '',
-                checkupDate    : '_ _ _'
+                checkupDate: '_ _ _'
             };
 
             $scope.form = {
@@ -722,45 +730,40 @@ angular.module('app.controllers', ['ngAnimate'])
             var data = response.data;
 
             $scope.diagnosis = {
-                gender         : data['gender'],
-                result         : data['diagnosis'],
-                weightLbs      : data['weightLbs'] + ' .lbs',
-                bmi            : parseFloat(data['bmi']).toFixed(2) + ' BMI',
-                height         : Math.floor(data['heightInch'] / 12) + "' " + data['heightInch'] % 12 + '"',
-                healthyWeight  : data['healthyWeightLowerLbs'] + ' - ' + data['healthyWeightUpperLbs'] + ' .lbs',
+                gender: data['gender'],
+                result: data['diagnosis'],
+                weightLbs: data['weightLbs'] + ' .lbs',
+                bmi: parseFloat(data['bmi']).toFixed(2) + ' BMI',
+                height: Math.floor(data['heightInch'] / 12) + "' " + data['heightInch'] % 12 + '"',
+                healthyWeight: data['healthyWeightLowerLbs'] + ' - ' + data['healthyWeightUpperLbs'] + ' .lbs',
                 healthyCalories: data['healthyCaloriesLower'] + ' - ' + data['healthyCaloriesUpper'] + ' .cal',
-                checkupDate    : new Date().toDateString().split(' ').slice(1, 4).join(' '),
+                checkupDate: new Date().toDateString().split(' ').slice(1, 4).join(' '),
                 nextCheckupDate: new Date(new Date().getTime() + 7 * 24 * 60 * 60 * 1000).toDateString().split(' ').slice(1, 4).join(' ')
             };
 
             $scope.form.hidden = true;
-            document.getElementsByTagName('ion-view')[0].style.transform = "translate3d(0%, 0px, 0px)";
         }
 
         function actOnError(response) {
             console.log(response);
         }
 
-        $scope.hideDet = function() {
+        $scope.hideDet = function () {
             $scope.detection.hidden = true;
         };
 
-        $scope.showDet = function() {
+        $scope.showDet = function () {
             $scope.detection.hidden = false;
         };
 
-        $scope.toggleSelectStyle = function() {
-            console.log($scope.body_measurement.gender);
-        };
-
         $scope.showForm = function () {
-          $scope.form.hidden = false;
+            $scope.form.hidden = false;
         };
 
         $scope.detect = function () {
             if ($scope.body_measurement.gender && $scope.body_measurement.weightLbs) {
                 var measurement = {
-                    usrId : sessionStorage.getItem('userID'),
+                    usrId: sessionStorage.getItem('userID'),
                     gender: $scope.body_measurement.gender,
                     weightLbs: $scope.body_measurement.weightLbs,
                     heightInch: 12 * parseInt($scope.body_measurement.heightInFeet) + parseInt($scope.body_measurement.heightInInch)
@@ -805,7 +808,31 @@ angular.module('app.controllers', ['ngAnimate'])
             console.log(cause);
         }
 
-        $scope.showHistory = function() {
-          OverweightHistoryService.recentHistory(sessionStorage.getItem('userID')).then(actOnSuccess, actOnError);
+        $scope.showHistory = function () {
+            OverweightHistoryService.recentHistory(sessionStorage.getItem('userID')).then(actOnSuccess, actOnError);
         };
+    })
+
+    .controller('ChangeController', function ($scope, $http, $httpParamSerializerJQLike, $ionicPopup) {
+
+        $scope.pageClass = 'changePass';
+        $scope.changePass = function (oldpass, newpass) {
+
+            $http({
+                method: 'PUT',
+                url: 'https://api.mongolab.com/api/1/databases/healthscope/collections/healthCollection/' + sessionStorage.getItem("userID") + '?apiKey=WgJow4bnh6OcS26MtwL5zRJlLxSSxP_e',
+                data: JSON.stringify({"$set": {"password": newpass}}),
+                contentType: "application/json"
+            }).success(function (data) {
+                console.log(data);
+                var alertPopup = $ionicPopup.alert({
+                    title: 'Password change success !',
+                    okText: 'Login again'
+                });
+                alertPopup.then(function () {
+
+                    window.location.assign("#/splash");
+                });
+            })
+        }
     });
