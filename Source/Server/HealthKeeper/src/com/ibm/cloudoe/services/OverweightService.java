@@ -194,25 +194,11 @@ public class OverweightService
 		}
 	}
 
-	/**
-	 * Daily weight losing calories consumption calculation
-	 * 
-	 * @author cuong
-	 * @param form
-	 * @return
-	 */
 	private int calculateWeightLossCalories(OverweightForm form)
 	{
 		return calculateWeightMaintainCalories(form) - 450;
 	}
 
-	/**
-	 * Daily weight gaining calories consumption calculation
-	 * 
-	 * @author cuong
-	 * @param form
-	 * @return
-	 */
 	private int calculateWeightGainCalories(OverweightForm form)
 	{
 		return calculateWeightMaintainCalories(form) + 500;
