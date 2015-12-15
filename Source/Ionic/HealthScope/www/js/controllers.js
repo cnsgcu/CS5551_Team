@@ -1,110 +1,102 @@
-angular.module('app.controllers', ['ngAnimate'])
+	angular.module('app.controllers', ['ngAnimate','ngCordova'])
 
-    /**
-     * Slider logic - Tarun
-     */
-    .controller('SliderController', function ($scope) {
-        $scope.images = [{src: 'img1.png', title: 'Pic 1'},
-            {src: 'img2.png', title: 'Pic 2'},
-            {src: 'img3.png', title: 'Pic 3'},
-            {src: 'img4.png', title: 'Pic 4'},
-            {src: 'img5.png', title: 'Pic 5'},
-            {src: 'img6.png', title: 'Pic 6'},
-            {src: 'img7.png', title: 'Pic 7'},
-            {src: 'img8.png', title: 'Pic 8'}];
-    })
+	    /**
+	     * Slider logic - Tarun
+	     */
+	    .controller('SliderController', function ($scope) {
+	        $scope.images = [{src: 'img1.png', title: 'Pic 1'},
+	            {src: 'img2.png', title: 'Pic 2'},
+	            {src: 'img3.png', title: 'Pic 3'},
+	            {src: 'img4.png', title: 'Pic 4'},
+	            {src: 'img5.png', title: 'Pic 5'},
+	            {src: 'img6.png', title: 'Pic 6'},
+	            {src: 'img7.png', title: 'Pic 7'},
+	            {src: 'img8.png', title: 'Pic 8'}];
+	    })
+    
 
+	    /**
+	     * Doughnut logic - Tarun
+	     */
+	    .controller("DoughnutCtrl", function ($scope, UserService, $ionicPopup, $location) {
 
-    .controller('VideoController', function ($scope, $location) {
+	        function actOnSuccess(response) {
 
-        $scope.showVideo = function () {
-            console.log("Here I am being called");
-            $location.url("/videoHP");
-        }
-    })
+	            if (response.data) {
 
-    /**
-     * Doughnut logic - Tarun
-     */
-    .controller("DoughnutCtrl", function ($scope, UserService, $ionicPopup, $location) {
+	                var jsonData = response.data;
 
-        function actOnSuccess(response) {
+	                if (jsonData.count == 3 || jsonData.count > 3) {
+	                    var record1 = jsonData.records[0].result + " (" + convertDate(jsonData.records[0].detectedDate) + ")";
+	                    var record2 = jsonData.records[1].result + " (" + convertDate(jsonData.records[1].detectedDate) + ")";
+	                    var record3 = jsonData.records[2].result + " (" + convertDate(jsonData.records[2].detectedDate) + ")";
+	                    $scope.labels = [record1, record2, record3]
+	                    $scope.data = [parseInt(jsonData.records[0].sbp) + parseInt(jsonData.records[0].dbp),
+	                        parseInt(jsonData.records[1].sbp) + parseInt(jsonData.records[1].dbp),
+	                        parseInt(jsonData.records[2].sbp) + parseInt(jsonData.records[2].dbp)]
+	                }
+	                else if (jsonData.count == 2) {
+	                    $scope.labels = [jsonData.records[0].result, jsonData.records[1].result];
+	                    $scope.data = [parseInt(jsonData.records[0].sbp) + parseInt(jsonData.records[0].dbp),
+	                        parseInt(jsonData.records[1].sbp) + parseInt(jsonData.records[1].dbp)]
+	                }
+	                else if (jsonData.count == 1) {
+	                    $scope.labels = [jsonData.records[0].result];
+	                    $scope.data = [parseInt(jsonData.records[0].sbp) + parseInt(jsonData.records[0].dbp)]
+	                }
 
-            if (response.data) {
+	            } else {
+	                $ionicPopup.alert({
+	                    title: 'No history for you',
+	                    okText: 'Record data'
+	                });
+	                $location.path('/hypertension');
+	            }
+	        };
 
-                var jsonData = response.data;
+	        function actOnError(reason) {
 
-                if (jsonData.count == 3 || jsonData.count > 3) {
-                    var record1 = jsonData.records[0].result + " (" + convertDate(jsonData.records[0].detectedDate) + ")";
-                    var record2 = jsonData.records[1].result + " (" + convertDate(jsonData.records[1].detectedDate) + ")";
-                    var record3 = jsonData.records[2].result + " (" + convertDate(jsonData.records[2].detectedDate) + ")";
-                    $scope.labels = [record1, record2, record3]
-                    $scope.data = [parseInt(jsonData.records[0].sbp) + parseInt(jsonData.records[0].dbp),
-                        parseInt(jsonData.records[1].sbp) + parseInt(jsonData.records[1].dbp),
-                        parseInt(jsonData.records[2].sbp) + parseInt(jsonData.records[2].dbp)]
-                }
-                else if (jsonData.count == 2) {
-                    $scope.labels = [jsonData.records[0].result, jsonData.records[1].result];
-                    $scope.data = [parseInt(jsonData.records[0].sbp) + parseInt(jsonData.records[0].dbp),
-                        parseInt(jsonData.records[1].sbp) + parseInt(jsonData.records[1].dbp)]
-                }
-                else if (jsonData.count == 1) {
-                    $scope.labels = [jsonData.records[0].result];
-                    $scope.data = [parseInt(jsonData.records[0].sbp) + parseInt(jsonData.records[0].dbp)]
-                }
+	            $ionicPopup.alert({
+	                title: 'Connection Error',
+	                okText: 'Try Again'
+	            });
+	            $location.path('/hypertension');
+	        };
 
-            } else {
-                $ionicPopup.alert({
-                    title: 'No history for you',
-                    okText: 'Record data'
-                });
-                $location.path('/hypertension');
-            }
-        };
+	        function convertDate(stringDate) {
+	            var month = stringDate.substring(4, 7);
+	            if (month == 'Dec') month = '12';
+	            if (month == 'Nov') month = '11';
+	            if (month == 'Oct') month = '10';
+	            if (month == 'Sep') month = '09';
+	            if (month == 'Aug') month = '08';
+	            if (month == 'Jul') month = '07';
+	            if (month == 'Jun') month = '06';
+	            if (month == 'May') month = '05';
+	            if (month == 'Apr') month = '04';
+	            if (month == 'Mar') month = '03';
+	            if (month == 'Feb') month = '02';
+	            if (month == 'Jan') month = '01';
+	            return month + "/" + stringDate.substring(8, 10);
+	        }
 
-        function actOnError(reason) {
+	        var id = sessionStorage.getItem("userID");
+	        //var jsonID = { "usrId": id};
+	        UserService.historyHypertension(id).then(actOnSuccess, actOnError);
+	    })
 
-            $ionicPopup.alert({
-                title: 'Connection Error',
-                okText: 'Try Again'
-            });
-            $location.path('/hypertension');
-        };
+	    /**
+	     * Bar chart logic - Tarun
+	     */
+	    .controller("BarCtrl", function ($scope, UserService, $ionicPopup, $location) {
 
-        function convertDate(stringDate) {
-            var month = stringDate.substring(4, 7);
-            if (month == 'Dec') month = '12';
-            if (month == 'Nov') month = '11';
-            if (month == 'Oct') month = '10';
-            if (month == 'Sep') month = '09';
-            if (month == 'Aug') month = '08';
-            if (month == 'Jul') month = '07';
-            if (month == 'Jun') month = '06';
-            if (month == 'May') month = '05';
-            if (month == 'Apr') month = '04';
-            if (month == 'Mar') month = '03';
-            if (month == 'Feb') month = '02';
-            if (month == 'Jan') month = '01';
-            return month + "/" + stringDate.substring(8, 10);
-        }
+	        var id = sessionStorage.getItem("userID");
+	        //var jsonID = { "usrId": id};
+	        UserService.historyHypertension(id).then(actOnSuccess, actOnError);
 
-        var id = sessionStorage.getItem("userID");
-        //var jsonID = { "usrId": id};
-        UserService.historyHypertension(id).then(actOnSuccess, actOnError);
-    })
+	        function actOnSuccess(response) {
 
-    /**
-     * Bar chart logic - Tarun
-     */
-    .controller("BarCtrl", function ($scope, UserService, $ionicPopup, $location) {
-
-        var id = sessionStorage.getItem("userID");
-        //var jsonID = { "usrId": id};
-        UserService.historyHypertension(id).then(actOnSuccess, actOnError);
-
-        function actOnSuccess(response) {
-
-            if (response.data) {
+	            if (response.data) {
 
                 var jsonData = response.data;
 
@@ -190,78 +182,94 @@ angular.module('app.controllers', ['ngAnimate'])
      */
     .controller('Hypertension', function ($scope, UserService, $location, $ionicPopup, $cordovaVibration) {
 
-        function actOnSuccess(response) {
+			$scope.diagnosis = {
+	            'SBP': '_ _ _',
+	            'DBP': '_ _ _',
+	            'RESULT': '_ _ _',
+	        };
 
-            if (response.data) {
-                var user = response.data;
-                console.log("Response from the server : " + JSON.stringify(user));
-                $ionicPopup.alert({
-                    title: 'Your result is ' + user['result'],
-                    okText: 'Home'
-                });
+	        $scope.top = [{
+	            'SBP': '---',
+	            'DBP': '---',
+	            'RESULT': '---',
+	            'detectedDate': '---',
+	        },
+	            {
+	                'SBP': '---',
+	                'DBP': '---',
+	                'RESULT': '---',
+	                'detectedDate': '---',
+	            },
+	            {
+	                'SBP': '---',
+	                'DBP': '---',
+	                'RESULT': '---',
+	                'detectedDate': '---',
+	            }];
+            
+	        $scope.showHPForm = function () {
+	            $scope.form = {};
 
-            } else {
-                $scope.sbp = "";
-                $scope.dbp = "";
-                $ionicPopup.alert({
-                    title: 'Wrong JSON',
-                    okText: 'Try Again'
-                });
-            }
-        };
+	            var hpForm = $ionicPopup.show({
+	                scope: $scope,
+	                title: 'Medical Information',
+	                templateUrl: 'templates/hypertension_form.html',
+	                buttons: [
+	                    {text: 'Cancel'},
+	                    {
+	                        text: '<b>Detect</b>',
+	                        type: 'button-positive',
+	                        onTap: function (e) {
+	                            if (!$scope.form) {
+	                                e.preventDefault();
+	                            } else {
+	                                hpForm.then(function (form) {
+                                   
+	                                    // console.log("Data from the form is "+ JSON.stringify(form)); 
+	                                    form.id = sessionStorage.getItem("userID");
+	                                    UserService.recordHypertension(form).then(actOnSuccess, actOnError);
+	                                });
+	                                return $scope.form;
+	                            }
+	                        }
+	                    }
+	                ]
+	            });
+	        }
+	
+	        function actOnSuccess(response) {
 
-        function actOnError(reason) {
-            $scope.sbp = "";
-            $scope.dbp = "";
-            $ionicPopup.alert({
-                title: 'Check your connection',
-                okText: 'Try Again'
-            });
-        };
+	            if (response.data) {
+	                var data = response.data;
+	                $scope.diagnosis['SBP'] = data['sbp'];
+	                $scope.diagnosis['DBP'] = data['dbp'];
+	                $scope.diagnosis['RESULT'] = data['result'];
+	                $cordovaVibration.vibrate(500);
+	                $ionicPopup.alert({
+	                    title: 'Your result is ' + data['result'],
+	                    okText: 'Home'
+	                });
 
-        $scope.doRecord = function (record) {
-            if (record == null) {
-                $ionicPopup.alert({
-                    title: 'Please enter data',
-                    okText: 'Try Again'
-                });
-            }
+	            } else {
+	                $scope.sbp = "";
+	                $scope.dbp = "";
+	                $ionicPopup.alert({
+	                    title: 'Try Again, something went wrong',
+	                    okText: 'Try Again'
+	                });
+	            }
+	        };
 
-            else {
-
-                if (typeof record.sbp === 'undefined' || record.sbp == "" || record.sbp == null) {
-                    console.log("SBP is empty");
-                    var alertPopupSBP = $ionicPopup.alert({
-                        title: 'Please enter SBP',
-                        okText: 'Try Again'
-                    });
-                    alertPopupSBP.then(function () {
-                        $scope.sbp = "";
-                        //$scope.dbp = "";
-                        record.sbp = "";
-                        //record.dbp = "";
-                    });
-                }
-                else if (typeof record.dbp === 'undefined' || record.dbp == "" || record.dbp == null) {
-                    console.log("DBP is empty");
-                    var alertPopupDBP = $ionicPopup.alert({
-                        title: 'Please enter DBP',
-                        okText: 'Try Again'
-                    });
-                    alertPopupDBP.then(function () {
-                        //$scope.sbp = "";
-                        $scope.dbp = "";
-                        //record.sbp = "";
-                        record.dbp = "";
-                    });
-                }
-                else {
-                    record.id = sessionStorage.getItem("userID");
-                    UserService.recordHypertension(record).then(actOnSuccess, actOnError);
-                }
-            }
-        };
-    })
+	        function actOnError(reason) {
+	            $scope.sbp = "";
+	            $scope.dbp = "";
+	            $ionicPopup.alert({
+	                title: 'Check your connection',
+	                okText: 'Try Again'
+	            });
+	        };
+        
+	    })
 
     /**
      * Diabetes - Ting
@@ -805,5 +813,29 @@ angular.module('app.controllers', ['ngAnimate'])
             console.log(cause);
         }
 
-        OverweightHistoryService.recentHistory(sessionStorage.getItem('userID')).then(actOnSuccess, actOnError);
-    });
+	        OverweightHistoryService.recentHistory(sessionStorage.getItem('userID')).then(actOnSuccess, actOnError);
+	    })
+		
+		.controller('ChangeController', function ($scope, $http, $httpParamSerializerJQLike, $ionicPopup) {
+
+			$scope.pageClass = 'changePass';
+			$scope.changePass = function(oldpass, newpass) {
+		  
+			$http({
+				method: 'PUT',
+				url : 'https://api.mongolab.com/api/1/databases/healthscope/collections/healthCollection/'+ sessionStorage.getItem("userID")+'?apiKey=WgJow4bnh6OcS26MtwL5zRJlLxSSxP_e',
+				data: JSON.stringify( { "$set" : { "password" : newpass } } ),
+				contentType: "application/json"
+			}).success(function(data) {
+				console.log(data);
+				var alertPopup = $ionicPopup.alert({
+						title: 'Password change success !',
+						okText: 'Login again'
+				});
+				alertPopup.then(function() {            
+					 
+					window.location.assign("#/splash");
+				});
+			})
+			}    
+		});

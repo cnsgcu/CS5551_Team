@@ -28,23 +28,11 @@ angular.module('app', ['ionic', 'app.controllers', 'app.services', 'ngCordova', 
                 controller: 'SignupCtrl',
                 templateUrl: 'templates/signup.html'
             })
-
-            .state('suggestHP', {
-                url: '/suggestHP',
-                controller: 'SliderController',
-                templateUrl: 'templates/suggestHP.html'
-            })
-
-            .state('videoHP', {
-                url: '/videoHP',
-                controller: 'VideoController',
-                templateUrl: 'templates/movieHP.html',
-            })
-
-            .state('historyHP', {
-                url: '/historyHP',
-                controller: 'HypertensionHistoryController',
-                templateUrl: 'templates/historyHP.html',
+            
+            .state('changePass', {
+                url: '/changePass',
+                controller: 'ChangeController',
+                templateUrl: 'templates/changePassword.html'
             })
 
             .state('home', {
@@ -55,11 +43,45 @@ angular.module('app', ['ionic', 'app.controllers', 'app.services', 'ngCordova', 
 
             .state('hypertension', {
                 url: '/hypertension',
-                controller: 'Hypertension',
-                templateUrl: 'templates/hypertension.html'
+                templateUrl: 'templates/hypertension_menu.html'
+            })
+			
+			.state('hypertension.detection', {
+                url: '/detection',
+                views: {
+                    menuContent: {
+                        controller: 'Hypertension',
+                        templateUrl: 'templates/hypertension_detection.html'
+                    }
+                }
             })
 
-            .state('diabetes', {
+            .state('hypertension.suggestion', {
+                url: '/suggestion',
+                views: {
+                    menuContent: {
+                        controller: 'SliderController',
+                        templateUrl: 'templates/hypertension_suggestion.html'
+                    }
+                }
+            })
+
+            .state('hypertension.history', {
+                url: '/history',
+                views: {
+                    menuContent: {
+                        controller: 'HypertensionHistoryController',
+                        templateUrl: 'templates/hypertension_history.html'
+                    }
+                }
+            })
+            
+            .state('videoHP', {
+                url: '/videoHP',
+                templateUrl: 'templates/movieHP.html',
+            })
+            
+           .state('diabetes', {
                 url: "/diabetes",
                 abstract: true,
                 templateUrl: "templates/diabetes_menu.html"
@@ -123,6 +145,20 @@ angular.module('app', ['ionic', 'app.controllers', 'app.services', 'ngCordova', 
 
         // If none of the above states are matched, use this as the fallback
         $urlRouterProvider.otherwise('/');
+    })
+    
+    // Added by Tarun (to disable the back button after login)
+    .run(function($ionicPlatform, $state){
+        $ionicPlatform.registerBackButtonAction(function (event) {
+            if ( $state.$current.name=="home") {
+                // H/W BACK button is disabled for these states (these views)
+                // Do not go to the previous state (or view) for these states. 
+                // Do nothing here to disable H/W back button.
+            } else {
+                // For all other states, the H/W BACK button is enabled
+                navigator.app.backHistory();
+            }
+        }, 100);
     })
 
     .directive('slider', function ($timeout) {
