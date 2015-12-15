@@ -730,6 +730,7 @@ angular.module('app.controllers', ['ngAnimate'])
             };
 
             $scope.form.hidden = true;
+            document.getElementsByTagName('ion-view')[0].style.transform = "translate3d(0%, 100px, 0px)";
         }
 
         function actOnError(response) {
