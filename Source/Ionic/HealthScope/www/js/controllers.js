@@ -709,6 +709,10 @@ angular.module('app.controllers', ['ngAnimate'])
                 hidden: false
             };
 
+            $scope.detection = {
+                hidden: false
+            };
+
             $scope.body_measurement = {};
         }
 
@@ -730,12 +734,20 @@ angular.module('app.controllers', ['ngAnimate'])
             };
 
             $scope.form.hidden = true;
-            document.getElementsByTagName('ion-view')[0].style.transform = "translate3d(0%, 100px, 0px)";
+            document.getElementsByTagName('ion-view')[0].style.transform = "translate3d(0%, 0px, 0px)";
         }
 
         function actOnError(response) {
             console.log(response);
         }
+
+        $scope.hideDet = function() {
+            $scope.detection.hidden = true;
+        };
+
+        $scope.showDet = function() {
+            $scope.detection.hidden = false;
+        };
 
         $scope.toggleSelectStyle = function() {
             console.log($scope.body_measurement.gender);

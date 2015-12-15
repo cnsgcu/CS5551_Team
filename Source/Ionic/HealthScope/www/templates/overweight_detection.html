@@ -2,7 +2,7 @@
     <link href="css/overweight-style.css" rel="stylesheet">
 
     <ion-nav-view class="has-header">
-        <div class="hide-on-keyboard-open" style="padding-top: 24px;
+        <div ng-if="!detection.hidden" style="padding-top: 24px;
                     height: 250px;
                     border: 1px solid #ddd;
                     border-top: none;
@@ -90,7 +90,7 @@
 
                         <div style="flex-grow: 1;">
                             <label class="item item-input">
-                                <input type="text" placeholder="Weight" ng-model="body_measurement.weightLbs">
+                                <input ng-focus="hideDet()" ng-blur="showDet()" type="text" placeholder="Weight" ng-model="body_measurement.weightLbs">
                                 <label style="padding-right: 16px;">.lbs</label>
                             </label>
                         </div>
@@ -108,7 +108,7 @@
                             <label class="item item-input item-select">
                                 <div class="input-label">&nbsp</div>
 
-                                <select ng-model="body_measurement.gender" style="left: 0; direction: ltr;" ng-class="body_measurement.gender ? '' : 'gender-selector'">
+                                <select ng-focus="hideDet()" ng-blur="showDet()" ng-model="body_measurement.gender" style="left: 0; direction: ltr;" ng-class="body_measurement.gender ? '' : 'gender-selector'">
                                     <option value="" disabled>Select gender</option>
                                     <option ng-repeat="gender in ['Male', 'Female']">{{gender}}</option>
                                 </select>
@@ -127,14 +127,14 @@
                             <div class="row" style="padding: 0;">
                                 <div class="col-50">
                                     <label class="item item-input">
-                                        <input type="text" placeholder="Height" ng-model="body_measurement.heightInFeet">
+                                        <input ng-focus="hideDet()" ng-blur="showDet()" type="text" placeholder="Height" ng-model="body_measurement.heightInFeet">
                                         <label style="padding-right: 16px;">.ft</label>
                                     </label>
                                 </div>
 
                                 <div class="col-50">
                                     <label class="item item-input">
-                                        <input type="text" placeholder="Height" ng-model="body_measurement.heightInInch">
+                                        <input ng-focus="hideDet()" ng-blur="showDet()" type="text" placeholder="Height" ng-model="body_measurement.heightInInch">
                                         <label style="padding-right: 16px;">.in</label>
                                     </label>
                                 </div>
