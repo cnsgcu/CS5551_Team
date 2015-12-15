@@ -124,15 +124,21 @@
                         </div>
 
                         <div style="flex-grow: 1;">
-                            <label class="item item-input">
-                                <input type="text" placeholder="Height" ng-model="body_measurement.heightInFeet">
-                                <label style="padding-right: 16px;">.ft</label>
-                            </label>
-                            
-                            <label class="item item-input">
-                                <input type="text" placeholder="Height" ng-model="body_measurement.heightInInch">
-                                <label style="padding-right: 16px;">.in</label>
-                            </label>
+                            <div class="row" style="padding: 0;">
+                                <div class="col-50">
+                                    <label class="item item-input">
+                                        <input type="text" placeholder="Height" ng-model="body_measurement.heightInFeet">
+                                        <label style="padding-right: 16px;">.ft</label>
+                                    </label>
+                                </div>
+
+                                <div class="col-50">
+                                    <label class="item item-input">
+                                        <input type="text" placeholder="Height" ng-model="body_measurement.heightInInch">
+                                        <label style="padding-right: 16px;">.in</label>
+                                    </label>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
