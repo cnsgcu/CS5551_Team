@@ -1,0 +1,46 @@
+<ion-view view-title="Diabetes Suggestion">
+  <ion-content class="padding has-header"> 
+      <h4 align="center">Create Your Plate</h4>
+      <p align="center">American Diabetes Association®</p>
+      <p>Choose the suitable amount of food of each category to create your plate. Also, tips are provided.</p>
+    <section class="itemTitle" id="Proteins">Protein (25%)</section>
+    <div class="lists">
+       <ion-item class="item-remove-animate  item-icon-right" ng-repeat="item in ProteinItems" type="item-text-wrap" ng-click=show({{item}})>
+        <p>{{item.name}}</p>
+        </ion-item>
+        </div>
+      <section class="itemTitle" id="GrainsAndStarchyFoods">Grains and Starchy Foods (25%)</section>
+<div class="lists">
+       <ion-item class="item-remove-animate  item-icon-right" ng-repeat="item in GrainsAndStarchyFoodItems" type="item-text-wrap" ng-click=show({{item}})>
+        <p>{{item.name}}</p>
+        </ion-item>
+        </div>
+      <section class="itemTitle" id="Non-StarchyVegetables">Non-Starchy Vegetables (50%)</section>
+        <div class="lists">
+       <ion-item class="item-remove-animate  item-icon-right" ng-repeat="item in NonStarchyVegetableItems" type="item-text-wrap" ng-click=show({{item}})>
+        <p>{{item.name}}</p>
+        </ion-item>
+        </div>
+      <div id="tips">         
+          <h4 id="tip"></h4>
+          <div class="itemToShow">
+          <h5 class="category" id="protein"></h5>
+          <div class="name" id="proteinName"></div>
+          <div align="center"id="proteinImage"></div>
+          <div class= "tip" id="proteinTip"></div> 
+          </div><br>
+          <div class="itemToShow">
+          <h5 class="category" id="Grain"></h5>
+          <div class="name" id="GrainsAndStarchyFoodName"></div>
+          <div align="center" id="GrainsAndStarchyFoodImage"></div>
+          <div class= "tip" id="GrainsAndStarchyFoodTip"></div>
+          </div><br>
+          <div class="itemToShow">
+          <h5 class="category" id="vegi"></h5>
+          <div class="name" id="Non-StarchyVegetableName"></div>
+          <div align="center" id="Non-StarchyVegetableImage"></div>
+          <div class= "tip" id="Non-StarchyVegetableTip"></div> 
+          </div> 
+      </div>
+        </ion-content>
+</ion-view>

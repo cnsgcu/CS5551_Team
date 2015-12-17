@@ -1,0 +1,33 @@
+<ion-view view-title="Diabetes History">
+  <ion-content class="padding has-header">
+    <link href="css/signup-style.css" rel="stylesheet">
+      <h5>Select the time period:</h5> 
+       <form name="loginform" novalidate="novalidate" ng-submit="loginform.$valid && doDiaHistory(date)">
+          <div class="list card">
+          <div class="list">
+           <div class="row">
+              <label class="item item-input validated" style="width: 100%;">
+               <i class="icon ion-calendar placeholder-icon"></i>From: 
+                <input id="start" class="hide" type="date" ng-model="date.startDate" required="required" style="padding-left: 10px;">
+                <i class="icon ion-alert-circled error"></i>
+              </label>
+              </div>
+              <div class="row">
+               <label class="item item-input validated" style="width: 100%;">
+               <i class="icon ion-calendar placeholder-icon"></i>To:
+                <input id="end" type="date" ng-model="date.endDate" required="required" style="padding-left: 10px;">
+                <i class="icon ion-alert-circled error"></i>
+              </label>
+              </div>
+              </div>
+          </div>
+          <button type="submit" class="button button-block" style="background-color: #39e698; color: white">Submit</button>
+
+      </form>
+          
+   <div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+   <div id="result"></div>
+   </ion-content>
+</ion-view>
+
+

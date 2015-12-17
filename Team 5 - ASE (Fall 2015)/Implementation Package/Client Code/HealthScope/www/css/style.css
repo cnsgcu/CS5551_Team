@@ -1,0 +1,58 @@
+// Git
+.hs-btn, .hs-btn:active, .hs-btn:hover, .hs-btn.activated {
+    color: #fff;
+    border-color: #8ccccf;
+    background-color: #8fd4d1;
+}
+
+.hs-btn.activated {
+    background-image: -o-linear-gradient(top left, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1));
+    background-image: linear-gradient(to bottom right, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1));
+    background-image: -webkit-linear-gradient(top left, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1));
+}
+
+.codegreen {
+    color: green;
+}
+
+.codered {
+    color: red;
+}
+
+.codeorange {
+    color: orange;
+}
+
+.codedarkorange {
+    color: darkorange;
+}
+
+.video-container {
+    position: relative;
+    padding-bottom: 56.25%;
+    padding-top: 30px; height: 0; overflow: hidden;
+}
+ 
+.video-container iframe, .video-container object, .video-container embed {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.input-color-HT {
+    position: relative;
+}
+.input-color-HT input {
+    padding-left: 20px;
+}
+.input-color-HT .color-box {
+    width: 10px;
+    height: 10px;
+    display: inline-block;
+    background-color: #ccc;
+    position: absolute;
+    left: 5px;
+    top: 5px;
+}

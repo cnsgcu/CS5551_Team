@@ -1,0 +1,38 @@
+<ion-view view-title="Welcome {{user_name}}!">
+  <ion-nav-bar class="bar-stable"></ion-nav-bar>
+
+  <ion-content>
+    <link href="css/home-style.css" rel="stylesheet">
+
+    <div class="slice slice-right">
+      <div class="arc button" ui-sref="overweight.detection">
+        <ul>
+          <li><i class="icon ion-ios-timer placeholder-icon"></i></li>
+          <li>Overweight</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="slice slice-bottom">
+      <div class="arc arc-bottom button" ui-sref="hypertension.detection">
+        <ul>
+          <li><i class="icon ion-heart placeholder-icon"></i></li>
+          <li>Hypertension</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="slice slice-left">
+      <div class="arc arc-left button" ui-sref="diabetes.detection">
+        <ul>
+          <li><i class="icon ion-waterdrop placeholder-icon"></i></li>
+          <li>Diabetes</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="core" ui-sref="changePass">
+      <img style="position: relative; left: 10px; top: 9px;" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAABWklEQVRIS9VWbVEDURBLFIADkIAD6gAc0DooCmgVAAooDsABOEACOAAFYdLZvXlt7+69MgNM98/7sR9JNnszRzSGpGMAt1F+TfKzpZUtRZKmMdwgDg+fk3ys9Y8CSDoF8ABgEoOe472I9wXAjOT7ENAggKQFgJto/AAwJemBkGTAFYCTyC9ILvtAdgCi2azN3uHGO+88cjBQeDIvSFiF1axJZHQAhYnet+M19vwWOYNeRu4phhn0zAQAnEfOyrojWANsmfgFwJLd5FyyTIOTnI123X1R57UelUfArV3bRO86mfks0+AhHzujQ6kV5BEsDWBmLvLZpYmlwbVLzHxndHjlDUw2TO4xuHV41u0YXZpsaVdjE0mmZ6ogr0jOXFMC1Jp8nq0AXe3/AyTroZVI6lWefVUFvw6w8dkfpAd/qmCfr67Z5H2G9qmtXtHhAPyUaa2v6a+iNmQs/w3P0cajNHAbJAAAAABJRU5ErkJggg==" />
+    </div>
+  </ion-content>
+</ion-view>

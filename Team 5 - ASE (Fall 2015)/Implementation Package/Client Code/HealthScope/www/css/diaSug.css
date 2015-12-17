@@ -1,0 +1,36 @@
+.itemTitle{
+    border:1px solid lightgray;
+         font-size: 15px;
+    border-radius:5px;
+    padding:10px;
+    margin:0px;
+    font-weight: bold;
+    background-color:rgb(245,245,245);
+    cursor:pointer;
+}
+.lists{
+    display:none;
+    cursor:pointer;
+}
+    
+.itemToShow{
+    background-color:lightcyan;
+    border-radius: 6px;
+}
+.name, .tip{
+    font-size: 15px;
+}
+.name{
+    text-decoration: underline;
+    font-weight: bold;
+    text-align: center;
+        }
+.category{
+    text-align: center;
+    font-size: 18px;
+}
+#tips > img{
+    width: 120px;
+    length:120px;
+    align: center;
+}

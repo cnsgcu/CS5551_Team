@@ -1,0 +1,41 @@
+<ion-view view-title="Hypertension">
+	<ion-nav-bar class="bar-stable">
+		<ion-nav-back-button></ion-nav-back-button>
+	</ion-nav-bar>
+
+	<ion-content class="padding">
+		<form ng-submit="doRecord(record)">
+			<div class="list">
+				<label class="item item-input">
+					<input type="text" placeholder="SBP" ng-model="record.sbp">
+				</label>
+				<label class="item item-input">
+					<input type="text" placeholder="DBP" ng-model="record.dbp">
+				</label>
+			</div>
+	    
+			<button type="submit" class="button button-royal button-block">Capture</button>
+			<button class="button button-full button-royal button-block" ui-sref="suggestHP">Home Remedies</button>
+			<button type="submit" class="button button-royal button-block" ui-sref="historyHP">View History</button>
+		</form>
+		
+	</ion-content>
+	
+	<div class="bar bar-footer bar-balanced">
+  		<div class="title">What is Hypertension</div>
+				<div style="position: relative;
+							right: -88%;
+							background: #8FD4D1;
+							width: 40px;
+							height: 40px;
+							z-index: 100;
+							border-radius: 20px;
+							text-align: center;
+							color: white;
+							line-height: 40px;
+							font-size: 1.5em;" ui-sref="videoHP"">
+					<i class="icon ion-ios-speedometer" style="font-size: 24px;"></i>
+				</div>
+	</div>
+	
+</ion-view>

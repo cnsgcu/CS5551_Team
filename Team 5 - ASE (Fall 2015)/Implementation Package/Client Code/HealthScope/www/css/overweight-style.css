@@ -1,0 +1,32 @@
+.checkupBtn {
+    position: absolute;
+    top: 230px;
+    right: 12px;
+
+    background: #8FD4D1;
+    box-shadow: 0 0 2px #81BFBC;
+
+    width: 40px;
+    height: 40px;
+    z-index: 1;
+    border-radius: 20px;
+    text-align: center;
+    color: white;
+    line-height: 40px;
+}
+
+.gender-selector {
+    color: rgb(170,170,170) !important;
+}
+
+.overweight-form .card {
+    margin: 10px 10px;
+}
+
+.overweight-form-icon {
+    color: rgb(180, 180, 180);
+    font-size: 20px;
+    text-align: center;
+    line-height: 45px;
+    padding-left: 16px;
+}
